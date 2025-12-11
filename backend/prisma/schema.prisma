@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Unit {
+  PC @map("pc")
+  KG @map("kg")
+}
+
+// Models
+
+model User {
+  id       Int        @id @default(autoincrement())
+  email    String     @unique
+  name     String?
+  products Products[]
+}
+
+model Products {
+  id             Int             @id @default(autoincrement())
+  name           String
+  costPerUnit    Float
+  soldBy         Unit
+  addedBy        Int
+  user           User            @relation(fields: [addedBy], references: [id])
+  categoryId     Int
+  category       Category        @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  branchId       Int
+  branch         Branch          @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  createdAt      DateTime        @default(now())
+  stockHistories Stock_History[]
+  transactions   Transaction[]
+}
+
+model Category {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  createdAt DateTime   @default(now())
+  products  Products[]
+}
+
+model Branch {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique
+  location     String
+  createdAt    DateTime      @default(now())
+  products     Products[]
+  transactions Transaction[]
+}
+
+model Stock_History {
+  id           Int      @id @default(autoincrement())
+  productId    Int
+  product      Products @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity     Float
+  stockAddedAt DateTime @default(now())
+}
+
+model Transaction {
+  id            Int      @id @default(autoincrement())
+  productId     Int
+  product       Products @relation(fields: [productId], references: [id], onDelete: Cascade)
+  branchId      Int
+  branch        Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  stockSold     Float
+  payment       Float
+  transactionAt DateTime @default(now())
+}
+
+model Monthly_Overall_Stats {
+  id            Int      @id @default(autoincrement())
+  date          DateTime @unique
+  profit        Float
+  totalSales    Float
+  totalCost     Float
+  stockQuantity Float
+}
