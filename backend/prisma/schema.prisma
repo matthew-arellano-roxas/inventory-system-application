@@ -20,20 +20,20 @@ enum Unit {
 
 // Models
 
-model User {
-  id       Int        @id @default(autoincrement())
-  email    String     @unique
-  name     String?
-  products Products[]
-}
+// model User {
+//   id       Int        @id @default(autoincrement())
+//   email    String     @unique
+//   name     String?
+//   product Product[]
+// }
 
-model Products {
+model Product {
   id             Int             @id @default(autoincrement())
   name           String
   costPerUnit    Float
   soldBy         Unit
   addedBy        Int
-  user           User            @relation(fields: [addedBy], references: [id])
+  user           String          
   categoryId     Int
   category       Category        @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   branchId       Int
@@ -47,7 +47,7 @@ model Category {
   id        Int        @id @default(autoincrement())
   name      String     @unique
   createdAt DateTime   @default(now())
-  products  Products[]
+  product  Product[]
 }
 
 model Branch {
@@ -55,14 +55,14 @@ model Branch {
   name         String        @unique
   location     String
   createdAt    DateTime      @default(now())
-  products     Products[]
+  product     Product[]
   transactions Transaction[]
 }
 
 model Stock_History {
   id           Int      @id @default(autoincrement())
   productId    Int
-  product      Products @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product      Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   quantity     Float
   stockAddedAt DateTime @default(now())
 }
@@ -70,7 +70,7 @@ model Stock_History {
 model Transaction {
   id            Int      @id @default(autoincrement())
   productId     Int
-  product       Products @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product       Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   branchId      Int
   branch        Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
   stockSold     Float

@@ -12,9 +12,13 @@
     "skipLibCheck": true,
     "paths": {
       "@/*": ["src/*"],
-      "@*": ["/*"]
+      "@root/*": ["*"],
+      "@config/*": ["config/*"],
+      "@prisma": ["lib/prisma"],
+      "@models": ["generated/prisma/client"],
+      "@helpers/*": ["src/helpers/*"],
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "config"],
   "exclude": ["node_modules"]
 }

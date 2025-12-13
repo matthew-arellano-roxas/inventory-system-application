@@ -1,5 +1,5 @@
 {
-  "name": "ts-node-template",
+  "name": "Inventory System Application - Backend",
   "version": "1.0.0",
   "description": "",
   "main": "dist/server.js",
@@ -17,6 +17,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/express": "^5.0.5",
+    "@types/lodash": "^4.17.21",
     "@types/node": "^25.0.0",
     "@types/pg": "^8.16.0",
     "eslint": "^9.39.1",
@@ -35,8 +36,13 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.1.0",
     "@prisma/client": "^7.1.0",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
     "dotenv": "^17.2.3",
-    "express": "^5.1.0",
+    "express": "^5.2.1",
+    "express-openid-connect": "^2.19.3",
+    "http-errors": "^2.0.1",
+    "lodash": "^4.17.21",
     "pg": "^8.16.3",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0"

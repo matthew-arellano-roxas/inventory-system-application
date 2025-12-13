@@ -9,7 +9,7 @@ import prettierConfig from 'eslint-config-prettier';
 
 export default defineConfig([
   {
-    ignores: ['dist/', 'build/', 'node_modules/', 'generated/'],
+    ignores: ['dist/', 'build/', 'node_modules/', 'generated/', '**/*.d.ts'],
   },
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
