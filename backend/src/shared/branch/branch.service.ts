@@ -41,7 +41,7 @@ export const createBranch = async (data: Pick<Branch, 'name' | 'location'>): Pro
 // Update branch by ID
 export const updateBranch = async (
   id: number,
-  data: Pick<Branch, 'name' | 'location'>,
+  data: Partial<Pick<Branch, 'name' | 'location'>>,
 ): Promise<Branch> => {
   const existingBranch = await getBranchById(id);
   if (!existingBranch) {

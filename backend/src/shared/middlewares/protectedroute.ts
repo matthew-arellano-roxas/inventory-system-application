@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 
-export function protectedRoute(req: Request, res: Response, next: NextFunction) {
+export function protectedRoute(req: Request, res: Response, _next: NextFunction) {
   if (req.oidc.isAuthenticated()) {
-    return next();
+    return _next();
   }
   res.redirect('/login');
 }
