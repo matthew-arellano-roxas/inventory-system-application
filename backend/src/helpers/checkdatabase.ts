@@ -1,5 +1,5 @@
 import { prisma } from '@prisma';
-import { logger } from '@root/config';
+import { logger } from '@/config';
 
 export const checkDatabaseConnection = async (): Promise<void> => {
   try {

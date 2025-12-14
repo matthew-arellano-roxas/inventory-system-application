@@ -1,7 +1,7 @@
 import createError, { HttpError } from 'http-errors';
-import { logger } from '@root/config';
+import { logger } from '@/config';
 import { NextFunction, Request, Response } from 'express';
-import { ApiResponse } from '@/shared/types';
+import { ApiResponse } from '@/types';
 
 const errorHandler = (err: Error | HttpError, req: Request, res: Response, _next: NextFunction) => {
   let httpError: HttpError;
