@@ -13,10 +13,9 @@
     "paths": {
       "@/*": ["src/*"],
       "@root/*": ["*"],
-      "@config/*": ["config/*"],
       "@prisma": ["lib/prisma"],
       "@models": ["generated/prisma/client"],
-      "@helpers/*": ["src/helpers/*"],
+      "@helpers/*": ["src/helpers/*"]
     }
   },
   "include": ["src/**/*", "config"],
