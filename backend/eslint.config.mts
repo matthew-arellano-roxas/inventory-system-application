@@ -20,7 +20,14 @@ export default defineConfig([
   {
     files: ['**/*.ts'],
     rules: {
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_', // ignores function arguments starting with _
+          varsIgnorePattern: '^_|error$', // ignores variables starting with _ or ending with 'error'
+          caughtErrorsIgnorePattern: '^_|error$', // ignores catch errors named _ or error
+        },
+      ],
     },
   },
   { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },

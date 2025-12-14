@@ -1,6 +1,12 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { countBranches, getBranches, updateBranch, createBranch, deleteBranch } from '@/shared/branch/branch.service';
+import {
+  countBranches,
+  getBranches,
+  updateBranch,
+  createBranch,
+  deleteBranch,
+} from '@/shared/branch/branch.service';
 import { Branch } from '@models';
 import { countCategories } from '@/shared/category/category.service';
 import { countProducts } from '@/shared/product/product.service';
@@ -37,14 +43,14 @@ export async function updateBranchController(req: Request, res: Response) {
   res.status(StatusCodes.OK).json(ok(updatedData, 'Branch updated successfully'));
 }
 
-export async function createBranchController(req: Request, res: Response){
+export async function createBranchController(req: Request, res: Response) {
   const payload: BranchInput = req.body;
   const createdData = await createBranch(payload);
   logger.info(`Branch ${createdData.id} successfully created.`);
   res.status(StatusCodes.OK).json(ok(createdData, 'Branch created successfully'));
 }
 
-export async function deleteBranchController(req: Request, res: Response){
+export async function deleteBranchController(req: Request, res: Response) {
   const id = Number(req.params.id);
   await deleteBranch(id);
   logger.info(`Branch ${id} successfully deleted.`);

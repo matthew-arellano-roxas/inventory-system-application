@@ -26,4 +26,3 @@ export function created<T>(data: T, message = 'Created'): ApiResponse<T> {
     data,
   };
 }
-
