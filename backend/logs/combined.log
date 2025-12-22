@@ -889,3 +889,55 @@ Argument `id` is missing.
 2025-12-22 18:18:48 [32minfo[39m: Get transaction list
 2025-12-22 18:19:00 [32minfo[39m: Get transaction list
 2025-12-22 18:19:06 [32minfo[39m: Get transaction list
+2025-12-22 18:28:56 [32minfo[39m: Database connected!
+2025-12-22 18:30:33 [32minfo[39m: Database connected!
+2025-12-22 18:33:06 [32minfo[39m: Database connected!
+2025-12-22 18:33:38 [32minfo[39m: Database connected!
+2025-12-22 18:34:29 [32minfo[39m: Database connected!
+2025-12-22 18:34:46 [32minfo[39m: Database connected!
+2025-12-22 18:36:54 [32minfo[39m: Database connected!
+2025-12-22 18:37:07 [32minfo[39m: Database connected!
+2025-12-22 18:44:02 [32minfo[39m: Database connected!
+2025-12-22 18:44:50 [32minfo[39m: Database connected!
+2025-12-22 18:49:16 [32minfo[39m: Database connected!
+2025-12-22 18:49:43 [32minfo[39m: Database connected!
+2025-12-22 18:55:14 [32minfo[39m: Database connected!
+2025-12-22 18:56:44 [32minfo[39m: Database connected!
+2025-12-22 18:58:21 [32minfo[39m: Database connected!
+2025-12-22 18:58:30 [32minfo[39m: Database connected!
+2025-12-22 18:59:02 [32minfo[39m: Database connected!
+2025-12-22 19:31:57 [32minfo[39m: Database connected!
+2025-12-22 19:32:44 [32minfo[39m: Database connected!
+2025-12-22 19:33:28 [32minfo[39m: Create Product
+2025-12-22 19:33:29 [31merror[39m: ConflictError: Product Already Exist.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:47:24)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 19:34:40 [32minfo[39m: Get product list
+2025-12-22 21:00:57 [32minfo[39m: Database connected!
+2025-12-22 21:02:18 [32minfo[39m: Database connected!
+2025-12-22 21:02:30 [32minfo[39m: Database connected!
+2025-12-22 21:03:04 [32minfo[39m: Database connected!
+2025-12-22 21:04:00 [32minfo[39m: Database connected!
+2025-12-22 21:04:17 [32minfo[39m: Database connected!
+2025-12-22 21:04:43 [32minfo[39m: Database connected!
+2025-12-22 21:18:35 [32minfo[39m: Database connected!
+2025-12-22 21:18:37 [32minfo[39m: Create transaction
+2025-12-22 21:19:54+08:00 [32minfo[39m: Database connected!
+2025-12-22 21:20:06+08:00 [32minfo[39m: Create transaction
+2025-12-22 21:23:34+08:00 [32minfo[39m: Database connected!
+2025-12-22 21:24:27+08:00 [32minfo[39m: Database connected!
+2025-12-22 21:39:52+08:00 [32minfo[39m: Database connected!
+2025-12-22 21:39:53+08:00 [32minfo[39m: Create transaction
+2025-12-22 21:40:00+08:00 [31merror[39m: SyntaxError: Expected double-quoted property name in JSON at position 98 (line 7 column 5)
+    at JSON.parse (<anonymous>)
+    at parse (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\body-parser\lib\types\json.js:74:19)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\body-parser\lib\read.js:163:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:211:14)
+    at invokeCallback (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\raw-body\index.js:238:16)
+    at done (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\raw-body\index.js:227:7)
+    at IncomingMessage.onEnd (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\raw-body\index.js:287:7)
+    at IncomingMessage.emit (node:events:518:28)
+    at IncomingMessage.emit (node:domain:489:12)
+    at endReadableNT (node:internal/streams/readable:1698:12)

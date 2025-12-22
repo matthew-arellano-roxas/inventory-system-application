@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { TransactionController } from '@/controllers';
+import { CreateTransactionBody, UpdateTransactionBody } from '@/schemas';
+import { validateBody } from '@/middlewares/validate';
 
 const transactionRoute: Router = Router();
 
@@ -10,10 +12,18 @@ transactionRoute.get('/', TransactionController.getTransactionList);
 transactionRoute.get('/:transactionId', TransactionController.getTransactionById);
 
 // Create a new transaction
-transactionRoute.post('/', TransactionController.createTransaction);
+transactionRoute.post(
+  '/',
+  validateBody(CreateTransactionBody),
+  TransactionController.createTransaction,
+);
 
 // Update a transaction
-transactionRoute.put('/:transactionId', TransactionController.updateTransaction);
+transactionRoute.put(
+  '/:transactionId',
+  validateBody(UpdateTransactionBody),
+  TransactionController.updateTransaction,
+);
 
 // Delete a transaction
 transactionRoute.delete('/:transactionId', TransactionController.deleteTransaction);
