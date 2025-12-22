@@ -1,0 +1,582 @@
+2025-12-22 11:47:33 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.branch.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:24:40
+
+  21 
+  22 // Get a single branch by ID
+  23 async getBranchById(id: number) {
+→ 24   const branch = await prisma.branch.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-22 11:49:08 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.branch.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:24:40
+
+  21 
+  22 // Get a single branch by ID
+  23 async getBranchById(id: number) {
+→ 24   const branch = await prisma.branch.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-22 11:53:30 [31merror[39m: BadRequestError: Invalid branch ID.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:25:13)
+    at Generator.next (<anonymous>)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:4:12)
+    at Object.getBranchById (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:34:16)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\controllers\branch.controller.ts:23:38
+    at Generator.next (<anonymous>)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\controllers\branch.controller.ts:8:71
+    at new Promise (<anonymous>)
+2025-12-22 11:53:34 [31merror[39m: BadRequestError: Invalid branch ID.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:25:13)
+    at Generator.next (<anonymous>)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:4:12)
+    at Object.getBranchById (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:34:16)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\controllers\branch.controller.ts:23:38
+    at Generator.next (<anonymous>)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\controllers\branch.controller.ts:8:71
+    at new Promise (<anonymous>)
+2025-12-22 11:53:37 [31merror[39m: BadRequestError: Invalid branch ID.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:25:13)
+    at Generator.next (<anonymous>)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:4:12)
+    at Object.getBranchById (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:34:16)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\controllers\branch.controller.ts:23:38
+    at Generator.next (<anonymous>)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\controllers\branch.controller.ts:8:71
+    at new Promise (<anonymous>)
+2025-12-22 11:54:11 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.branch.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:24:40
+
+  21 
+  22 // Get a single branch by ID
+  23 async getBranchById(id: number) {
+→ 24   const branch = await prisma.branch.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-22 11:55:01 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.branch.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:26:40
+
+  23 // Get a single branch by ID
+  24 async getBranchById(id: number) {
+  25   logger.debug(id);
+→ 26   const branch = await prisma.branch.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-22 11:56:02 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.branch.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:25:40
+
+  22 // Get a single branch by ID
+  23 async getBranchById(id: number) {
+  24   console.log('');
+→ 25   const branch = await prisma.branch.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-22 11:56:45 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.branch.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:25:40
+
+  22 // Get a single branch by ID
+  23 async getBranchById(id: number) {
+  24   console.log('');
+→ 25   const branch = await prisma.branch.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-22 12:01:46 [31merror[39m: ConflictError: Branch Already Exists.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:40:31)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 13:14:58 [31merror[39m: NotFoundError: Branch Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:29:24)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:05:47 [31merror[39m: ConflictError: Category Already Exists.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:45:25)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:05:52 [31merror[39m: ConflictError: Category Already Exists.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:45:25)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:11:16 [31merror[39m: NotFoundError: Category Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:33:26)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:20:29 [31merror[39m: NotFoundError: Product Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:30:25)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:20:36 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.product.update()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:55:33
+
+  52 
+  53 if (!product) throw new createError.NotFound('Product Not Found.');
+  54 
+→ 55 return await prisma.product.update(
+Foreign key constraint violated on the constraint: `Product_categoryId_fkey`
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-22 14:22:09 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.branch.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:28:40
+
+  25 // Get a single branch by ID
+  26 async getBranchById(id: number) {
+  27   console.log('');
+→ 28   const branch = await prisma.branch.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-22 14:22:13 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.branch.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:28:40
+
+  25 // Get a single branch by ID
+  26 async getBranchById(id: number) {
+  27   console.log('');
+→ 28   const branch = await prisma.branch.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-22 14:25:26 [31merror[39m: NotFoundError: Category Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:33:26)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:30:08 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:45:33
+
+  42 
+  43 if (product) throw new createError.Conflict('Product Already Exist.');
+  44 
+→ 45 return await prisma.product.create(
+Foreign key constraint violated on the constraint: `Product_branchId_fkey`
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-22 14:34:44 [31merror[39m: NotFoundError: Branch Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:32:24)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:35:11 [31merror[39m: NotFoundError: Branch Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:32:24)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:35:24 [31merror[39m: ConflictError: Product Already Exist.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:47:24)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:35:29 [31merror[39m: NotFoundError: Category Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:33:26)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:55:20 [31merror[39m: BadRequestError: Invalid category ID.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:26:13)
+    at Generator.next (<anonymous>)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:4:12)
+    at Object.getCategoryById (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:36:16)
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:45:45)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:55:27 [31merror[39m: BadRequestError: Invalid category ID.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:26:13)
+    at Generator.next (<anonymous>)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:4:12)
+    at Object.getCategoryById (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:36:16)
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:45:45)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:55:36 [31merror[39m: BadRequestError: Invalid category ID.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:26:13)
+    at Generator.next (<anonymous>)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:4:12)
+    at Object.getCategoryById (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:36:16)
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:45:45)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:55:56 [31merror[39m: NotFoundError: Category Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:33:26)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\category.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:57:32 [31merror[39m: SyntaxError: Expected double-quoted property name in JSON at position 45 (line 4 column 1)
+    at JSON.parse (<anonymous>)
+    at parse (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\body-parser\lib\types\json.js:74:19)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\body-parser\lib\read.js:163:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:211:14)
+    at invokeCallback (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\raw-body\index.js:238:16)
+    at done (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\raw-body\index.js:227:7)
+    at IncomingMessage.onEnd (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\raw-body\index.js:287:7)
+    at IncomingMessage.emit (node:events:518:28)
+    at IncomingMessage.emit (node:domain:489:12)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+2025-12-22 14:57:37 [31merror[39m: BadRequestError: Product does not exist.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:55:13)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:57:51 [31merror[39m: BadRequestError: Product does not exist.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:55:13)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:58:36 [31merror[39m: BadRequestError: Product does not exist.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:55:13)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 14:59:59 [31merror[39m: NotFoundError: Product Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:31:25)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 15:00:16 [31merror[39m: NotFoundError: Product Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:31:25)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 15:00:37 [31merror[39m: NotFoundError: Product Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:31:25)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 15:02:10 [31merror[39m: NotFoundError: Product Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:31:25)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 15:03:18 [31merror[39m: NotFoundError: Stock Not Found!
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:69:22)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 15:03:24 [31merror[39m: NotFoundError: Stock Not Found!
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:69:22)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 15:04:01 [31merror[39m: NotFoundError: Stock Not Found!
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:69:22)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 15:04:02 [31merror[39m: NotFoundError: Stock Not Found!
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:69:22)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 15:04:03 [31merror[39m: NotFoundError: Stock Not Found!
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:69:22)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 15:05:27 [31merror[39m: NotFoundError: Stock Not Found!
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:69:22)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 15:06:18 [31merror[39m: NotFoundError: Stock Not Found!
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:71:22)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 15:08:56 [31merror[39m: NotFoundError: Stock Not Found!
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:78:22)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 15:09:00 [31merror[39m: NotFoundError: Stock Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:42:23)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 15:09:04 [31merror[39m: NotFoundError: Stock Not Found!
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:78:22)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 15:09:19 [31merror[39m: NotFoundError: Stock Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:42:23)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 15:09:21 [31merror[39m: NotFoundError: Stock Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:42:23)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 16:48:10 [31merror[39m: NotFoundError: Transaction not found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:160:29)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 16:51:23 [31merror[39m: BadRequestError: Not enough stock for product ID 1.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:43:17)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 16:53:12 [31merror[39m: NotFoundError: Transaction not found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:78:28)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 16:54:08 [31merror[39m: TypeError: Cannot read properties of undefined (reading 'details')
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:69:18)
+    at Generator.next (<anonymous>)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:4:12)
+    at Object.updateTransaction (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:62:16)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\controllers\transaction.controller.ts:36:43
+    at Generator.next (<anonymous>)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\controllers\transaction.controller.ts:8:71
+    at new Promise (<anonymous>)
+2025-12-22 16:54:15 [31merror[39m: NotFoundError: Transaction not found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:144:28)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 16:54:22 [31merror[39m: BadRequestError: Not enough stock for product ID 1.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:43:17)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 16:54:43 [31merror[39m: BadRequestError: Product does not exist.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:55:13)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 17:00:11 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.branch.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:28:40
+
+  25 // Get a single branch by ID
+  26 async getBranchById(id: number) {
+  27   console.log('');
+→ 28   const branch = await prisma.branch.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-22 17:11:11 [31merror[39m: NotFoundError: Stock Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:39:23)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 17:11:15 [31merror[39m: NotFoundError: Stock Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:39:23)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 18:13:49 [31merror[39m: BadRequestError: Not enough stock for product ID 5.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:45:17)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-22 18:14:42 [31merror[39m: BadRequestError: Product does not exist.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:52:13)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\stock.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)

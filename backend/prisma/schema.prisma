@@ -18,30 +18,26 @@ enum Unit {
   KG @map("kg")
 }
 
-// Models
-
-// model User {
-//   id       Int        @id @default(autoincrement())
-//   email    String     @unique
-//   name     String?
-//   product Product[]
-// }
-
 model Product {
-  id             Int             @id @default(autoincrement())
+  id             Int      @id @default(autoincrement())
   name           String
   costPerUnit    Float
   soldBy         Unit
   addedBy        Int
-  user           String          
+  user           String
   categoryId     Int
-  category       Category        @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   branchId       Int
-  branch         Branch          @relation(fields: [branchId], references: [id], onDelete: Cascade)
-  createdAt      DateTime        @default(now())
-  stockHistories Stock_History[]
-  transactions   Transaction[]
+  createdAt      DateTime @default(now())
+
+  category       Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  branch         Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  stock          Stock[]
+  transactionsDetails TransactionDetail[]
+
+  @@index([categoryId])
+  @@index([branchId])
 }
+
 
 model Category {
   id        Int        @id @default(autoincrement())
@@ -53,36 +49,54 @@ model Category {
 model Branch {
   id           Int           @id @default(autoincrement())
   name         String        @unique
-  location     String
   createdAt    DateTime      @default(now())
   product     Product[]
-  transactions Transaction[]
+  transactionsDetails TransactionDetail[]
 }
 
-model Stock_History {
+model Stock {
   id           Int      @id @default(autoincrement())
   productId    Int
-  product      Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   quantity     Float
   stockAddedAt DateTime @default(now())
+
+  product      Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([stockAddedAt])
 }
 
 model Transaction {
-  id            Int      @id @default(autoincrement())
-  productId     Int
-  product       Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  branchId      Int
-  branch        Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
-  stockSold     Float
-  payment       Float
-  transactionAt DateTime @default(now())
+  id                  Int                 @id @default(autoincrement())
+  transactionDetails  TransactionDetail[]
+  totalPrice          Int
+  transactionDate     DateTime            @default(now())
 }
+
+model TransactionDetail {
+  id               Int      @id @default(autoincrement())
+  productId        Int
+  branchId         Int
+  transactionId    Int
+  stockSold        Float
+  payment          Float
+  transactionDate  DateTime @default(now())
+
+  product          Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  branch           Branch      @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  transaction      Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([branchId])
+  @@index([transactionId])
+  @@index([branchId, transactionDate])
+  @@index([productId, transactionDate])
+}
+
 
 model Monthly_Overall_Stats {
   id            Int      @id @default(autoincrement())
   date          DateTime @unique
   profit        Float
   totalSales    Float
-  totalCost     Float
-  stockQuantity Float
 }

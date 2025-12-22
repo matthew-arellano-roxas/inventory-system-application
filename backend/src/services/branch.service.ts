@@ -1,84 +1,75 @@
 import { prisma } from '@prisma';
-import { Branch } from '@models';
+import { calculateSkip, nowPH } from '@/helpers';
 import createError from 'http-errors';
+import { Branch } from '@models';
 
-export class BranchService {
-  // Get all branches
-  getBranches(): Promise<Branch[]> {
-    return prisma.branch.findMany({
-      orderBy: { name: 'asc' },
+const itemLimit = 30;
+
+export const BranchService = {
+  // Get all branches with optional pagination
+  async getBranches(page: number = 1) {
+    const skip = calculateSkip(page, itemLimit);
+
+    return await prisma.branch.findMany({
+      orderBy: {
+        id: 'asc',
+      },
+      take: itemLimit,
+      skip,
+      include: {
+        product: true,
+      },
     });
-  }
+  },
 
-  // Get branch by ID
-  getBranchById(id: number): Promise<Branch | null> {
-    return prisma.branch.findUnique({
+  // Get a single branch by ID
+  async getBranchById(id: number) {
+    console.log('');
+    const branch = await prisma.branch.findFirst({
       where: { id },
     });
-  }
 
-  // Get branch by name (case-insensitive)
-  getBranchByName(name: string): Promise<Branch | null> {
-    return prisma.branch.findFirst({
-      where: { name: { equals: name, mode: 'insensitive' } },
-    });
-  }
+    if (!branch) throw new createError.NotFound('Branch Not Found.');
 
-  // Check if branch name already exists
-  async isBranchNameTaken(name: string): Promise<boolean> {
-    const branch = await prisma.branch.findFirst({
-      where: { name: { equals: name, mode: 'insensitive' } },
-    });
-    return Boolean(branch);
-  }
+    return branch;
+  },
 
   // Create a new branch
-  async createBranch(data: Pick<Branch, 'name' | 'location'>): Promise<Branch> {
-    const nameTaken = await this.isBranchNameTaken(data.name);
-    if (nameTaken) {
-      throw new createError.Conflict(`Branch name "${data.name}" is already taken.`);
-    }
+  async createBranch(data: Omit<Branch, 'id' | 'createdAt'>) {
+    const existingBranch = await prisma.branch.findFirst({
+      where: { name: data.name },
+    });
 
-    return prisma.branch.create({ data });
-  }
+    if (existingBranch) throw new createError.Conflict('Branch Already Exists.');
 
-  // Update branch by ID
-  async updateBranch(
-    id: number,
-    data: Partial<Pick<Branch, 'name' | 'location'>>,
-  ): Promise<Branch> {
-    const existingBranch = await this.getBranchById(id);
-    if (!existingBranch) {
-      throw new createError.NotFound(`Branch with ID ${id} not found.`);
-    }
+    return await prisma.branch.create({
+      data: {
+        ...data,
+        createdAt: nowPH,
+      },
+    });
+  },
 
-    if (data.name && data.name !== existingBranch.name) {
-      const nameTaken = await this.isBranchNameTaken(data.name);
-      if (nameTaken) {
-        throw new createError.Conflict(`Branch name "${data.name}" is already taken.`);
-      }
-    }
+  // Update an existing branch
+  async updateBranch(id: number, data: Partial<Omit<Branch, 'createdAt'>>) {
+    const branch = await this.getBranchById(id);
 
-    return prisma.branch.update({
+    if (!branch) throw new createError.NotFound('Branch Not Found.');
+
+    return await prisma.branch.update({
       where: { id },
       data,
     });
-  }
+  },
 
-  // Delete branch by ID
-  async deleteBranch(id: number): Promise<Branch> {
-    const existingBranch = await this.getBranchById(id);
-    if (!existingBranch) {
-      throw new createError.NotFound(`Branch with ID ${id} not found.`);
-    }
+  // Delete a branch
+  async deleteBranch(id: number) {
+    const branch = await this.getBranchById(id);
 
-    return prisma.branch.delete({
+    if (!branch) throw new createError.NotFound('Branch Not Found.');
+
+    return await prisma.branch.delete({
       where: { id },
     });
-  }
-
-  // Count total branches
-  countBranches(): Promise<number> {
-    return prisma.branch.count();
-  }
-}
+  },
+};

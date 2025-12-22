@@ -1,25 +1,28 @@
 import createError, { HttpError } from 'http-errors';
 import { logger } from '@/config';
 import { NextFunction, Request, Response } from 'express';
-import { ApiResponse } from '@/types';
+import { ApiResponse } from '@/helpers/response';
+import { ZodError } from 'zod';
 
-const errorHandler = (err: Error | HttpError, req: Request, res: Response, _next: NextFunction) => {
-  let httpError: HttpError;
+const errorHandler = (err: unknown, req: Request, res: Response, _next: NextFunction) => {
+  let statusCode: number;
+  let message: string | string[];
 
-  // Convert normal Error to HttpError if needed
-  if (createError.isHttpError(err)) {
-    httpError = err;
+  if (err instanceof ZodError) {
+    statusCode = 400;
+    // Use err.issues directly, fully typed and not deprecated
+    message = err.issues.map((issue) => `${issue.path.join('.')} - ${issue.message}`);
   } else {
-    httpError = createError(500, err.message || 'Internal Server Error');
+    const httpError: HttpError = createError.isHttpError(err)
+      ? (err as HttpError)
+      : createError(500, (err as Error).message || 'Internal Server Error');
+
+    statusCode = httpError.status || 500;
+    message = httpError.message || 'Something went wrong';
   }
 
-  const statusCode = httpError.status || 500;
-  const message = httpError.message || 'Something went wrong';
+  logger.error(`[${new Date().toISOString()}] Error:`, err);
 
-  // Log the error
-  logger.error(`[${new Date().toISOString()}] Error:`, httpError);
-
-  // Send JSON response
   res.status(statusCode).json({
     success: false,
     status: statusCode,

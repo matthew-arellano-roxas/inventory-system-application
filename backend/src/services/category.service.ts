@@ -1,82 +1,71 @@
 import { prisma } from '@prisma';
-import { Category } from '@models';
+import { calculateSkip } from '@/helpers';
 import createError from 'http-errors';
+import { Category } from '@models';
+import { nowPH } from '@/helpers';
+const itemLimit = 30;
 
-// Get all categories
-export class CategoryService {
-  // Get all categories
-  getCategories(): Promise<Category[]> {
-    return prisma.category.findMany({
-      orderBy: { name: 'asc' },
-    });
-  }
+export const CategoryService = {
+  // Get a paginated list of categories
+  async getCategories(page: number = 1) {
+    const skip = calculateSkip(page, itemLimit);
 
-  // Get category by ID
-  getCategoryById(id: number): Promise<Category | null> {
-    return prisma.category.findUnique({
-      where: { id },
+    return await prisma.category.findMany({
+      orderBy: { id: 'asc' },
+      take: itemLimit,
+      skip,
+      include: {
+        product: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
     });
-  }
+  },
 
-  // Get category by name (case-insensitive)
-  getCategoryByName(name: string): Promise<Category | null> {
-    return prisma.category.findFirst({
-      where: { name: { equals: name, mode: 'insensitive' } },
-    });
-  }
+  // Get a single category by its ID
+  async getCategoryById(id: number) {
+    if (typeof id !== 'number' || isNaN(id)) {
+      throw new createError.BadRequest('Invalid category ID.');
+    }
 
-  // Check if category name already exists
-  async isCategoryNameTaken(name: string): Promise<boolean> {
-    const category = await prisma.category.findFirst({
-      where: { name: { equals: name, mode: 'insensitive' } },
+    const category = await prisma.category.findUnique({
+      where: { id }, // findUnique is safer for primary keys
     });
-    return Boolean(category);
-  }
+
+    if (!category) throw new createError.NotFound('Category Not Found.');
+
+    return category;
+  },
 
   // Create a new category
-  async createCategory(data: Pick<Category, 'name'>): Promise<Category> {
-    const nameTaken = await this.isCategoryNameTaken(data.name);
-    if (nameTaken) {
-      throw new createError.Conflict(`Category name "${data.name}" is already taken.`);
-    }
+  async createCategory(data: Omit<Category, 'id' | 'createdAt'>) {
+    // Check if a category with the same name already exists
+    const existing = await prisma.category.findUnique({
+      where: { name: data.name },
+    });
 
-    return prisma.category.create({ data });
-  }
+    if (existing) throw new createError.Conflict('Category Already Exists.');
 
-  // Update category by ID
-  async updateCategory(id: number, data: Pick<Category, 'name'>): Promise<Category> {
-    const existingCategory = await this.getCategoryById(id);
-    if (!existingCategory) {
-      throw new createError.NotFound(`Category with ID ${id} not found.`);
-    }
+    return await prisma.category.create({ data: { ...data, createdAt: nowPH } });
+  },
 
-    if (data.name && data.name !== existingCategory.name) {
-      const nameTaken = await this.isCategoryNameTaken(data.name);
-      if (nameTaken) {
-        throw new createError.Conflict(`Category name "${data.name}" is already taken.`);
-      }
-    }
-
-    return prisma.category.update({
+  // Update an existing category
+  async updateCategory(id: number, data: Partial<Omit<Category, 'createdAt' | 'id'>>) {
+    const category = await this.getCategoryById(id);
+    if (!category) throw new createError.NotFound('Category not found.');
+    return await prisma.category.update({
       where: { id },
       data,
     });
-  }
+  },
 
-  // Delete category by ID
-  async deleteCategory(id: number): Promise<Category> {
-    const existingCategory = await this.getCategoryById(id);
-    if (!existingCategory) {
-      throw new createError.NotFound(`Category with ID ${id} not found.`);
-    }
-
-    return prisma.category.delete({
-      where: { id },
-    });
-  }
-
-  // Count total categories
-  countCategories(): Promise<number> {
-    return prisma.category.count();
-  }
-}
+  // Delete a category
+  async deleteCategory(id: number) {
+    const category = await this.getCategoryById(id);
+    if (!category) throw new createError.NotFound('Category not found.');
+    return await prisma.category.delete({ where: { id } });
+  },
+};

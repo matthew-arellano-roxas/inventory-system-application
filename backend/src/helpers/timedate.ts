@@ -1,21 +1,9 @@
-import { startOfMonth, endOfMonth } from 'date-fns';
-import { toZonedTime, fromZonedTime } from 'date-fns-tz';
+import { format } from 'date-fns-tz';
+const timeZone = 'Asia/Manila';
+const now = new Date();
 
-const TIMEZONE = 'Asia/Manila';
-
-export const getStartOfMonthPH = (): Date => {
-  const now = new Date();
-  const nowPH = toZonedTime(now, TIMEZONE);
-  return fromZonedTime(startOfMonth(nowPH), TIMEZONE);
+export const formatDatePH = (date: Date) => {
+  return format(date, 'yyyy-MM-dd HH:mm:ss', { timeZone: 'Asia/Manila' });
 };
 
-export const getEndOfMonthPH = (): Date => {
-  const now = new Date();
-  const nowPH = toZonedTime(now, TIMEZONE);
-  return fromZonedTime(endOfMonth(nowPH), TIMEZONE);
-};
-
-export const getNowPH = (): Date => {
-  const now = new Date();
-  return toZonedTime(now, TIMEZONE);
-};
+export const nowPH = format(now, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone });

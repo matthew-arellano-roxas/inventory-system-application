@@ -1,139 +1,76 @@
 import { prisma } from '@prisma';
-import { Product } from '@models';
+import { calculateSkip, nowPH } from '@/helpers';
 import createError from 'http-errors';
-import { calculateSkip } from '@/helpers/calculateskipitems';
+import { Product } from '@models';
+import { Prisma } from '@models';
+import { BranchService, CategoryService } from '@/services';
 
-const ITEMS_LIMIT = 30;
+const itemLimit = 30;
 
-const defaultIncludes = {
-  category: true,
-  branch: true,
-};
-
-// Helper to calculate pagination
-
-export class ProductService {
-  // Get all products with pagination
-  async getProducts(page = 1, limit = ITEMS_LIMIT): Promise<Product[]> {
-    return prisma.product.findMany({
-      skip: calculateSkip(page, limit),
-      take: limit,
-      orderBy: { name: 'asc' },
-      include: defaultIncludes,
+export const ProductService = {
+  async getProducts(page: number = 1, categoryId?: number) {
+    const where: Prisma.ProductWhereInput = {};
+    if (categoryId) where.categoryId = categoryId;
+    const skip = calculateSkip(page, itemLimit);
+    return await prisma.product.findMany({
+      orderBy: {
+        id: 'asc',
+      },
+      take: itemLimit,
+      skip,
+      where,
     });
-  }
+  },
 
-  // Get product by ID
-  getProductById(id: number): Promise<Product | null> {
-    return prisma.product.findUnique({
-      where: { id },
-      include: defaultIncludes,
+  async getProductById(id: number) {
+    const product = await prisma.product.findFirst({
+      where: {
+        id,
+      },
     });
-  }
+    if (!product) throw new createError.NotFound('Product Not Found.');
 
-  // Search products by name (case-insensitive, partial match)
-  getProductsByName(name: string): Promise<Product[]> {
-    return prisma.product.findMany({
-      where: { name: { contains: name, mode: 'insensitive' } },
-      include: defaultIncludes,
+    return product;
+  },
+
+  async createProduct(data: Omit<Product, 'id' | 'createdAt'>) {
+    const product = await prisma.product.findFirst({
+      where: {
+        name: data.name,
+        branchId: data.branchId,
+      },
     });
-  }
 
-  // Create a new product
-  async createProduct(data: Omit<Product, 'createdAt' | 'id'>): Promise<Product> {
-    const isNameTaken = await this.isProductNameTaken(data.name);
-    if (isNameTaken) {
-      throw new createError.Conflict(`Product name "${data.name}" is already taken.`);
-    }
-    return prisma.product.create({ data });
-  }
+    const _branch = await BranchService.getBranchById(data.branchId);
+    const _category = await CategoryService.getCategoryById(data.categoryId);
 
-  // Update product by ID
-  async updateProduct(
-    id: number,
-    data: Partial<Omit<Product, 'createdAt' | 'id'>>,
-  ): Promise<Product> {
-    const existingProduct = await this.getProductById(id);
-    if (!existingProduct) {
-      throw new createError.NotFound(`Product with ID ${id} not found.`);
-    }
-    if (data.name && data.name !== existingProduct.name) {
-      const isNameTaken = await this.isProductNameTaken(data.name);
-      if (isNameTaken) {
-        throw new createError.Conflict(`Product name "${data.name}" is already taken.`);
-      }
-    }
-    return prisma.product.update({
-      where: { id },
+    if (product) throw new createError.Conflict('Product Already Exist.');
+
+    return await prisma.product.create({
+      data: { ...data, createdAt: nowPH },
+    });
+  },
+
+  async updateProduct(id: number, data: Partial<Omit<Product, 'createdAt'>>) {
+    const product = await this.getProductById(id);
+
+    if (!product) throw new createError.NotFound('Product Not Found.');
+
+    return await prisma.product.update({
+      where: {
+        id: id,
+      },
       data,
     });
-  }
+  },
 
-  // Delete product by ID
-  async deleteProduct(id: number): Promise<Product> {
-    const existingProduct = await this.getProductById(id);
-    if (!existingProduct) {
-      throw new createError.NotFound(`Product with ID ${id} not found.`);
-    }
-    return prisma.product.delete({
-      where: { id },
-    });
-  }
-
-  // Count total products
-  countProducts(): Promise<number> {
-    return prisma.product.count();
-  }
-
-  // Check if product name already exists
-  async isProductNameTaken(name: string): Promise<boolean> {
-    const count = await prisma.product.count({
-      where: { name },
-    });
-    return count > 0;
-  }
-
-  // Get products by category with pagination
-  async getProductsByCategory(
-    categoryId: number,
-    page = 1,
-    limit = ITEMS_LIMIT,
-  ): Promise<Product[]> {
-    return prisma.product.findMany({
-      where: { categoryId },
-      skip: calculateSkip(page, limit),
-      take: limit,
-      orderBy: { name: 'asc' },
-      include: defaultIncludes,
-    });
-  }
-
-  // Get product transactions (paginated)
-  async getProductTransactions(productId: number, page = 1, limit = ITEMS_LIMIT) {
-    return prisma.product.findUnique({
-      where: { id: productId },
-      select: {
-        transactions: {
-          skip: calculateSkip(page, limit),
-          take: limit,
-          orderBy: { transactionAt: 'desc' },
-        },
+  async deleteProduct(id: number) {
+    const product = await this.getProductById(id);
+    if (!product) throw new createError.NotFound('Product Not Found.');
+    return await prisma.product.delete({
+      where: {
+        id,
       },
     });
-  }
-
-  // Get product stock history (paginated)
-  async getProductStockHistory(productId: number, page = 1, limit = ITEMS_LIMIT) {
-    return prisma.product.findUnique({
-      where: { id: productId },
-      select: {
-        stockHistories: {
-          skip: calculateSkip(page, limit),
-          take: limit,
-          orderBy: { stockAddedAt: 'desc' },
-        },
-        user: true,
-      },
-    });
-  }
-}
+  },
+};
