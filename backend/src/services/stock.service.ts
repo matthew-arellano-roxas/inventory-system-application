@@ -55,7 +55,7 @@ export const StockService = {
     return await prisma.stock.create({
       data: {
         ...data,
-        stockAddedAt: nowPH,
+        stockAddedAt: nowPH(),
       },
     });
   },

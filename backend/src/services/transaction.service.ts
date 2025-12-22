@@ -50,7 +50,7 @@ export const TransactionService = {
 
       // Create transaction
       const transaction = await tx.transaction.create({
-        data: { totalPrice, transactionDate: nowPH },
+        data: { totalPrice, transactionDate: nowPH() },
       });
 
       // Create transaction details
@@ -61,7 +61,7 @@ export const TransactionService = {
           branchId: d.branchId,
           stockSold: d.stockSold,
           payment: d.payment,
-          transactionDate: nowPH,
+          transactionDate: nowPH(),
         })),
       });
 
@@ -115,7 +115,7 @@ export const TransactionService = {
       // Update transaction totalPrice and transactionDate
       await tx.transaction.update({
         where: { id },
-        data: { totalPrice, transactionDate: nowPH },
+        data: { totalPrice, transactionDate: nowPH() },
       });
 
       // Delete existing transaction details
@@ -129,7 +129,7 @@ export const TransactionService = {
           branchId: d.branchId,
           stockSold: d.stockSold,
           payment: d.payment,
-          transactionDate: nowPH,
+          transactionDate: nowPH(),
         })),
       });
 

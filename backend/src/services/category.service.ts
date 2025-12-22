@@ -49,7 +49,7 @@ export const CategoryService = {
 
     if (existing) throw new createError.Conflict('Category Already Exists.');
 
-    return await prisma.category.create({ data: { ...data, createdAt: nowPH } });
+    return await prisma.category.create({ data: { ...data, createdAt: nowPH() } });
   },
 
   // Update an existing category

@@ -1,9 +1,12 @@
 import { format } from 'date-fns-tz';
-const timeZone = 'Asia/Manila';
-const now = new Date();
 
-export const formatDatePH = (date: Date) => {
-  return format(date, 'yyyy-MM-dd HH:mm:ss', { timeZone: 'Asia/Manila' });
+const timeZone = 'Asia/Manila';
+
+export const formatDatePH = (date: Date): string => {
+  return format(date, 'yyyy-MM-dd HH:mm:ss', { timeZone });
 };
 
-export const nowPH = format(now, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone });
+export const nowPH = (): string => {
+  const now = new Date();
+  return format(now, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone });
+};

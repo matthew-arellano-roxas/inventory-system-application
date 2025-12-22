@@ -45,7 +45,7 @@ export const BranchService = {
     return await prisma.branch.create({
       data: {
         ...data,
-        createdAt: nowPH,
+        createdAt: nowPH(),
       },
     });
   },
