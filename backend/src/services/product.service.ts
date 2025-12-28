@@ -1,67 +1,162 @@
 import { prisma } from '@prisma';
 import { calculateSkip, nowPH } from '@/helpers';
 import createError from 'http-errors';
-import { Product } from '@models';
+import { Product, Unit } from '@models';
 import { Prisma } from '@models';
 import { BranchService, CategoryService } from '@/services';
-import { Unit } from '@root/generated/prisma/enums';
+import { GetProductQuery } from '@/schemas';
+import { StockWhereInput, TransactionDetailWhereInput } from '@root/generated/prisma/models';
+import type { ProductDetail, SalesStockDetails } from '@/types/product';
 
-const itemLimit = 30;
+const itemLimit = Number(process.env.PAGINATION_ITEM_LIMIT);
 
 export const ProductService = {
   // Get products with optional filters
-  async getProducts(page: number = 1, categoryId?: number, branchId?: number, soldBy?: Unit) {
+  async getProducts(query: GetProductQuery): Promise<ProductDetail[]> {
     const where: Prisma.ProductWhereInput = {};
+    // details in query not true means will not show product details
+    const select: Prisma.ProductSelect | undefined = query.details
+      ? undefined
+      : {
+          id: true,
+          name: true,
+        };
 
-    if (categoryId) where.categoryId = categoryId;
-    if (branchId) where.branchId = branchId;
-    if (soldBy) where.soldBy = soldBy; // soldBy must be Unit.PC or Unit.KG
+    where.categoryId = query.categoryId;
+    where.branchId = query.branchId;
 
-    const skip = calculateSkip(page, itemLimit);
+    if (query.soldBy) {
+      const unit = query.soldBy?.toUpperCase();
+      where.soldBy = unit === 'KG' || unit === 'PC' ? (unit as Unit) : undefined;
+    }
 
-    return prisma.product.findMany({
+    where.name = {
+      contains: query.search,
+      mode: 'insensitive',
+    };
+    // Calculation for pagination
+    const skip = calculateSkip(query.page, itemLimit);
+    const productData = await prisma.product.findMany({
+      select,
       where,
       orderBy: { id: 'asc' },
       take: itemLimit,
       skip,
     });
+    // Process each product to have it's data completed
+    const dataCombined = await Promise.all(
+      productData.map(async (product) => {
+        // Get Months sold, sales, stock
+        const { stockSold, stock, monthSales } = await this.getProductSalesStockDetails(product.id);
+        return {
+          ...product,
+          stockSold,
+          stock,
+          monthSales,
+        };
+      }),
+    );
+    return dataCombined as ProductDetail[];
   },
 
-  async getProductById(id: number) {
+  async getProductById(id: number): Promise<ProductDetail> {
     const product = await prisma.product.findFirst({ where: { id } });
     if (!product) throw new createError.NotFound('Product Not Found.');
-    return product;
+    // Get Overall Stock & Transaction
+    const { stockSold, stock, monthSales } = await this.getProductSalesStockDetails(product.id);
+    return { ...product, stock, monthSales, stockSold };
   },
 
   async createProduct(data: Omit<Product, 'id' | 'createdAt'>) {
-    const product = await prisma.product.findFirst({
+    // Check If product already Exist
+    const existing = await prisma.product.findFirst({
       where: { name: data.name, branchId: data.branchId },
     });
-
-    // Ensure branch and category exist
     await BranchService.getBranchById(data.branchId);
     await CategoryService.getCategoryById(data.categoryId);
-
-    if (product) throw new createError.Conflict('Product Already Exist.');
+    if (existing) throw new createError.Conflict('Product Already Exist.');
+    // Normalize and validate enum
+    const unit = data.soldBy?.toUpperCase();
+    if (unit !== 'KG' && unit !== 'PC') {
+      throw new createError.BadRequest('Invalid soldBy unit');
+    }
 
     return await prisma.product.create({
-      data: { ...data, createdAt: nowPH() },
+      data: {
+        ...data,
+        soldBy: unit as Unit, // Safe cast
+        createdAt: nowPH(),
+      },
     });
   },
 
   async updateProduct(id: number, data: Partial<Omit<Product, 'createdAt'>>) {
     const product = await this.getProductById(id);
     if (!product) throw new createError.NotFound('Product Not Found.');
-
     return await prisma.product.update({
       where: { id },
       data,
     });
   },
 
-  async deleteProduct(id: number) {
+  async deleteProduct(id: number): Promise<Product> {
     const product = await this.getProductById(id);
     if (!product) throw new createError.NotFound('Product Not Found.');
     return await prisma.product.delete({ where: { id } });
+  },
+
+  async getProductTotalStock(productId: number, lastNMonth?: number) {
+    const now: Date = nowPH();
+    const targetMonth = new Date(now.getFullYear(), now.getMonth() - (lastNMonth ?? 0), 1);
+    const where: StockWhereInput = {};
+    if (lastNMonth) {
+      where.productId = productId;
+      where.stockAddedAt = {
+        gte: targetMonth,
+        lte: now,
+      };
+    }
+    const stock = await prisma.stock.aggregate({
+      where,
+      _sum: { quantity: true },
+    });
+
+    return { productId, ...stock._sum };
+  },
+
+  async getProductTotalTransaction(productId: number, lastNMonth?: number) {
+    const now: Date = nowPH();
+    const targetMonth = new Date(now.getFullYear(), now.getMonth() - (lastNMonth ?? 0), 1);
+    const where: TransactionDetailWhereInput = {};
+    if (lastNMonth) {
+      where.productId = productId;
+      where.transactionDate = {
+        gte: targetMonth,
+        lte: now,
+      };
+    }
+    const transaction = await prisma.transactionDetail.aggregate({
+      where,
+      _sum: { stockSold: true, payment: true },
+    });
+
+    return {
+      productId,
+      stockSold: transaction._sum.stockSold ?? 0,
+      sales: transaction._sum.payment ?? 0,
+    };
+  },
+
+  async getProductSalesStockDetails(productId: number): Promise<SalesStockDetails> {
+    // Get Sum of Stock and Stock Sold
+    const productStock = (await this.getProductTotalStock(productId)).quantity ?? 0;
+    const productStockSold = (await this.getProductTotalTransaction(productId)).stockSold ?? 0;
+    // Get Monthly Sold Stocks & Sales
+    const transactionData = await this.getProductTotalTransaction(productId, 0);
+    const monthSales = transactionData.sales ?? 0;
+    const monthStockSold = transactionData.stockSold ?? 0;
+    // Compute the Stock
+    const stock = productStock - productStockSold;
+    return { stockSold: monthStockSold, stock, monthSales };
   },
 };

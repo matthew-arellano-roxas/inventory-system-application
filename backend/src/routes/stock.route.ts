@@ -10,5 +10,4 @@ stockRoute.get('/:stockId', StockController.getStockById);
 stockRoute.post('/', validateBody(CreateStockBody), StockController.createStock);
 stockRoute.put('/:stockId', validateBody(UpdateBranchBody), StockController.updateStock);
 stockRoute.delete('/:stockId', StockController.deleteStock);
-
 export { stockRoute };

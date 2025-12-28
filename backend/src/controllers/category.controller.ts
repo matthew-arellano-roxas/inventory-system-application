@@ -8,8 +8,9 @@ export const CategoryController = {
   getCategoryList: async (req: Request, res: Response) => {
     logger.info('Get category list');
     const page = Number(req.query.page) || 1;
+    const search = req.query.search as string | undefined;
 
-    const data = await CategoryService.getCategories(page);
+    const data = await CategoryService.getCategories(page, search);
     res.status(StatusCodes.OK).json(ok(data, 'Category List Retrieved.'));
   },
 

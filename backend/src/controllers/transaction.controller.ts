@@ -8,10 +8,8 @@ export const TransactionController = {
   // List all transactions with optional cursor (infinite scroll)
   getTransactionList: async (req: Request, res: Response) => {
     logger.info('Get transaction list');
-
     const limit = req.query.limit ? Number(req.query.limit) : 20;
     const cursorDate = req.query.cursor ? new Date(req.query.cursor as string) : undefined;
-
     const data = await TransactionService.getTransactions(cursorDate, limit);
 
     res.status(StatusCodes.OK).json(ok(data, 'Transaction List Retrieved.'));

@@ -9,8 +9,8 @@ export const BranchController = {
   getBranchList: async (req: Request, res: Response) => {
     logger.info('Get branch list');
     const page = Number(req.query.page) || 1;
-
-    const data = await BranchService.getBranches(page);
+    const search = req.query.search as string | undefined;
+    const data = await BranchService.getBranches(page, search);
 
     res.status(StatusCodes.OK).json(ok(data, 'Branch List Retrieved.'));
   },
@@ -54,5 +54,11 @@ export const BranchController = {
     const data = await BranchService.deleteBranch(Number(branchId));
 
     res.status(StatusCodes.OK).json(ok(data, 'Branch Deleted.'));
+  },
+
+  getBranchSales: async (req: Request, res: Response) => {
+    logger.info('Get Branch Sales');
+    const data = await BranchService.getBranchSales();
+    res.status(StatusCodes.OK).json(ok(data, 'Branch List Retrieved.'));
   },
 };

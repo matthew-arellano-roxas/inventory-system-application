@@ -1,12 +1,13 @@
-import { format } from 'date-fns-tz';
+import { toZonedTime } from 'date-fns-tz';
 
 const timeZone = 'Asia/Manila';
 
-export const formatDatePH = (date: Date): string => {
-  return format(date, 'yyyy-MM-dd HH:mm:ss', { timeZone });
+// Returns the current date/time as a Date object in PH time
+export const nowPH = (): Date => {
+  return toZonedTime(new Date(), timeZone);
 };
 
-export const nowPH = (): string => {
-  const now = new Date();
-  return format(now, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone });
+// If you pass any date, this converts it to the PH equivalent Date object
+export const getDatePH = (date: Date): Date => {
+  return toZonedTime(date, timeZone);
 };

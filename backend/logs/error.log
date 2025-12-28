@@ -2161,3 +2161,672 @@ Invalid value for argument `soldBy`. Expected Unit.
     at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-25 14:42:50+08:00 [31merror[39m: Database connection failed!
+2025-12-25 14:44:26+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.product.findMany()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:39:27
+
+  36 
+  37 const skip = calculateSkip(page, itemLimit);
+  38 
+→ 39 return prisma.product.findMany({
+       select: {
+     ?   id?: true,
+     ?   name?: true,
+     ?   costPerUnit?: true,
+     ?   soldBy?: true,
+     ?   addedBy?: true,
+     ?   user?: true,
+     ?   categoryId?: true,
+     ?   branchId?: true,
+     ?   createdAt?: true,
+     ?   category?: true,
+     ?   branch?: true,
+     ?   stock?: true,
+     ?   transactionsDetails?: true,
+     ?   _count?: true
+       },
+       where: {
+         soldBy: "KG"
+       },
+       orderBy: {
+         id: "asc"
+       },
+       take: 30,
+       skip: 0
+     })
+
+The `select` statement for type Product must not be empty. Available options are marked with ?.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-25 14:44:29+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.product.findMany()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:39:27
+
+  36 
+  37 const skip = calculateSkip(page, itemLimit);
+  38 
+→ 39 return prisma.product.findMany({
+       select: {
+     ?   id?: true,
+     ?   name?: true,
+     ?   costPerUnit?: true,
+     ?   soldBy?: true,
+     ?   addedBy?: true,
+     ?   user?: true,
+     ?   categoryId?: true,
+     ?   branchId?: true,
+     ?   createdAt?: true,
+     ?   category?: true,
+     ?   branch?: true,
+     ?   stock?: true,
+     ?   transactionsDetails?: true,
+     ?   _count?: true
+       },
+       where: {
+         soldBy: "KG"
+       },
+       orderBy: {
+         id: "asc"
+       },
+       take: 30,
+       skip: 0
+     })
+
+The `select` statement for type Product must not be empty. Available options are marked with ?.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-25 14:44:31+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.product.findMany()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:39:27
+
+  36 
+  37 const skip = calculateSkip(page, itemLimit);
+  38 
+→ 39 return prisma.product.findMany({
+       select: {
+     ?   id?: true,
+     ?   name?: true,
+     ?   costPerUnit?: true,
+     ?   soldBy?: true,
+     ?   addedBy?: true,
+     ?   user?: true,
+     ?   categoryId?: true,
+     ?   branchId?: true,
+     ?   createdAt?: true,
+     ?   category?: true,
+     ?   branch?: true,
+     ?   stock?: true,
+     ?   transactionsDetails?: true,
+     ?   _count?: true
+       },
+       where: {
+         soldBy: "KG"
+       },
+       orderBy: {
+         id: "asc"
+       },
+       take: 30,
+       skip: 0
+     })
+
+The `select` statement for type Product must not be empty. Available options are marked with ?.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-25 17:31:36+08:00 [31merror[39m: ZodError: [
+  {
+    "code": "invalid_value",
+    "values": [
+      "pc",
+      "kg"
+    ],
+    "path": [
+      "soldBy"
+    ],
+    "message": "Invalid option: expected one of \"pc\"|\"kg\""
+  }
+]
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\controllers\product.controller.ts:12:35
+    at Generator.next (<anonymous>)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\controllers\product.controller.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Users\Matthew\Videos\Inventory System Application\backend\src\controllers\product.controller.ts:4:12)
+    at getProductList (C:\Users\Matthew\Videos\Inventory System Application\backend\src\controllers\product.controller.ts:11:57)
+    at Layer.handleRequest (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\router\index.js:435:11)
+2025-12-25 17:31:46+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.product.findMany()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:32:27
+
+  29 
+  30 const skip = calculateSkip(query.page, itemLimit);
+  31 
+→ 32 return prisma.product.findMany({
+       select: {
+         id: true,
+         name: true
+       },
+       where: {
+         categoryId: 3,
+         branchId: undefined,
+         soldBy: "kg",
+                 ~~~~
+         name: {
+           contains: undefined,
+           mode: "insensitive"
+         }
+       },
+       orderBy: {
+         id: "asc"
+       },
+       take: 30,
+       skip: 0
+     })
+
+Invalid value for argument `soldBy`. Expected Unit.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-25 17:34:46+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.product.findMany()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:34:27
+
+  31 
+  32 const skip = calculateSkip(query.page, itemLimit);
+  33 
+→ 34 return prisma.product.findMany({
+       select: {
+         id: true,
+         name: true
+       },
+       where: {
+         categoryId: 3,
+         branchId: undefined,
+         soldBy: "kg",
+                 ~~~~
+         name: {
+           contains: undefined,
+           mode: "insensitive"
+         }
+       },
+       orderBy: {
+         id: "asc"
+       },
+       take: 30,
+       skip: 0
+     })
+
+Invalid value for argument `soldBy`. Expected Unit.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-25 17:51:34+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.product.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:46:42
+
+  43 },
+  44 
+  45 async getProductById(id: number) {
+→ 46   const product = await prisma.product.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-25 17:51:36+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.product.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:46:42
+
+  43 },
+  44 
+  45 async getProductById(id: number) {
+→ 46   const product = await prisma.product.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-25 17:52:37+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.product.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:46:42
+
+  43 },
+  44 
+  45 async getProductById(id: number) {
+→ 46   const product = await prisma.product.findFirst({
+         where: {
+           id: {
+       +     equals: Int
+           }
+         }
+       })
+
+Argument `equals` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-25 17:53:16+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.product.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:46:42
+
+  43 },
+  44 
+  45 async getProductById(id: number) {
+→ 46   const product = await prisma.product.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-25 17:54:05+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.product.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:48:42
+
+  45 
+  46 async getProductById(id: number) {
+  47   logger.info(`ID: ${id}`);
+→ 48   const product = await prisma.product.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-25 17:54:55+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.product.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:45:42
+
+  42 },
+  43 
+  44 async getProductById(id: number) {
+→ 45   const product = await prisma.product.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-25 17:56:30+08:00 [31merror[39m: NotFoundError: Product Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:46:25)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-25 18:31:25+08:00 [31merror[39m: ConflictError: Branch Already Exists.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:48:31)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-25 23:01:44+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.branch.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:35:40
+
+  32 
+  33 // Get a single branch by ID
+  34 async getBranchById(id: number) {
+→ 35   const branch = await prisma.branch.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-25 23:01:48+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.branch.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:35:40
+
+  32 
+  33 // Get a single branch by ID
+  34 async getBranchById(id: number) {
+→ 35   const branch = await prisma.branch.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-25 23:04:14+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.branch.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:35:40
+
+  32 
+  33 // Get a single branch by ID
+  34 async getBranchById(id: number) {
+→ 35   const branch = await prisma.branch.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-25 23:05:10+08:00 [31merror[39m: NotFoundError: Branch Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:38:24)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-25 23:05:24+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.branch.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:35:40
+
+  32 
+  33 // Get a single branch by ID
+  34 async getBranchById(id: number) {
+→ 35   const branch = await prisma.branch.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-25 23:08:41+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.branch.findFirst()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:35:40
+
+  32 
+  33 // Get a single branch by ID
+  34 async getBranchById(id: number) {
+→ 35   const branch = await prisma.branch.findFirst({
+         where: {
+       +   id: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `id` is missing.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-28 01:15:44+08:00 [31merror[39m: BadRequestError: Not enough stock for product ID 7.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:35:17)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-28 14:32:28+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:79:33
+
+  76 
+  77 if (product) throw new createError.Conflict('Product Already Exist.');
+  78 
+→ 79 return await prisma.product.create({
+       data: {
+         name: "Saba",
+         costPerUnit: 70.8,
+         soldBy: "kg",
+                 ~~~~
+         addedBy: 30,
+         user: "admin",
+         categoryId: 3,
+         branchId: 2,
+         createdAt: new Date("2025-12-28T06:32:28.572Z")
+       }
+     })
+
+Invalid value for argument `soldBy`. Expected Unit.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-28 15:15:49+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:79:33
+
+  76 
+  77 if (product) throw new createError.Conflict('Product Already Exist.');
+  78 
+→ 79 return await prisma.product.create({
+       data: {
+         name: "Saba",
+         costPerUnit: 60.5,
+         soldBy: "kg",
+                 ~~~~
+         sellingPrice: 75.8,
+         addedBy: "Matthew Roxas",
+         categoryId: 3,
+         branchId: 2,
+         createdAt: new Date("2025-12-28T07:15:49.002Z")
+       }
+     })
+
+Invalid value for argument `soldBy`. Expected Unit.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-28 15:17:08+08:00 [31merror[39m: PrismaClientValidationError: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:79:33
+
+  76 
+  77 if (product) throw new createError.Conflict('Product Already Exist.');
+  78 
+→ 79 return await prisma.product.create({
+       data: {
+         name: "Saba",
+         costPerUnit: 60.5,
+         soldBy: "kg",
+                 ~~~~
+         sellingPrice: 75.8,
+         addedBy: "Matthew Roxas",
+         categoryId: 3,
+         branchId: 2,
+         createdAt: new Date("2025-12-28T07:17:08.064Z")
+       }
+     })
+
+Invalid value for argument `soldBy`. Expected Unit.
+    at throwValidationException (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:46:9)
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-28 15:27:08+08:00 [31merror[39m: BadRequestError: Not enough stock for product ID 11.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:35:17)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-28 20:25:16+08:00 [31merror[39m: NotFoundError: Product Not Found.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:63:25)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\product.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-28 23:22:46+08:00 [31merror[39m: BadRequestError: Not enough stock for product ID 11.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:35:17)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-28 23:22:53+08:00 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `tx.transactionDetail.createMany()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:47:34
+
+  44 });
+  45 
+  46 // Create transaction details
+→ 47 await tx.transactionDetail.createMany(
+Foreign key constraint violated on the constraint: `TransactionDetail_branchId_fkey`
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2025-12-28 23:24:00+08:00 [31merror[39m: BadRequestError: Not enough stock for product ID 1.
+    at Object.<anonymous> (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:35:17)
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction.service.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)

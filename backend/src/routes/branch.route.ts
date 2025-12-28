@@ -5,7 +5,8 @@ import { validateBody } from '@/middlewares/validate';
 
 const branchRoute: Router = Router();
 
-branchRoute.get('/', BranchController.getBranchList); // page will come as ?page=1
+branchRoute.get('/', BranchController.getBranchList);
+branchRoute.get('/sales', BranchController.getBranchSales); // Sales for each branch
 branchRoute.get('/:branchId', BranchController.getBranchById);
 branchRoute.post('/', validateBody(CreateBranchBody), BranchController.createBranch);
 branchRoute.put('/:branchId', validateBody(UpdateBranchBody), BranchController.updateBranch);

@@ -3,25 +3,13 @@ import { StatusCodes } from 'http-status-codes';
 import { ProductService } from '@/services';
 import { ok } from '@/helpers/response';
 import { logger } from '@/config';
-import { Unit } from '@root/generated/prisma/enums';
+import { GetProductQuery } from '@/schemas';
 
 export const ProductController = {
   // Get paginated product list with optional filters
   getProductList: async (req: Request, res: Response) => {
-    const page = Number(req.query.page) || 1;
-    const category = req.query.category ? Number(req.query.category) : undefined;
-    const branchId = req.query.branchId ? Number(req.query.branchId) : undefined;
-
-    // Ensure the value matches the ENUM KEYS (PC, KG), not the @map values
-    let soldBy: Unit | undefined;
-    if (req.query.soldBy) {
-      const input = String(req.query.soldBy).toUpperCase();
-      if (input === 'PC' || input === 'KG') {
-        soldBy = input as Unit;
-      }
-    }
-
-    const data = await ProductService.getProducts(page, category, branchId, soldBy);
+    const query = GetProductQuery.parse(req.query);
+    const data = await ProductService.getProducts(query);
     res.status(StatusCodes.OK).json(ok(data, 'Product List Retrieved.'));
   },
 

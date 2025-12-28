@@ -1,17 +1,7 @@
 import { prisma } from '@prisma';
 import createError from 'http-errors';
 import { nowPH } from '@/helpers';
-
-interface TransactionDetailPayload {
-  productId: number;
-  branchId: number;
-  stockSold: number;
-  payment: number;
-}
-
-interface TransactionPayload {
-  details: TransactionDetailPayload[];
-}
+import { TransactionPayload } from '@/types/transaction/transaction-payload';
 
 export const TransactionService = {
   // Create a transaction

@@ -3,30 +3,31 @@ import { calculateSkip } from '@/helpers';
 import createError from 'http-errors';
 import { Category } from '@models';
 import { nowPH } from '@/helpers';
-const itemLimit = 30;
+import { CategoryWhereInput } from '@root/generated/prisma/models';
+
+const itemLimit = Number(process.env.PAGINATION_ITEM_LIMIT);
 
 export const CategoryService = {
   // Get a paginated list of categories
-  async getCategories(page: number = 1) {
+  async getCategories(page: number = 1, search?: string): Promise<Category[]> {
     const skip = calculateSkip(page, itemLimit);
+    const where: CategoryWhereInput = {
+      name: {
+        contains: search,
+        mode: 'insensitive',
+      },
+    };
 
     return await prisma.category.findMany({
       orderBy: { id: 'asc' },
       take: itemLimit,
       skip,
-      include: {
-        product: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-      },
+      where,
     });
   },
 
   // Get a single category by its ID
-  async getCategoryById(id: number) {
+  async getCategoryById(id: number): Promise<Category> {
     if (typeof id !== 'number' || isNaN(id)) {
       throw new createError.BadRequest('Invalid category ID.');
     }
@@ -36,12 +37,11 @@ export const CategoryService = {
     });
 
     if (!category) throw new createError.NotFound('Category Not Found.');
-
     return category;
   },
 
   // Create a new category
-  async createCategory(data: Omit<Category, 'id' | 'createdAt'>) {
+  async createCategory(data: Omit<Category, 'id' | 'createdAt'>): Promise<Category> {
     // Check if a category with the same name already exists
     const existing = await prisma.category.findUnique({
       where: { name: data.name },
@@ -53,7 +53,10 @@ export const CategoryService = {
   },
 
   // Update an existing category
-  async updateCategory(id: number, data: Partial<Omit<Category, 'createdAt' | 'id'>>) {
+  async updateCategory(
+    id: number,
+    data: Partial<Omit<Category, 'createdAt' | 'id'>>,
+  ): Promise<Category> {
     const category = await this.getCategoryById(id);
     if (!category) throw new createError.NotFound('Category not found.');
     return await prisma.category.update({
@@ -63,7 +66,7 @@ export const CategoryService = {
   },
 
   // Delete a category
-  async deleteCategory(id: number) {
+  async deleteCategory(id: number): Promise<Category> {
     const category = await this.getCategoryById(id);
     if (!category) throw new createError.NotFound('Category not found.');
     return await prisma.category.delete({ where: { id } });

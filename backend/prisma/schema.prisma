@@ -13,6 +13,18 @@ datasource db {
   provider = "postgresql"
 }
 
+enum StockMovementType {
+  IN @map("in")
+  OUT @map("out")
+}
+
+enum TransactionType {
+  SALE @map("sale")
+  RETURN @map("return")
+  PURCHASE @map("purchase")
+  MANUAL @map("manual")
+}
+
 enum Unit {
   PC @map("pc")
   KG @map("kg")
@@ -23,8 +35,8 @@ model Product {
   name           String
   costPerUnit    Float
   soldBy         Unit
-  addedBy        Int
-  user           String
+  sellingPrice   Int
+  addedBy        String
   categoryId     Int
   branchId       Int
   createdAt      DateTime @default(now())
@@ -32,7 +44,9 @@ model Product {
   category       Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   branch         Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
   stock          Stock[]
+  StockSnapshot   StockSnapshot[]
   transactionsDetails TransactionDetail[]
+  TransactionDetailSnapshot TransactionDetailSnapshot[]
 
   @@index([categoryId])
   @@index([branchId])
@@ -52,6 +66,7 @@ model Branch {
   createdAt    DateTime      @default(now())
   product     Product[]
   transactionsDetails TransactionDetail[]
+  TransactionDetailSnapshot TransactionDetailSnapshot[]
 }
 
 model Stock {
@@ -59,11 +74,20 @@ model Stock {
   productId    Int
   quantity     Float
   stockAddedAt DateTime @default(now())
-
   product      Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@index([productId])
   @@index([stockAddedAt])
+}
+
+model StockSnapshot {
+  id           Int      @id @default(autoincrement())
+  productId    Int
+  quantity     Float
+  archivedAt   DateTime @default(now())
+  product      Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
 }
 
 model Transaction {
@@ -71,6 +95,7 @@ model Transaction {
   transactionDetails  TransactionDetail[]
   totalPrice          Int
   transactionDate     DateTime            @default(now())
+  TransactionDetailSnapshot TransactionDetailSnapshot[]
 }
 
 model TransactionDetail {
@@ -91,6 +116,25 @@ model TransactionDetail {
   @@index([transactionId])
   @@index([branchId, transactionDate])
   @@index([productId, transactionDate])
+}
+
+model TransactionDetailSnapshot {
+  id               Int      @id @default(autoincrement())
+  productId        Int
+  branchId         Int
+  transactionId    Int
+  stockSold        Float
+  payment          Float
+  ArchiveAt  DateTime @default(now())
+  product          Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  branch           Branch      @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  transaction      Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([branchId])
+  @@index([transactionId])
+  @@index([branchId, ArchiveAt])
+  @@index([productId, ArchiveAt])
 }
 
 
