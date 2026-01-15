@@ -1,13 +1,14 @@
+import { StockController } from '@/controllers/stock.controller';
+import { StockService } from '@/services';
 import { Router } from 'express';
-import { StockController } from '@/controllers';
-import { CreateStockBody, UpdateBranchBody } from '@/schemas';
-import { validateBody } from '@/middlewares/validate';
 
 const stockRoute: Router = Router();
 
-stockRoute.get('/', StockController.getStockList);
-stockRoute.get('/:stockId', StockController.getStockById);
-stockRoute.post('/', validateBody(CreateStockBody), StockController.createStock);
-stockRoute.put('/:stockId', validateBody(UpdateBranchBody), StockController.updateStock);
-stockRoute.delete('/:stockId', StockController.deleteStock);
+const stockService = new StockService();
+const stockController = new StockController(stockService);
+
+stockRoute.get('/', stockController.getStockMovements.bind(stockController));
+stockRoute.get('/search', stockController.getStockMovementsByProductId.bind(stockController));
+stockRoute.get('/product/:productId', stockController.getProductStock.bind(stockController));
+
 export { stockRoute };

@@ -1,33 +1,21 @@
 import { z } from 'zod';
+import { TransactionType } from '@root/generated/prisma/enums'; // your enum
 
-// Transaction detail item
-export const TransactionDetailItem = z.object({
-  productId: z
-    .number()
-    .int()
-    .refine((val) => val > 0, {
-      message: 'Product ID must be a positive integer',
-    }),
-  branchId: z
-    .number()
-    .int()
-    .refine((val) => val > 0, {
-      message: 'Branch ID must be a positive integer',
-    }),
-  stockSold: z.number().refine((val) => val > 0, {
-    message: 'Stock sold must be greater than 0',
-  }),
-  payment: z.number().refine((val) => val >= 0, {
-    message: 'Payment must be 0 or greater',
-  }),
+// Transaction Item schema
+export const transactionItemSchema = z.object({
+  productId: z.number().int().positive(), // must be a positive integer
+  productName: z.string().min(1), // non-empty string
+  quantity: z.number().positive(), // quantity > 0
+  price: z.number().nonnegative(), // price >= 0
 });
 
-// Create transaction
-export const CreateTransactionBody = z.object({
-  details: z.array(TransactionDetailItem).nonempty('Transaction must include at least one item'),
+// Transaction schema
+export const transactionSchema = z.object({
+  type: z.enum(TransactionType), // validates your Prisma enum
+  branchId: z.number().int().positive(), // positive integer
+  items: z.array(transactionItemSchema).min(1), // must have at least 1 item
 });
 
-// Update transaction
-export const UpdateTransactionBody = z.object({
-  details: z.array(TransactionDetailItem).nonempty('Transaction must include at least one item'),
-});
+// Type inference (optional, keeps TypeScript types in sync)
+export type TransactionBody = z.infer<typeof transactionSchema>;
+export type TransactionItemBody = z.infer<typeof transactionItemSchema>;

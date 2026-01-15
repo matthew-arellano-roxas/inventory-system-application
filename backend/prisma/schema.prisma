@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -13,134 +7,144 @@ datasource db {
   provider = "postgresql"
 }
 
+// Enums
+enum Unit {
+  PC
+  KG
+}
+
 enum StockMovementType {
-  IN @map("in")
-  OUT @map("out")
+  IN
+  OUT
+}
+
+enum StockMovementReason {
+  SALE
+  DAMAGE
+  RETURN
+  PURCHASE
 }
 
 enum TransactionType {
-  SALE @map("sale")
-  RETURN @map("return")
-  PURCHASE @map("purchase")
-  MANUAL @map("manual")
+  SALE
+  DAMAGE
+  RETURN
+  PURCHASE
 }
 
-enum Unit {
-  PC @map("pc")
-  KG @map("kg")
-}
+// Main Model
+model Product{
+  id Int @id @default(autoincrement())
+  branchId Int
+  branch Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  categoryId Int
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  name String
+  costPerUnit Float
+  soldBy Unit
+  sellingPrice Float
+  addedBy String
+  createdAt DateTime @default(now())
 
-model Product {
-  id             Int      @id @default(autoincrement())
-  name           String
-  costPerUnit    Float
-  soldBy         Unit
-  sellingPrice   Int
-  addedBy        String
-  categoryId     Int
-  branchId       Int
-  createdAt      DateTime @default(now())
+  // Transaction
+  transactionItem TransactionItem[]
+  stockMovement StockMovement[]
 
-  category       Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  branch         Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
-  stock          Stock[]
-  StockSnapshot   StockSnapshot[]
-  transactionsDetails TransactionDetail[]
-  TransactionDetailSnapshot TransactionDetailSnapshot[]
+  // Realtime Value Report
+  productReport ProductReport?
 
   @@index([categoryId])
   @@index([branchId])
 }
 
-
-model Category {
-  id        Int        @id @default(autoincrement())
-  name      String     @unique
-  createdAt DateTime   @default(now())
-  product  Product[]
+model Category{
+  id Int @id @default(autoincrement())
+  name String @unique
+  createdAt DateTime @default(now())
+  product Product[]
 }
 
-model Branch {
-  id           Int           @id @default(autoincrement())
-  name         String        @unique
-  createdAt    DateTime      @default(now())
-  product     Product[]
-  transactionsDetails TransactionDetail[]
-  TransactionDetailSnapshot TransactionDetailSnapshot[]
+model Branch{
+  id Int @id @default(autoincrement())
+  name String
+  createdAt DateTime @default(now())
+  
+  product Product[]
+  transaction Transaction[]
+  branchReport BranchReport?
 }
 
-model Stock {
-  id           Int      @id @default(autoincrement())
-  productId    Int
-  quantity     Float
-  stockAddedAt DateTime @default(now())
-  product      Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+// Transaction
+model Transaction{
+  id BigInt @id @default(autoincrement())
+  branchId Int
+  branch Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  type TransactionType
+  totalAmount Float?
+  createdAt DateTime @default(now())
 
-  @@index([productId])
-  @@index([stockAddedAt])
+  transactionItem TransactionItem[]
+
+  @@index([branchId, createdAt])
 }
 
-model StockSnapshot {
-  id           Int      @id @default(autoincrement())
-  productId    Int
-  quantity     Float
-  archivedAt   DateTime @default(now())
-  product      Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+model TransactionItem{
+  id BigInt @id @default(autoincrement())
+  productId Int
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  transactionId BigInt
+  transaction Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  transactionType TransactionType
+  quantity Float
+  price Float
+  createdAt DateTime @default(now())
 
-  @@index([productId])
-}
-
-model Transaction {
-  id                  Int                 @id @default(autoincrement())
-  transactionDetails  TransactionDetail[]
-  totalPrice          Int
-  transactionDate     DateTime            @default(now())
-  TransactionDetailSnapshot TransactionDetailSnapshot[]
-}
-
-model TransactionDetail {
-  id               Int      @id @default(autoincrement())
-  productId        Int
-  branchId         Int
-  transactionId    Int
-  stockSold        Float
-  payment          Float
-  transactionDate  DateTime @default(now())
-
-  product          Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
-  branch           Branch      @relation(fields: [branchId], references: [id], onDelete: Cascade)
-  transaction      Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
-
-  @@index([productId])
-  @@index([branchId])
+  @@index([productId, createdAt])
   @@index([transactionId])
-  @@index([branchId, transactionDate])
-  @@index([productId, transactionDate])
 }
 
-model TransactionDetailSnapshot {
-  id               Int      @id @default(autoincrement())
-  productId        Int
-  branchId         Int
-  transactionId    Int
-  stockSold        Float
-  payment          Float
-  ArchiveAt  DateTime @default(now())
-  product          Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
-  branch           Branch      @relation(fields: [branchId], references: [id], onDelete: Cascade)
-  transaction      Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+model StockMovement{
+  id Int @id @default(autoincrement())
+  productId Int
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  movementType StockMovementType
+  movementReason StockMovementReason
+  quantity Float
+  oldValue Float
+  newValue Float
+  createdAt DateTime @default(now())
+
+  @@index([productId, createdAt])
+}
+
+// Sales & Profit Report
+model BranchReport{
+  id Int @id @default(autoincrement())
+  branchId Int @unique
+  branch Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  profit Float @default(0)
+  sales Float @default(0)
+
+  @@index([branchId])
+}
+
+model ProductReport{
+  id Int @id @default(autoincrement())
+  productId Int @unique
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  profit Float @default(0)
+  sales Float @default(0)
+  stock Float @default(0)
 
   @@index([productId])
-  @@index([branchId])
-  @@index([transactionId])
-  @@index([branchId, ArchiveAt])
-  @@index([productId, ArchiveAt])
+}
+
+model MonthlyReport{
+  id Int @id @default(autoincrement())
+  date DateTime @default(now())
+  profit Float @default(0)
+  sales Float @default(0)
+  stock Float @default(0)
 }
 
 
-model Monthly_Overall_Stats {
-  id            Int      @id @default(autoincrement())
-  date          DateTime @unique
-  profit        Float
-  totalSales    Float
-}

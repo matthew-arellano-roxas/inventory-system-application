@@ -1,4 +1,5 @@
 import { Unit } from '@models';
+import { Product } from '@models';
 
 export type ProductDetail = SalesStockDetails & {
   categoryId: number;
@@ -17,3 +18,5 @@ export type SalesStockDetails = {
   stock: number;
   monthSales: number;
 };
+
+export type ProductPriceInfo = Pick<Product, 'sellingPrice' | 'costPerUnit' | 'name'>;

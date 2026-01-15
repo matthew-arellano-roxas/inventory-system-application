@@ -1,27 +1,31 @@
-import createError, { HttpError } from 'http-errors';
+import createError from 'http-errors';
+import { Prisma } from '@root/generated/prisma/client';
 import { logger } from '@/config';
 import { NextFunction, Request, Response } from 'express';
 import { ApiResponse } from '@/helpers/response';
 import { ZodError } from 'zod';
 
 const errorHandler = (err: unknown, req: Request, res: Response, _next: NextFunction) => {
-  let statusCode: number;
-  let message: string | string[];
+  let statusCode = 500;
+  let message: string | string[] = 'Something went wrong';
 
   if (err instanceof ZodError) {
     statusCode = 400;
-    // Use err.issues directly, fully typed and not deprecated
     message = err.issues.map((issue) => `${issue.path.join('.')} - ${issue.message}`);
-  } else {
-    const httpError: HttpError = createError.isHttpError(err)
-      ? (err as HttpError)
-      : createError(500, (err as Error).message || 'Internal Server Error');
-
-    statusCode = httpError.status || 500;
-    message = httpError.message || 'Something went wrong';
+  } else if (createError.isHttpError(err)) {
+    statusCode = err.status || 500;
+    message = err.message;
+  } else if (
+    err instanceof Prisma.PrismaClientKnownRequestError ||
+    err instanceof Prisma.PrismaClientUnknownRequestError ||
+    err instanceof Prisma.PrismaClientValidationError
+  ) {
+    // Intentionally opaque response
+    statusCode = 500;
+    message = 'Something went wrong';
   }
 
-  logger.error(`[${new Date().toISOString()}] Error:`, err);
+  logger.error(`[${new Date().toISOString()}]`, err);
 
   res.status(statusCode).json({
     success: false,

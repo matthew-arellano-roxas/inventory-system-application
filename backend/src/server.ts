@@ -4,7 +4,7 @@ import express from 'express';
 import { auth } from 'express-openid-connect';
 
 // Configs
-import { serverConfig } from '@/config';
+import { logger, serverConfig } from '@/config';
 import { authConfig } from '@/config';
 
 // Routes
@@ -14,7 +14,13 @@ import errorHandler from '@/middlewares/errorhandler';
 import { checkDatabaseConnection } from '@/helpers/checkdatabase';
 
 // Routes
-import { productRoute, branchRoute, categoryRoute, stockRoute, transactionRoute } from '@/routes';
+import { productRoute, branchRoute, categoryRoute } from '@/routes';
+
+// Scheduler
+import { scheduleWeeklyCleanup } from '@/services/scheduler/weekly-transaction-cleanup';
+import { stockRoute } from '@/routes/stock.route';
+import { transactionRoute } from './routes/transaction.route';
+import { reportRoute } from './routes/report.route';
 
 const app = express();
 app.use(express.json());
@@ -28,13 +34,17 @@ app.use('/api/branch', branchRoute);
 app.use('/api/category', categoryRoute);
 app.use('/api/stock', stockRoute);
 app.use('/api/transaction', transactionRoute);
+app.use('/api/report', reportRoute);
+// app.use('/api/transaction', categoryRoute);
 
 app.use(errorHandler);
+
+scheduleWeeklyCleanup();
 
 // Start server
 (async () => {
   await checkDatabaseConnection(); // wait for DB connection
   app.listen(serverConfig.PORT, () => {
-    console.log(`Server running at http://localhost:${serverConfig.PORT}`);
+    logger.info(`Server running at http://localhost:${serverConfig.PORT}`);
   });
 })();

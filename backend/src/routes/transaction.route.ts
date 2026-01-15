@@ -1,31 +1,17 @@
 import { Router } from 'express';
-import { TransactionController } from '@/controllers';
-import { CreateTransactionBody, UpdateTransactionBody } from '@/schemas';
-import { validateBody } from '@/middlewares/validate';
+import { TransactionService } from '@/services/transaction';
+import { TransactionController } from '@/controllers/transaction.controller';
+import { BranchService, CategoryService, ProductService } from '@/services';
 
-const transactionRoute: Router = Router();
+const transactionRoute = Router();
 
-// List all transactions (supports cursor & limit query)
-transactionRoute.get('/', TransactionController.getTransactionList);
+const categoryService = new CategoryService();
+const branchService = new BranchService();
+const productService = new ProductService(categoryService, branchService);
+const transactionService = new TransactionService(productService);
+const transactionController = new TransactionController(transactionService);
 
-// Get a single transaction by ID
-transactionRoute.get('/:transactionId', TransactionController.getTransactionById);
-
-// Create a new transaction
-transactionRoute.post(
-  '/',
-  validateBody(CreateTransactionBody),
-  TransactionController.createTransaction,
-);
-
-// Update a transaction
-transactionRoute.put(
-  '/:transactionId',
-  validateBody(UpdateTransactionBody),
-  TransactionController.updateTransaction,
-);
-
-// Delete a transaction
-transactionRoute.delete('/:transactionId', TransactionController.deleteTransaction);
+transactionRoute.post('/', transactionController.createTransaction.bind(transactionController));
+transactionRoute.get('/', transactionController.getTransactions.bind(transactionController));
 
 export { transactionRoute };
