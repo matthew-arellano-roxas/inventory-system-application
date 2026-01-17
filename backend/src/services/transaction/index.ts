@@ -7,3 +7,4 @@ export * from './use-cases/get-transactions';
 export * from './transaction.repository';
 export * from './transaction.validation';
 export * from './transaction.mapper';
+export * from './transaction.domain';

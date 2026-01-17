@@ -15,7 +15,7 @@ import {
 } from '@/services/transaction';
 import { ProductPriceInfo } from '@/types/product';
 import { decreaseProductStock } from '@/services/transaction';
-import { getItemTotalCost } from '../../../domain';
+import { getItemTotalCost } from '@/services/transaction';
 import { logger } from '@/config';
 
 export async function createDamageTransaction(payload: TransactionPayload) {

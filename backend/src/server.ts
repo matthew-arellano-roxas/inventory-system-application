@@ -21,10 +21,12 @@ import { scheduleWeeklyCleanup } from '@/services/scheduler/weekly-transaction-c
 import { stockRoute } from '@/routes/stock.route';
 import { transactionRoute } from './routes/transaction.route';
 import { reportRoute } from './routes/report.route';
+import { requestLogger } from './middlewares/logger';
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(requestLogger);
 
 // Auth0 middleware
 app.use(auth(authConfig));

@@ -1,5 +1,6 @@
 import { prisma } from '@root/lib/prisma';
 import createHttpError from 'http-errors';
+import { getTotalDamageAmount } from '../transaction';
 
 export class ReportService {
   // Monthly Reports
@@ -8,6 +9,20 @@ export class ReportService {
       orderBy: { date: 'desc' },
       take: 6,
     });
+  }
+
+  async getCurrentMonthReport() {
+    return prisma.branchReport
+      .aggregate({
+        _sum: {
+          sales: true,
+          profit: true,
+        },
+      })
+      .then(async (report) => {
+        const damage = await getTotalDamageAmount();
+        return { ...report._sum, damage };
+      });
   }
 
   // Product Reports

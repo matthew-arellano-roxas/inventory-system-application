@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ProductService } from '@/services';
 import { ok } from '@/helpers/response';
-import { logger } from '@/config';
 import { GetProductQuery } from '@/schemas';
 import createHttpError from 'http-errors';
 
@@ -22,7 +21,6 @@ export class ProductController {
 
   // Get a single product by ID
   getProductById = async (req: Request, res: Response) => {
-    logger.info('Get product by id');
     const { productId } = req.params;
     const data = await this.productService.getProductById(Number(productId));
     res.status(StatusCodes.OK).json(ok(data, 'Product Retrieved.'));
@@ -30,7 +28,6 @@ export class ProductController {
 
   // Create a new product
   createProduct = async (req: Request, res: Response) => {
-    logger.info('Create Product');
     const body = req.body;
     const data = await this.productService.createProduct(body);
     res.status(StatusCodes.CREATED).json(ok(data, 'New Product Created.'));
@@ -38,7 +35,6 @@ export class ProductController {
 
   // Update a product
   updateProduct = async (req: Request, res: Response) => {
-    logger.info('Update Product');
     const { productId } = req.params;
     const body = req.body;
     const data = await this.productService.updateProduct(Number(productId), body);
@@ -47,7 +43,6 @@ export class ProductController {
 
   // Delete a product
   deleteProduct = async (req: Request, res: Response) => {
-    logger.info('Delete Product');
     const { productId } = req.params;
     const data = await this.productService.deleteProduct(Number(productId));
     res.status(StatusCodes.OK).json(ok(data, 'Product Deleted.'));
@@ -55,7 +50,6 @@ export class ProductController {
 
   // Get product stock/report
   getProductStock = async (req: Request, res: Response) => {
-    logger.info('Get Product Stock');
     const productId = req.query.productId ? Number(req.query.productId) : undefined;
     if (productId === undefined) {
       throw new createHttpError.BadRequest('productId is required.');

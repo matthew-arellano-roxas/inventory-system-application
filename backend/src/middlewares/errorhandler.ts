@@ -1,25 +1,20 @@
-import createError from 'http-errors';
-import { Prisma } from '@root/generated/prisma/client';
 import { logger } from '@/config';
 import { NextFunction, Request, Response } from 'express';
 import { ApiResponse } from '@/helpers/response';
-import { ZodError } from 'zod';
+import ErrorValidator from '@/helpers/ErrorValidator';
+import { formatZodError } from '@/helpers/formatZodError';
 
 const errorHandler = (err: unknown, req: Request, res: Response, _next: NextFunction) => {
   let statusCode = 500;
   let message: string | string[] = 'Something went wrong';
 
-  if (err instanceof ZodError) {
+  if (ErrorValidator.isZodError(err)) {
     statusCode = 400;
-    message = err.issues.map((issue) => `${issue.path.join('.')} - ${issue.message}`);
-  } else if (createError.isHttpError(err)) {
+    message = formatZodError(err);
+  } else if (ErrorValidator.isHttpError(err)) {
     statusCode = err.status || 500;
     message = err.message;
-  } else if (
-    err instanceof Prisma.PrismaClientKnownRequestError ||
-    err instanceof Prisma.PrismaClientUnknownRequestError ||
-    err instanceof Prisma.PrismaClientValidationError
-  ) {
+  } else if (ErrorValidator.isPrismaError(err)) {
     // Intentionally opaque response
     statusCode = 500;
     message = 'Something went wrong';

@@ -16,7 +16,7 @@ import {
   checkSellingPrice,
   isThereEnoughStock,
 } from '@/services/transaction';
-import { getItemTotalCost, getItemTotalPrice, getProfitAmount } from '@/domain';
+import { getItemTotalCost, getItemTotalPrice, getProfitAmount } from '@/services/transaction';
 import { logger } from '@/config';
 
 export async function createSaleTransaction(payload: TransactionPayload): Promise<Transaction> {

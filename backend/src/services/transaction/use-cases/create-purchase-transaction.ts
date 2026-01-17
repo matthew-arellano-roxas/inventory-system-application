@@ -15,7 +15,7 @@ import {
   increaseProductStock,
 } from '@/services/transaction';
 import { ProductPriceInfo } from '@/types/product';
-import { getItemTotalCost } from '@/domain';
+import { getItemTotalCost } from '@/services/transaction';
 import { logger } from '@/config';
 
 export async function createPurchaseTransaction(payload: TransactionPayload): Promise<Transaction> {

@@ -8,6 +8,7 @@ const reportController = new ReportController(reportService);
 const reportRoute: Router = Router();
 
 reportRoute.get('/monthly', reportController.getMonthlyReport.bind(reportController));
+reportRoute.get('/current-month', reportController.getCurrentMonthReport.bind(reportController));
 reportRoute.get('/product', reportController.getProductReport.bind(reportController));
 reportRoute.get(
   '/product/:productId',

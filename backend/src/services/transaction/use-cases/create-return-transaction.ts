@@ -18,7 +18,7 @@ import {
   checkSellingPrice,
 } from '../transaction.validation';
 import { logger } from '@/config';
-import { getItemTotalPrice, getProfitAmount } from '@/domain';
+import { getItemTotalPrice, getProfitAmount } from '@/services/transaction';
 
 export async function createReturnTransaction(payload: TransactionPayload) {
   logger.info('Create return transaction');
