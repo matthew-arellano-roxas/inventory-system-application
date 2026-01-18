@@ -3,7 +3,6 @@ import { StatusCodes } from 'http-status-codes';
 import { ProductService } from '@/services';
 import { ok } from '@/helpers/response';
 import { GetProductQuery } from '@/schemas';
-import createHttpError from 'http-errors';
 
 export class ProductController {
   private productService: ProductService;
@@ -46,15 +45,5 @@ export class ProductController {
     const { productId } = req.params;
     const data = await this.productService.deleteProduct(Number(productId));
     res.status(StatusCodes.OK).json(ok(data, 'Product Deleted.'));
-  };
-
-  // Get product stock/report
-  getProductStock = async (req: Request, res: Response) => {
-    const productId = req.query.productId ? Number(req.query.productId) : undefined;
-    if (productId === undefined) {
-      throw new createHttpError.BadRequest('productId is required.');
-    }
-    const data = await this.productService.getReportByProductId(productId);
-    res.status(StatusCodes.OK).json(ok(data, 'Product Stock Retrieved.'));
   };
 }

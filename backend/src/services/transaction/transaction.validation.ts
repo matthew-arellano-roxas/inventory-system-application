@@ -20,7 +20,7 @@ export function checkStock(productName: string, obj: { stock: number } | null): 
 export function isThereEnoughStock(productName: string, currentStock: number, quantity: number) {
   if (quantity > currentStock)
     throw new createHttpError.BadRequest(
-      `The damaged quantity of ${productName} is greater than the available stock.`,
+      `The requested quantity of ${productName} is greater than the available stock.`,
     );
 }
 
