@@ -15,6 +15,7 @@ import {
   checkProductExistence,
   checkSellingPrice,
   isThereEnoughStock,
+  isLowStock,
 } from '@/services/transaction';
 import { getItemTotalCost, getItemTotalPrice, getProfitAmount } from '@/services/transaction';
 import { logger } from '@/config';
@@ -35,10 +36,18 @@ export async function createSaleTransaction(payload: TransactionPayload): Promis
 
       // Get Stock
       const currentStock = await getProductStock(tx, item);
+      const branchName = await tx.branch
+        .findFirst({
+          where: { id: payload.branchId },
+          select: {
+            name: true,
+          },
+        })
+        .then((branch) => branch?.name ?? 'Unknown');
 
       // Compare available stock and user item quantity
       isThereEnoughStock(item.productName, currentStock, item.quantity);
-
+      isLowStock(item.productName, branchName, currentStock - item.quantity, 30);
       // Create Stock Movement Record
       await createStockMovement(tx, {
         productId: item.productId,

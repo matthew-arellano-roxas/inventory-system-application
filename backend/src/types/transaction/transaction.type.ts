@@ -1,4 +1,4 @@
-import { TransactionType } from '@models';
+import { Transaction, TransactionType } from '@models';
 
 export type TransactionPayload = {
   type: TransactionType;
@@ -11,3 +11,7 @@ export type TransactionItemPayload = {
   productName: string;
   quantity: number;
 };
+
+export interface TransactionProcess {
+  makeTransaction(payload: TransactionPayload): Promise<Transaction>;
+}

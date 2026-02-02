@@ -5,6 +5,7 @@ export enum ROUTE {
   TRANSACTION = '/api/transaction',
   STOCK = '/api/stock',
   REPORT = '/api/report',
+  NOTIFICATION = '/api/notification',
 }
 
 export const TTL = 60;

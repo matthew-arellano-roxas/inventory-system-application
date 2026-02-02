@@ -2,6 +2,7 @@ import { logger } from '@/config';
 import { ProductPriceInfo } from '@/types/product';
 import { Product } from '@root/generated/prisma/client';
 import createHttpError from 'http-errors';
+import { StockNotificationService } from '../notification/stock-notification-service';
 
 export function checkProductExistence(
   productName: string,
@@ -22,6 +23,18 @@ export function isThereEnoughStock(productName: string, currentStock: number, qu
     throw new createHttpError.BadRequest(
       `The requested quantity of ${productName} is greater than the available stock.`,
     );
+}
+
+export function isLowStock(
+  productName: string,
+  branchName: string,
+  currentStock: number,
+  threshold: number,
+) {
+  if (currentStock < threshold) {
+    logger.info(`Branch ${branchName} has low stock of product ${productName}.`);
+    new StockNotificationService().createLowStockNotification(productName, branchName);
+  }
 }
 
 export function checkCostPerUnit(

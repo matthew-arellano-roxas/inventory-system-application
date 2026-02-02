@@ -32,6 +32,11 @@ enum TransactionType {
   PURCHASE
 }
 
+enum NotificationType {
+  STOCK
+  RESOURCE
+}
+
 // Main Model
 model Product{
   id Int @id @default(autoincrement())
@@ -147,4 +152,18 @@ model MonthlyReport{
   stock Float @default(0)
 }
 
+// Notification
+model Notification{
+  id Int @id @default(autoincrement())
+  type NotificationType
+  title String
+  message String
+  createdAt DateTime @default(now())
+}
 
+
+model SystemSettings{
+  id Int @id @default(autoincrement())
+  key String @unique
+  value String
+}

@@ -7,10 +7,10 @@ import { BranchService, CategoryService } from '@/services';
 import { GetProductQuery } from '@/schemas';
 import type { ProductDetail } from '@/types/product';
 import createHttpError from 'http-errors';
-
-const itemLimit = Number(process.env.PAGINATION_ITEM_LIMIT);
+import { apiConfig } from '@/config/config.api';
 
 export class ProductService {
+  private itemLimit = apiConfig.ITEM_LIMIT;
   private branchService: BranchService;
   private categoryService: CategoryService;
 
@@ -39,12 +39,12 @@ export class ProductService {
       mode: 'insensitive',
     };
     // Calculation for pagination
-    const skip = calculateSkip(query.page, itemLimit);
+    const skip = calculateSkip(query.page, this.itemLimit);
     const productData = await prisma.product.findMany({
       select,
       where,
       orderBy: { id: 'asc' },
-      take: itemLimit,
+      take: this.itemLimit,
       skip,
     });
     return productData as ProductDetail[];

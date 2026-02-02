@@ -81,7 +81,7 @@ export async function createReturnTransaction(payload: TransactionPayload) {
         where: { productId: item.productId },
         data: {
           sales: { decrement: salesAmount },
-          stock: { decrement: item.quantity },
+          stock: { increment: item.quantity },
           profit: { decrement: profitAmount },
         },
       });

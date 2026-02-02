@@ -1,10 +1,10 @@
 const authConfig = {
   authRequired: false,
   auth0Logout: true,
-  secret: 'NightmareKurumi',
-  baseURL: 'http://localhost:3000',
-  clientID: '2qnQkRNsqRNtyAWEJvJTc39Ss2S2POsa',
-  issuerBaseURL: 'https://dev-q01w7wld0f6wwc5g.us.auth0.com',
+  secret: process.env.AUTH_SECRET,
+  baseURL: process.env.AUTH_BASE_URL,
+  clientID: process.env.AUTH_CLIENT_ID,
+  issuerBaseURL: process.env.AUTH_ISSUER_BASE_URL,
 };
 
 export { authConfig };
