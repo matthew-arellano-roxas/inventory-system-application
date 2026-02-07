@@ -1,5 +1,5 @@
-import { clearResourceCache } from '@/middlewares/cacheMiddleware';
-import { ROUTE } from '@/routes/route.constants';
+import { clearResourceCache } from '@/middlewares/cache';
+import { ROUTE } from '@/enums/product.enums';
 
 export function refreshResourceCache(routes: ROUTE | ROUTE[]): void {
   const routeList = Array.isArray(routes) ? routes : [routes];

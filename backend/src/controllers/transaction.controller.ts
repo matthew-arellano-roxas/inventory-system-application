@@ -1,29 +1,29 @@
-import { Response, Request, NextFunction } from 'express';
-import { TransactionService } from '@/services/transaction';
 import { StatusCodes } from 'http-status-codes';
 import { serializeBigInt } from '@/helpers/serialiazeBigInt';
 import { ok } from '@/helpers';
-import { ROUTE } from '@/routes/route.constants';
+import { ROUTE } from '@/enums/product.enums';
 import { refreshResourceCache } from '@/helpers/refreshResource';
+import { Controller } from '@/types/controller.type';
+import { transactionService } from '@/services';
 
-export class TransactionController {
-  private transactionService: TransactionService;
+export const createTransaction: Controller = async (req, res, _next) => {
+  const payload = req.body;
+  const transaction = await transactionService
+    .createTransaction(payload)
+    .then((t) => serializeBigInt(t));
 
-  constructor(transactionService: TransactionService) {
-    this.transactionService = transactionService;
-  }
+  refreshResourceCache([ROUTE.STOCK, ROUTE.REPORT, ROUTE.TRANSACTION]);
 
-  async createTransaction(req: Request, res: Response, _next: NextFunction) {
-    const payload = req.body;
-    const transaction = await this.transactionService
-      .createTransaction(payload)
-      .then((t) => serializeBigInt(t));
-    refreshResourceCache([ROUTE.STOCK, ROUTE.REPORT, ROUTE.TRANSACTION]);
-    res.status(StatusCodes.OK).json(ok(transaction, 'Successfully created transaction'));
-  }
+  res.status(StatusCodes.OK).json(ok(transaction, 'Successfully created transaction'));
+};
 
-  async getTransactions(req: Request, res: Response, _next: NextFunction) {
-    const transactions = await this.transactionService.getTransactions();
-    res.status(StatusCodes.OK).json(ok(transactions, 'Transactions retrieved'));
-  }
-}
+// Get transactions
+export const getTransactions: Controller = async (req, res, _next) => {
+  const transactions = await transactionService.getTransactions();
+  res.status(StatusCodes.OK).json(ok(transactions, 'Transactions retrieved'));
+};
+
+export const transactionController = {
+  createTransaction,
+  getTransactions,
+};

@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { ApiResponse } from '@/helpers/response';
 import ErrorValidator from '@/helpers/ErrorValidator';
 import { formatZodError } from '@/helpers/formatZodError';
+import { clearResourceCache } from '@/middlewares';
 
 const errorHandler = (err: unknown, req: Request, res: Response, _next: NextFunction) => {
   let statusCode = 500;
@@ -14,10 +15,13 @@ const errorHandler = (err: unknown, req: Request, res: Response, _next: NextFunc
   } else if (ErrorValidator.isHttpError(err)) {
     statusCode = err.status || 500;
     message = err.message;
+  } else if (err instanceof Error && err.name === 'UnauthorizedError') {
+    statusCode = 401;
+    message = 'Access denied. Insufficient permissions.';
   } else if (ErrorValidator.isPrismaError(err)) {
     // Intentionally opaque response
     statusCode = 500;
-    message = 'Something went wrong';
+    message = 'Internal Server Error';
   }
 
   logger.error(`[${new Date().toISOString()}]`, err);
@@ -26,7 +30,10 @@ const errorHandler = (err: unknown, req: Request, res: Response, _next: NextFunc
     success: false,
     status: statusCode,
     message,
+    error: err,
   } as ApiResponse);
+
+  clearResourceCache(req.originalUrl);
 };
 
-export default errorHandler;
+export { errorHandler };

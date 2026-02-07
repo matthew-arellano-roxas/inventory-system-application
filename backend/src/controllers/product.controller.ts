@@ -1,49 +1,49 @@
-import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { ProductService } from '@/services';
 import { ok } from '@/helpers/response';
 import { GetProductQuery } from '@/schemas';
+import { Controller } from '@/types/controller.type';
+import { productService } from '@/services';
 
-export class ProductController {
-  private productService: ProductService;
+// Get paginated product list with optional filters
+const getProductList: Controller = async (req, res, _next) => {
+  const query = GetProductQuery.parse(req.query);
+  const data = await productService.getProducts(query);
+  res.status(StatusCodes.OK).json(ok(data, 'Product List Retrieved.'));
+};
 
-  constructor(productService: ProductService) {
-    this.productService = productService;
-  }
+// Get a single product by ID
+const getProductById: Controller = async (req, res, _next) => {
+  const { productId } = req.params;
+  const data = await productService.getProductById(Number(productId));
+  res.status(StatusCodes.OK).json(ok(data, 'Product Retrieved.'));
+};
 
-  // Get paginated product list with optional filters
-  getProductList = async (req: Request, res: Response) => {
-    const query = GetProductQuery.parse(req.query);
-    const data = await this.productService.getProducts(query);
-    res.status(StatusCodes.OK).json(ok(data, 'Product List Retrieved.'));
-  };
+// Create a new product
+const createProduct: Controller = async (req, res, _next) => {
+  const body = req.body;
+  const data = await productService.createProduct(body);
+  res.status(StatusCodes.CREATED).json(ok(data, 'New Product Created.'));
+};
 
-  // Get a single product by ID
-  getProductById = async (req: Request, res: Response) => {
-    const { productId } = req.params;
-    const data = await this.productService.getProductById(Number(productId));
-    res.status(StatusCodes.OK).json(ok(data, 'Product Retrieved.'));
-  };
+// Update a product
+const updateProduct: Controller = async (req, res, _next) => {
+  const { productId } = req.params;
+  const body = req.body;
+  const data = await productService.updateProduct(Number(productId), body);
+  res.status(StatusCodes.OK).json(ok(data, 'Product Updated Successfully.'));
+};
 
-  // Create a new product
-  createProduct = async (req: Request, res: Response) => {
-    const body = req.body;
-    const data = await this.productService.createProduct(body);
-    res.status(StatusCodes.CREATED).json(ok(data, 'New Product Created.'));
-  };
+// Delete a product
+const deleteProduct: Controller = async (req, res, _next) => {
+  const { productId } = req.params;
+  const data = await productService.deleteProduct(Number(productId));
+  res.status(StatusCodes.OK).json(ok(data, 'Product Deleted.'));
+};
 
-  // Update a product
-  updateProduct = async (req: Request, res: Response) => {
-    const { productId } = req.params;
-    const body = req.body;
-    const data = await this.productService.updateProduct(Number(productId), body);
-    res.status(StatusCodes.OK).json(ok(data, 'Product Updated Successfully.'));
-  };
-
-  // Delete a product
-  deleteProduct = async (req: Request, res: Response) => {
-    const { productId } = req.params;
-    const data = await this.productService.deleteProduct(Number(productId));
-    res.status(StatusCodes.OK).json(ok(data, 'Product Deleted.'));
-  };
-}
+export const productController = {
+  getProductList,
+  getProductById,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+};

@@ -1,8 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
+import { auth } from 'express-oauth2-jwt-bearer';
 
-export function protectedRoute(req: Request, res: Response, _next: NextFunction) {
-  if (req.oidc.isAuthenticated()) {
-    return _next();
-  }
-  res.redirect('/login');
-}
+const protectedRoute = auth({
+  audience: process.env.AUTH_AUDIENCE,
+  issuerBaseURL: process.env.AUTH_ISSUER_BASE_URL,
+  tokenSigningAlg: 'RS256',
+});
+
+export { protectedRoute };

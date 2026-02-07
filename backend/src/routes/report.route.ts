@@ -1,31 +1,19 @@
 import { Router } from 'express';
-import { ReportService } from '@/services/reports/report.service';
-import { ReportController } from '@/controllers';
-import { cacheMiddleware } from '@/middlewares/cacheMiddleware';
-import { TTL } from './route.constants';
-
-const reportService = new ReportService();
-const reportController = new ReportController(reportService);
+import { reportController } from '@/controllers/report.controller';
+import { cacheMiddleware } from '@/middlewares/cache';
+import { TTL } from '@/enums';
+import { checkPermissions } from '@/middlewares';
 
 const reportRoute: Router = Router();
 
-reportRoute.use(cacheMiddleware(TTL));
+reportRoute.use(checkPermissions(['read:report']));
+reportRoute.use(cacheMiddleware(TTL.ONE_MINUTE));
 
-reportRoute.get('/monthly', reportController.getMonthlyReport.bind(reportController));
-reportRoute.get(
-  '/current-month',
-  cacheMiddleware(TTL),
-  reportController.getCurrentMonthReport.bind(reportController),
-);
-reportRoute.get('/product', reportController.getProductReport.bind(reportController));
-reportRoute.get(
-  '/product/:productId',
-  reportController.getProductReportByProductId.bind(reportController),
-);
-reportRoute.get('/branch', reportController.getBranchReport.bind(reportController));
-reportRoute.get(
-  '/branch/:branchId',
-  reportController.getBranchReportByBranchId.bind(reportController),
-);
+reportRoute.get('/monthly', reportController.getMonthlyReport);
+reportRoute.get('/current-month', reportController.getCurrentMonthReport);
+reportRoute.get('/product', reportController.getProductReport);
+reportRoute.get('/product/:productId', reportController.getProductReportByProductId);
+reportRoute.get('/branch', reportController.getBranchReport);
+reportRoute.get('/branch/:branchId', reportController.getBranchReportByBranchId);
 
 export { reportRoute };

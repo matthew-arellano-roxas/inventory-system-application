@@ -1,45 +1,45 @@
-import { ProductController } from '@/controllers';
+import { productController } from '@/controllers';
 import { CreateProductBody, UpdateProductBody } from '@/schemas';
 import { Router } from 'express';
 import { validateBody } from '@/middlewares/validate';
-import { BranchService, CategoryService, ProductService } from '@/services';
-import { cacheMiddleware, invalidateCache } from '@/middlewares/cacheMiddleware';
-import { ROUTE, TTL } from '@/routes/route.constants';
+import { cacheMiddleware, invalidateCache } from '@/middlewares/cache';
+import { ROUTE, TTL } from '@/enums';
+import { checkPermissions } from '@/middlewares';
 
 const productRoute: Router = Router();
-// Create an instance of the service
-const branchService = new BranchService();
-const categoryService = new CategoryService();
-const productService = new ProductService(categoryService, branchService);
-
-// Inject the service into the controller
-const productController = new ProductController(productService);
 
 productRoute.get(
   '/',
-  cacheMiddleware(TTL),
-  productController.getProductList.bind(productController),
+  checkPermissions(['read:product']),
+  cacheMiddleware(TTL.ONE_MINUTE),
+  productController.getProductList,
 );
 productRoute.post(
   '/',
-  [validateBody(CreateProductBody), invalidateCache(ROUTE.PRODUCT)],
-  productController.createProduct.bind(productController),
+  checkPermissions(['create:product']),
+  validateBody(CreateProductBody),
+  invalidateCache(ROUTE.PRODUCT),
+  productController.createProduct,
 );
 
 productRoute.get(
   '/:productId',
-  cacheMiddleware(TTL),
-  productController.getProductById.bind(productController),
+  checkPermissions(['read:product']),
+  cacheMiddleware(TTL.ONE_MINUTE),
+  productController.getProductById,
 );
 productRoute.put(
   '/:productId',
-  [validateBody(UpdateProductBody), invalidateCache(ROUTE.PRODUCT)],
-  productController.updateProduct.bind(productController),
+  checkPermissions(['update:product']),
+  validateBody(UpdateProductBody),
+  invalidateCache(ROUTE.PRODUCT),
+  productController.updateProduct,
 );
 productRoute.delete(
   '/:productId',
+  checkPermissions(['delete:product']),
   invalidateCache(ROUTE.PRODUCT),
-  productController.deleteProduct.bind(productController),
+  productController.deleteProduct,
 );
 
 export { productRoute };

@@ -7,7 +7,7 @@ let io: Server; // shared instance
 export function initSocketServer(server: http.Server) {
   io = new Server(server, {
     cors: {
-      origin: serverConfig.ALLOWED_ORIGIN, // your frontend URL
+      origin: serverConfig.allowedOrigins, // your frontend URL
       methods: ['GET', 'POST'],
       credentials: true, // optional if you need cookies
     },

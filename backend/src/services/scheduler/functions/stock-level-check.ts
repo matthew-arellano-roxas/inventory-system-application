@@ -1,11 +1,12 @@
-import { StockNotificationService } from '@/services/notification/stock-notification-service';
+import {
+  createLowStockAnnouncement,
+  createNegativeStockAnnouncement,
+} from '@/services/announcement/stock-announcement';
 import { prisma } from '@root/lib/prisma';
 
 const LOW_STOCK_THRESHOLD = 30;
 
 export async function stockLevelCheck(): Promise<void> {
-  const stockNotificationService = new StockNotificationService();
-
   const reports = await prisma.productReport.findMany({
     where: {
       stock: {
@@ -37,10 +38,10 @@ export async function stockLevelCheck(): Promise<void> {
     }
 
     if (report.stock < 0) {
-      await stockNotificationService.createNegativeStockNotification(productName, branchName);
+      await createNegativeStockAnnouncement(productName, branchName);
       continue;
     }
 
-    await stockNotificationService.createLowStockNotification(productName, branchName);
+    await createLowStockAnnouncement(productName, branchName);
   }
 }

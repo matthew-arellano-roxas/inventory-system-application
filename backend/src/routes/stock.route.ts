@@ -1,24 +1,16 @@
-import { StockController } from '@/controllers/stock.controller';
-import { StockService } from '@/services';
+import { stockController } from '@/controllers';
+
 import { Router } from 'express';
-import { cacheMiddleware } from '@/middlewares/cacheMiddleware';
-import { TTL } from './route.constants';
+import { cacheMiddleware } from '@/middlewares/cache';
+import { TTL } from '@/enums';
+import { checkPermissions } from '@/middlewares';
 
 const stockRoute: Router = Router();
+stockRoute.use(checkPermissions(['read:stock']));
+stockRoute.use(cacheMiddleware(TTL.ONE_MINUTE));
 
-const stockService = new StockService();
-const stockController = new StockController(stockService);
-
-stockRoute.get('/', cacheMiddleware(TTL), stockController.getStockMovements.bind(stockController));
-stockRoute.get(
-  '/search',
-  cacheMiddleware(TTL),
-  stockController.getStockMovementsByProductId.bind(stockController),
-);
-stockRoute.get(
-  '/product/:productId',
-  cacheMiddleware(TTL),
-  stockController.getProductStock.bind(stockController),
-);
+stockRoute.get('/', stockController.getStockMovements);
+stockRoute.get('/search', stockController.getStockMovementsByProductId);
+stockRoute.get('/product/:productId', stockController.getProductStock);
 
 export { stockRoute };

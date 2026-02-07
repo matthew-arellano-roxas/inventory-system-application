@@ -1,5 +1,5 @@
 import { PrismaClient, Transaction, TransactionType } from '@models';
-import { TransactionPayload } from '@/types/transaction';
+import { TransactionPayload } from '@/types';
 import createHttpError from 'http-errors';
 import {
   createSaleTransaction,
@@ -9,89 +9,87 @@ import {
 } from '@/services/transaction';
 import { prisma } from '@root/lib/prisma';
 import { addMonths, startOfMonth } from 'date-fns';
-import { ProductService } from '../product/product.service';
+import { productService } from '@/services';
 
-export class TransactionService {
-  private prismaClient: PrismaClient;
-  private productService: ProductService;
+const prismaClient: PrismaClient = prisma;
 
-  constructor(productService: ProductService, prismaClient: PrismaClient = prisma) {
-    this.productService = productService;
-    this.prismaClient = prismaClient;
+// Create a transaction based on its type
+export const createTransaction = async (payload: TransactionPayload): Promise<Transaction> => {
+  switch (payload.type as TransactionType) {
+    case TransactionType.SALE:
+      return createSaleTransaction(payload);
+    case TransactionType.DAMAGE:
+      return createDamageTransaction(payload);
+    case TransactionType.PURCHASE:
+      return createPurchaseTransaction(payload);
+    case TransactionType.RETURN:
+      return createReturnTransaction(payload);
+    default:
+      throw new createHttpError.BadRequest('Invalid transaction type.');
   }
+};
 
-  // Create a transaction based on its type
-  async createTransaction(payload: TransactionPayload): Promise<Transaction> {
-    switch (payload.type as TransactionType) {
-      case TransactionType.SALE:
-        return createSaleTransaction(payload);
-      case TransactionType.DAMAGE:
-        return createDamageTransaction(payload);
-      case TransactionType.PURCHASE:
-        return createPurchaseTransaction(payload);
-      case TransactionType.RETURN:
-        return createReturnTransaction(payload);
-      default:
-        throw new createHttpError.BadRequest('Invalid transaction type.');
-    }
-  }
-
-  // Get recent transactions with product names
-  async getTransactions() {
-    const transactions = await this.prismaClient.transaction.findMany({
-      include: {
-        transactionItem: {
-          select: {
-            productId: true,
-            quantity: true,
-          },
+// Get recent transactions with product names
+export const getTransactions = async () => {
+  const transactions = await prismaClient.transaction.findMany({
+    include: {
+      transactionItem: {
+        select: {
+          productId: true,
+          quantity: true,
         },
       },
-      orderBy: { createdAt: 'desc' },
-      take: 50,
-    });
+    },
+    orderBy: { createdAt: 'desc' },
+    take: 50,
+  });
 
-    const transactionsWithProducts = await Promise.all(
-      transactions.map(async (transaction) => {
-        const transactionItems = await Promise.all(
-          transaction.transactionItem.map(async (item) => {
-            const product = await this.productService.getProductById(item.productId);
-            return {
-              ...item,
-              productName: product.name,
-            };
-          }),
-        );
+  const transactionsWithProducts = await Promise.all(
+    transactions.map(async (transaction) => {
+      const transactionItems = await Promise.all(
+        transaction.transactionItem.map(async (item) => {
+          const product = await productService.getProductById(item.productId);
+          return {
+            ...item,
+            productName: product.name,
+          };
+        }),
+      );
 
-        return {
-          ...transaction,
-          transactionItem: transactionItems,
-        };
-      }),
-    );
+      return {
+        ...transaction,
+        transactionItem: transactionItems,
+      };
+    }),
+  );
 
-    return transactionsWithProducts;
-  }
+  return transactionsWithProducts;
+};
 
-  // Get total damage amount for the current month
-  async getTotalDamageAmount() {
-    const now = new Date();
-    const monthStart = startOfMonth(now);
-    const nextMonthStart = startOfMonth(addMonths(now, 1));
+// Get total damage amount for the current month
+export const getTotalDamageAmount = async () => {
+  const now = new Date();
+  const monthStart = startOfMonth(now);
+  const nextMonthStart = startOfMonth(addMonths(now, 1));
 
-    const result = await this.prismaClient.transaction.aggregate({
-      where: {
-        type: TransactionType.DAMAGE,
-        createdAt: {
-          gte: monthStart,
-          lt: nextMonthStart,
-        },
+  const result = await prismaClient.transaction.aggregate({
+    where: {
+      type: TransactionType.DAMAGE,
+      createdAt: {
+        gte: monthStart,
+        lt: nextMonthStart,
       },
-      _sum: {
-        totalAmount: true,
-      },
-    });
+    },
+    _sum: {
+      totalAmount: true,
+    },
+  });
 
-    return result._sum.totalAmount ?? 0;
-  }
-}
+  return result._sum.totalAmount ?? 0;
+};
+
+export const transactionService = {
+  createTransaction,
+  getTransactions,
+  getTotalDamageAmount,
+};

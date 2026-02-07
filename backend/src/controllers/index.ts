@@ -4,3 +4,5 @@ export * from './category.controller';
 export * from './transaction.controller';
 export * from './stock.controller';
 export * from './report.controller';
+export * from './notification.controller';
+export * from './opex.controller';

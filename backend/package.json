@@ -47,6 +47,7 @@
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "express-async-error": "^0.0.2",
+    "express-oauth2-jwt-bearer": "^1.7.4",
     "express-openid-connect": "^2.19.3",
     "express-rate-limit": "^8.2.1",
     "http-errors": "^2.0.1",

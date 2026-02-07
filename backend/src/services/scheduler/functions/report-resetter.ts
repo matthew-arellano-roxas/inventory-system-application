@@ -5,7 +5,7 @@ export async function resetReports(tx?: Prisma.TransactionClient) {
   const client = tx || prisma;
   await client.productReport.updateMany({
     data: {
-      sales: 0,
+      revenue: 0,
       profit: 0,
     },
   });
@@ -17,7 +17,7 @@ export async function resetReports(tx?: Prisma.TransactionClient) {
       await client.branchReport.update({
         where: { id: branchId },
         data: {
-          sales: 0,
+          revenue: 0,
           profit: 0,
         },
       });

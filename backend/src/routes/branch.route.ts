@@ -1,35 +1,44 @@
-import { BranchController } from '@/controllers';
+import { branchController } from '@/controllers';
 import { Router } from 'express';
 import { CreateBranchBody, UpdateBranchBody } from '@/schemas';
 import { validateBody } from '@/middlewares/validate';
-import { BranchService } from '@/services';
-import { cacheMiddleware, invalidateCache } from '@/middlewares/cacheMiddleware';
-import { ROUTE, TTL } from '@/routes/route.constants';
+import { cacheMiddleware, invalidateCache } from '@/middlewares/cache';
+import { ROUTE, TTL } from '@/enums';
+import { checkPermissions } from '@/middlewares';
 
 const branchRoute: Router = Router();
-const branchService = new BranchService();
-const branchController = new BranchController(branchService);
 
-branchRoute.get('/', cacheMiddleware(TTL), branchController.getBranchList.bind(branchController));
+branchRoute.get(
+  '/',
+  checkPermissions(['read:branch']),
+  cacheMiddleware(TTL.ONE_MINUTE),
+  branchController.getBranchList,
+);
 branchRoute.get(
   '/:branchId',
-  cacheMiddleware(TTL),
-  branchController.getBranchById.bind(branchController),
+  checkPermissions(['read:branch']),
+  cacheMiddleware(TTL.ONE_MINUTE),
+  branchController.getBranchById,
 );
 branchRoute.post(
   '/',
-  [validateBody(CreateBranchBody), invalidateCache(ROUTE.BRANCH)],
-  branchController.createBranch.bind(branchController),
+  checkPermissions(['create:branch']),
+  validateBody(CreateBranchBody),
+  invalidateCache(ROUTE.BRANCH),
+  branchController.createBranch,
 );
 branchRoute.put(
   '/:branchId',
-  [validateBody(UpdateBranchBody), invalidateCache(ROUTE.BRANCH)],
-  branchController.updateBranch.bind(branchController),
+  checkPermissions(['update:branch']),
+  validateBody(UpdateBranchBody),
+  invalidateCache(ROUTE.BRANCH),
+  branchController.updateBranch,
 );
 branchRoute.delete(
   '/:branchId',
+  checkPermissions(['delete:branch']),
   invalidateCache('/api/branch'),
-  branchController.deleteBranch.bind(branchController),
+  branchController.deleteBranch,
 );
 
 export { branchRoute };

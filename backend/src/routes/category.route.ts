@@ -1,41 +1,44 @@
 import { Router } from 'express';
-import { CategoryController } from '@/controllers';
+import { categoryController } from '@/controllers';
 import { validateBody } from '@/middlewares/validate';
 import { CreateCategoryBody, UpdateCategoryBody } from '@/schemas';
-import { CategoryService } from '@/services';
-import { cacheMiddleware, invalidateCache } from '@/middlewares/cacheMiddleware';
-import { ROUTE, TTL } from '@/routes/route.constants';
+import { cacheMiddleware, invalidateCache } from '@/middlewares/cache';
+import { ROUTE, TTL } from '@/enums';
+import { checkPermissions } from '@/middlewares';
 
 const categoryRoute: Router = Router();
-const categoryService = new CategoryService();
-
-// Inject the service into the controller
-const categoryController = new CategoryController(categoryService);
 
 categoryRoute.get(
   '/',
-  cacheMiddleware(TTL),
-  categoryController.getCategoryList.bind(categoryController),
+  checkPermissions(['read:category']),
+  cacheMiddleware(TTL.ONE_MINUTE),
+  categoryController.getCategoryList,
 );
 categoryRoute.get(
   '/:categoryId',
-  cacheMiddleware(TTL),
-  categoryController.getCategoryById.bind(categoryController),
+  checkPermissions(['read:category']),
+  cacheMiddleware(TTL.ONE_MINUTE),
+  categoryController.getCategoryById,
 );
 categoryRoute.post(
   '/',
-  [(validateBody(CreateCategoryBody), invalidateCache(ROUTE.CATEGORY))],
-  categoryController.createCategory.bind(categoryController),
+  checkPermissions(['create:category']),
+  validateBody(CreateCategoryBody),
+  invalidateCache(ROUTE.CATEGORY),
+  categoryController.createCategory,
 );
 categoryRoute.put(
   '/:categoryId',
-  [(validateBody(UpdateCategoryBody), invalidateCache(ROUTE.CATEGORY))],
-  categoryController.updateCategory.bind(categoryController),
+  checkPermissions(['update:category']),
+  validateBody(UpdateCategoryBody),
+  invalidateCache(ROUTE.CATEGORY),
+  categoryController.updateCategory,
 );
 categoryRoute.delete(
   '/:categoryId',
+  checkPermissions(['delete:category']),
   invalidateCache(ROUTE.CATEGORY),
-  categoryController.deleteCategory.bind(categoryController),
+  categoryController.deleteCategory,
 );
 
 export { categoryRoute };

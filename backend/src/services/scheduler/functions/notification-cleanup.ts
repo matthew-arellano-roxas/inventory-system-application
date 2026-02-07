@@ -11,18 +11,18 @@ export interface CleanupResult {
  * Cleans up old notifications.
  * Default retention: 90 days
  */
-export async function cleanupOldNotifications(retentionDays = 90): Promise<CleanupResult> {
+export async function cleanupOldAnnouncements(retentionDays = 90): Promise<CleanupResult> {
   const cutoffDate = subDays(new Date(), retentionDays);
 
   // 1️⃣ Dry run — count first
-  const found = await prisma.notification.count({
+  const found = await prisma.announcement.count({
     where: {
       createdAt: { lt: cutoffDate },
     },
   });
 
   logger.info(
-    `[Notification Cleanup] Found ${found} notifications older than ${retentionDays} days`,
+    `[CLEANUP ANNOUNCEMENTS] Found ${found} annoucements older than ${retentionDays} days`,
   );
 
   if (found === 0) {
@@ -30,13 +30,13 @@ export async function cleanupOldNotifications(retentionDays = 90): Promise<Clean
   }
 
   // 2️⃣ Delete
-  const { count: deleted } = await prisma.notification.deleteMany({
+  const { count: deleted } = await prisma.announcement.deleteMany({
     where: {
       createdAt: { lt: cutoffDate },
     },
   });
 
-  logger.info(`[Notification Cleanup] Deleted ${deleted} notifications`);
+  logger.info(`[CLEANUP ANNOUNCEMENTS] Deleted ${deleted} annoucements`);
 
   return { found, deleted };
 }

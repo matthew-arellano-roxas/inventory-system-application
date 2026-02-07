@@ -32,7 +32,7 @@ enum TransactionType {
   PURCHASE
 }
 
-enum NotificationType {
+enum AnnouncementType {
   STOCK
   RESOURCE
 }
@@ -77,6 +77,7 @@ model Branch{
   product Product[]
   transaction Transaction[]
   branchReport BranchReport?
+  operatingExpense OperatingExpense[]
 }
 
 // Transaction
@@ -128,7 +129,7 @@ model BranchReport{
   branchId Int @unique
   branch Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
   profit Float @default(0)
-  sales Float @default(0)
+  revenue Float @default(0)
 
   @@index([branchId])
 }
@@ -138,7 +139,7 @@ model ProductReport{
   productId Int @unique
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   profit Float @default(0)
-  sales Float @default(0)
+  revenue Float @default(0)
   stock Float @default(0)
 
   @@index([productId])
@@ -148,19 +149,27 @@ model MonthlyReport{
   id Int @id @default(autoincrement())
   date DateTime @default(now())
   profit Float @default(0)
-  sales Float @default(0)
+  revenue Float @default(0)
   stock Float @default(0)
 }
 
 // Notification
-model Notification{
+model Announcement{
   id Int @id @default(autoincrement())
-  type NotificationType
+  type AnnouncementType
   title String
   message String
   createdAt DateTime @default(now())
 }
 
+model OperatingExpense{
+  id Int @id @default(autoincrement())
+  branchId Int
+  branch Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  name String
+  amount Float
+  createdAt DateTime @default(now())
+}
 
 model SystemSettings{
   id Int @id @default(autoincrement())

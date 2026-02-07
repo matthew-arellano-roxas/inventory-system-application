@@ -8,13 +8,13 @@ export async function createMonthlyReport() {
     const branchReport = await tx.branchReport
       .aggregate({
         _sum: {
-          sales: true,
+          revenue: true,
           profit: true,
         },
       })
       .then((b) => {
         return {
-          sales: b._sum.sales ?? 0,
+          sales: b._sum.revenue ?? 0,
           profit: b._sum.profit ?? 0,
         };
       });
@@ -22,7 +22,7 @@ export async function createMonthlyReport() {
     await tx.monthlyReport.create({
       data: {
         date: currentDate,
-        sales: branchReport.sales,
+        revenue: branchReport.sales,
         profit: branchReport.profit,
       },
     });
