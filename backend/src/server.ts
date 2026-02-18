@@ -35,15 +35,15 @@ app.use(cors(corsOptions));
 // Auth0 middleware
 initSocketServer(server);
 
-app.use(protectedRoute);
-app.use('/api/product', productRoute);
-app.use('/api/branch', branchRoute);
-app.use('/api/category', categoryRoute);
-app.use('/api/stock', stockRoute);
-app.use('/api/transaction', transactionRoute);
-app.use('/api/report', reportRoute);
-app.use('/api/announcement', annoucementRoute);
-app.use('/api/expenses', opexRoute);
+app.use('/api/product', protectedRoute, productRoute);
+app.use('/api/branch', protectedRoute, branchRoute);
+app.use('/api/category', protectedRoute, categoryRoute);
+app.use('/api/stock', protectedRoute, stockRoute);
+app.use('/api/transaction', protectedRoute, transactionRoute);
+app.use('/api/report', protectedRoute, reportRoute);
+app.use('/api/announcement', protectedRoute, annoucementRoute);
+app.use('/api/expenses', protectedRoute, opexRoute);
+app.get('/health', (req, res) => res.status(200).json({ status: 'OK' }));
 
 app.use(errorHandler);
 

@@ -5,7 +5,7 @@ import { opexService } from './opex.service';
 import { BranchFinancialReport } from '@/types/report.types';
 
 // Monthly Reports
-const getMonthlyReports = async () => {
+const getMonthlyReports = () => {
   return prisma.monthlyReport.findMany({
     orderBy: { date: 'desc' },
     take: 6,

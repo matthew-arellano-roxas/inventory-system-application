@@ -4,7 +4,7 @@ import createError from 'http-errors';
 import { Branch } from '@models';
 import { BranchWhereInput } from '@root/generated/prisma/models';
 
-const itemLimit = Number(process.env.PAGINATION_ITEM_LIMIT);
+const itemLimit = 30;
 
 // Get all branches with optional pagination
 const getBranches = async (page: number = 1, search?: string) => {

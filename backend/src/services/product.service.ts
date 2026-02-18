@@ -86,7 +86,12 @@ const isProfitable = (costPerUnit: number, sellingPrice: number) => {
   return costPerUnit < sellingPrice;
 };
 
+const getProductCount = async () => {
+  return prisma.product.count();
+};
+
 export const productService = {
+  getProductCount,
   getProducts,
   getProductById,
   createProduct,

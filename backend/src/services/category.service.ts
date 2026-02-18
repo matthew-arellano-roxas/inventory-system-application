@@ -4,7 +4,7 @@ import createError from 'http-errors';
 import { Category } from '@models';
 import { CategoryWhereInput } from '@root/generated/prisma/models';
 
-const itemLimit = Number(process.env.PAGINATION_ITEM_LIMIT);
+const itemLimit = 30;
 
 // Get a paginated list of categories
 const getCategories = async (page: number = 1, search?: string): Promise<Category[]> => {

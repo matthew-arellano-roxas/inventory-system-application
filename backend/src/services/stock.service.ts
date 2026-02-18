@@ -5,7 +5,7 @@ import createHttpError from 'http-errors';
 const getStockMovements = async () => {
   return prisma.stockMovement.findMany({
     orderBy: { createdAt: 'desc' },
-    take: 50,
+    take: 30,
   });
 };
 
@@ -20,14 +20,14 @@ const getStockMovementsByProductId = async (id: number) => {
 
 // Get product stock
 const getProductStock = async (productId: number) => {
-  return prisma.productReport
-    .findFirst({
-      where: { productId },
-      select: { productId: true, stock: true },
-    })
-    .catch((_err) => {
-      throw createHttpError.NotFound('Product stock not found');
-    });
+  const productStock = await prisma.productReport.findFirst({
+    where: { productId },
+    select: { productId: true, stock: true },
+  });
+
+  if (!productStock) throw new createHttpError.NotFound('Product Report Not Found.');
+
+  return productStock.stock;
 };
 
 export const stockService = {

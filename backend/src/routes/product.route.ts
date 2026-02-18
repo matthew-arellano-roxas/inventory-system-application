@@ -9,6 +9,12 @@ import { checkPermissions } from '@/middlewares';
 const productRoute: Router = Router();
 
 productRoute.get(
+  '/count',
+  checkPermissions(['read:product']),
+  cacheMiddleware(TTL.ONE_MINUTE),
+  productController.getProductCount,
+);
+productRoute.get(
   '/',
   checkPermissions(['read:product']),
   cacheMiddleware(TTL.ONE_MINUTE),

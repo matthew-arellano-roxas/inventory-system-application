@@ -1,0 +1,69 @@
+import { RootLayout } from "@/components/layout/RootLayout";
+import { LoginPage } from "@/components/auth/Login";
+import { AnnouncementPage } from "@/components/pages/AnnouncementPage";
+import { Dashboard } from "@/components/pages/Dashboard";
+import { InventoryPage } from "@/components/pages/InventoryPage";
+import { PointOfSalePage } from "@/components/pages/PointOfSale/PointOfSale";
+import { ProductFormPage } from "@/components/pages/PointOfSale/ProductFormPage";
+import { ProductStorePage } from "@/components/pages/PointOfSale/ProductStorePage";
+import { TransactionsPage } from "@/components/pages/TransactionsPage";
+import { NotFoundPage } from "@/components/pages/NotFoundPage";
+import { ErrorHandler } from "@/components/ErrorHandler";
+
+export const routes = [
+  {
+    path: "/",
+    element: <RootLayout />,
+    errorElement: <ErrorHandler />,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: "/inventory",
+        element: <InventoryPage />,
+      },
+      {
+        path: "/announcement",
+        element: <AnnouncementPage />,
+      },
+      {
+        path: "/transactions",
+        element: <TransactionsPage />,
+      },
+      {
+        path: "/pos",
+        children: [
+          {
+            index: true,
+            element: <PointOfSalePage />,
+          },
+          {
+            path: ":branchId",
+            children: [
+              {
+                index: true,
+                element: <ProductStorePage />,
+              },
+              {
+                path: "product-form", // remove the duplicate :branchId
+                element: <ProductFormPage />,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
+];
+
+export default routes;
