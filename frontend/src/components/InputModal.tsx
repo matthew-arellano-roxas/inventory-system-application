@@ -12,6 +12,7 @@ interface InputModalProps {
   defaultValue?: string;
   label: string;
   placeholder?: string;
+  autoComplete?: boolean;
 }
 
 export function InputModal({
@@ -22,6 +23,7 @@ export function InputModal({
   defaultValue = "",
   label,
   placeholder,
+  autoComplete,
 }: InputModalProps) {
   // We initialize state directly.
   // Because we use a 'key' on the BaseModal below,
@@ -58,6 +60,7 @@ export function InputModal({
           onChange={(e) => setValue(e.target.value)}
           placeholder={placeholder}
           autoFocus
+          autoComplete={autoComplete ? "on" : "off"}
         />
       </div>
     </BaseModal>

@@ -35,87 +35,131 @@ export function ProductReportRanking({
   }, [data]);
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Top Products</CardTitle>
         <CardDescription>Ranked by revenue</CardDescription>
       </CardHeader>
 
-      <CardContent className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead className="text-muted-foreground">
-            <tr className="border-b">
-              <th className="text-left py-2">#</th>
-              <th className="text-left py-2">Product</th>
-              <th className="text-right py-2">Revenue</th>
-              <th className="text-right py-2">Profit</th>
-              <th className="text-right py-2">Stock</th>
-              <th className="text-right py-2">Margin</th>
-            </tr>
-          </thead>
+      <CardContent>
+        {/* --- MOBILE VIEW: Visible only on small screens --- */}
+        <div className="grid grid-cols-1 gap-4 md:hidden">
+          {ranked.map((p, index) => {
+            const margin = p.margin;
+            return (
+              <div
+                key={p.id}
+                className="relative flex flex-col gap-3 p-4 rounded-xl border bg-card/50"
+              >
+                {/* Rank Badge */}
+                <div className="absolute top-3 right-3 h-6 w-6 flex items-center justify-center rounded-full bg-muted text-xs font-bold">
+                  #{index + 1}
+                </div>
 
-          <tbody>
-            {ranked.map((p, index) => {
-              const margin = p.margin;
+                <div className="space-y-1">
+                  <p className="text-sm font-black uppercase text-slate-500">
+                    Product
+                  </p>
+                  <p className="font-bold text-lg">{p.productName}</p>
+                </div>
 
-              const marginColor =
-                margin >= 25
-                  ? "text-emerald-600 dark:text-emerald-400"
-                  : margin >= 15
-                    ? "text-yellow-600 dark:text-yellow-400"
-                    : "text-rose-600 dark:text-rose-400";
+                <div className="grid grid-cols-2 gap-4 border-t pt-3">
+                  <div>
+                    <p className="text-[10px] font-bold uppercase text-muted-foreground">
+                      Revenue
+                    </p>
+                    <p className="text-emerald-600 font-bold">
+                      {formatCurrency(p.revenue)}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase text-muted-foreground">
+                      Profit
+                    </p>
+                    <p className="text-indigo-600 font-bold">
+                      {formatCurrency(p.profit)}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase text-muted-foreground">
+                      Stock
+                    </p>
+                    <p
+                      className={
+                        p.stock < 30 ? "text-rose-600 font-bold" : "font-bold"
+                      }
+                    >
+                      {p.stock}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase text-muted-foreground">
+                      Margin
+                    </p>
+                    <p className="text-slate-900 font-bold">
+                      {margin.toFixed(1)}%
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
 
-              return (
-                <tr
-                  key={p.id}
-                  className={`border-b last:border-0 transition-colors ${
-                    index === 0
-                      ? "bg-emerald-500/10 hover:bg-emerald-500/15"
-                      : index === 1
-                        ? "bg-indigo-500/10 hover:bg-indigo-500/15"
-                        : index === 2
-                          ? "bg-amber-500/10 hover:bg-amber-500/15"
-                          : "bg-transparent hover:bg-muted/40"
-                  }`}
-                >
-                  <td className="py-2 font-semibold text-muted-foreground">
-                    {index + 1}
-                  </td>
+        {/* --- DESKTOP VIEW: Hidden on mobile --- */}
+        <div className="hidden md:block w-full overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="text-muted-foreground">
+              <tr className="border-b">
+                <th className="text-left py-2">#</th>
+                <th className="text-left py-2">Product</th>
+                <th className="text-right py-2">Revenue</th>
+                <th className="text-right py-2">Profit</th>
+                <th className="text-right py-2">Stock</th>
+                <th className="text-right py-2">Margin</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ranked.map((p, index) => {
+                const margin = p.margin;
+                const marginColor =
+                  margin >= 25
+                    ? "text-emerald-600"
+                    : margin >= 15
+                      ? "text-yellow-600"
+                      : "text-rose-600";
 
-                  <td className="py-2 font-medium text-foreground">
-                    {p.productName}
-                  </td>
-
-                  <td className="py-2 text-right font-semibold text-emerald-600 dark:text-emerald-400">
-                    {formatCurrency(p.revenue)}
-                  </td>
-
-                  <td className="py-2 text-right font-medium text-indigo-600 dark:text-indigo-400">
-                    {formatCurrency(p.profit)}
-                  </td>
-
-                  <td
-                    className={`py-2 text-right font-medium ${
-                      p.stock < 30
-                        ? "text-rose-600 dark:text-rose-400"
-                        : p.stock < 60
-                          ? "text-yellow-600 dark:text-yellow-400"
-                          : "text-muted-foreground"
-                    }`}
+                return (
+                  <tr
+                    key={p.id}
+                    className="border-b last:border-0 hover:bg-muted/40 transition-colors"
                   >
-                    {p.stock}
-                  </td>
-
-                  <td
-                    className={`py-2 text-right font-semibold ${marginColor}`}
-                  >
-                    {margin.toFixed(1)}%
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                    <td className="py-3 font-semibold text-muted-foreground">
+                      {index + 1}
+                    </td>
+                    <td className="py-3 font-medium">{p.productName}</td>
+                    <td className="py-3 text-right font-semibold text-emerald-600">
+                      {formatCurrency(p.revenue)}
+                    </td>
+                    <td className="py-3 text-right font-medium text-indigo-600">
+                      {formatCurrency(p.profit)}
+                    </td>
+                    <td
+                      className={`py-3 text-right font-medium ${p.stock < 30 ? "text-rose-600" : ""}`}
+                    >
+                      {p.stock}
+                    </td>
+                    <td
+                      className={`py-3 text-right font-semibold ${marginColor}`}
+                    >
+                      {margin.toFixed(1)}%
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </CardContent>
     </Card>
   );

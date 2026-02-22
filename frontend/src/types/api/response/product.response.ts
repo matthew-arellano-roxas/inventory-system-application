@@ -1,7 +1,7 @@
 import type { Unit } from "@/types/api/shared";
 
 export type Product = {
-  id: number;
+  id?: number;
   branchId: number;
   categoryId: number;
   name: string;
@@ -9,7 +9,7 @@ export type Product = {
   soldBy: Unit;
   sellingPrice: number;
   addedBy: string;
-  createdAt: string;
+  createdAt?: string;
 };
 
 export type ProductSnippet = {

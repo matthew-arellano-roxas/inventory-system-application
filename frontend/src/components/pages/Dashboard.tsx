@@ -56,8 +56,8 @@ export function Dashboard() {
       {/* 1. HEADER */}
       <section className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b pb-6">
         <div className="flex items-center gap-4">
-          <div className="p-3 bg-primary/10 rounded-2xl shrink-0">
-            <Calendar className="h-7 w-7 text-primary" />
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-md shadow-primary/20">
+            <Calendar className="h-5 w-5" />
           </div>
           <div>
             <h1 className="text-2xl font-black tracking-tighter uppercase">

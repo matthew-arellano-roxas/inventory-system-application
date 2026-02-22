@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { environment } from "@/config";
 
 export function LoginPage() {
   const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
@@ -27,6 +28,8 @@ export function LoginPage() {
     await loginWithRedirect({
       authorizationParams: {
         connection: "google-oauth2",
+        audience: environment.VITE_AUTH0_AUDIENCE,
+        scope: environment.VITE_AUTH0_SCOPE,
       },
       appState: {
         returnTo: sessionStorage.getItem("redirectAfterLogin") || "/",

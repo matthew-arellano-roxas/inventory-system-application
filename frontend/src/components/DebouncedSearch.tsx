@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -9,25 +9,21 @@ interface DebouncedSearchProps {
   placeholder?: string;
   label?: string;
   delay?: number;
-  className?: string;
+  className?: string; // controls layout of the whole component
 }
 
 export function DebouncedSearch({
   onSearch,
   placeholder = "Search...",
   label = "Search",
-  delay = 500, // 500ms default debounce
+  delay = 500,
   className,
 }: DebouncedSearchProps) {
   const [displayValue, setDisplayValue] = useState("");
 
   useEffect(() => {
-    const handler = setTimeout(() => {
-      onSearch(displayValue);
-    }, delay);
-
-    // Cleanup: clear timeout if user types again before delay finishes
-    return () => clearTimeout(handler);
+    const handler = window.setTimeout(() => onSearch(displayValue), delay);
+    return () => window.clearTimeout(handler);
   }, [displayValue, delay, onSearch]);
 
   const handleClear = () => {
@@ -36,21 +32,25 @@ export function DebouncedSearch({
   };
 
   return (
-    <div>
+    <div className={className}>
       <Label className="text-xs font-semibold ml-1 uppercase text-muted-foreground mb-2">
         {label}
       </Label>
 
-      <div className={`relative w-full ${className}`}>
+      {/* min-w-0 is critical inside flex parents */}
+      <div className="relative w-full min-w-0">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+
         <Input
           value={displayValue}
           onChange={(e) => setDisplayValue(e.target.value)}
           placeholder={placeholder}
-          className="pl-9 pr-9 h-10 shadow-sm"
+          className="h-10 w-full min-w-0 pl-9 pr-9 shadow-sm truncate placeholder:truncate focus:truncate focus:placeholder:truncate"
         />
+
         {displayValue && (
           <Button
+            type="button"
             variant="ghost"
             size="icon"
             className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 hover:bg-transparent"
