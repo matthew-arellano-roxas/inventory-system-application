@@ -1,145 +1,86 @@
 import { DebouncedSearch } from "@/components/DebouncedSearch";
-import { ProductFormModal } from "@/components/forms/ProductFormModal";
+import { CreateProductFormModal } from "@/components/forms/CreateProductFormModal";
 import { InputModal } from "@/components/InputModal";
+import { Loader } from "@/components/Loader";
 import { ManagedSelect } from "@/components/pos/ManagedSelect";
 import { ProductSnippetCard } from "@/components/pos/ProductSnippetCard";
 import { SelectionModal } from "@/components/pos/SelectionModal";
 import { Tooltip } from "@/components/ToolTip";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useCategoryMutation } from "@/hooks/useCategoryMutation";
+import { useCategoryActions } from "@/hooks/useCategoryActions";
 import { usePosCatalogQueries } from "@/hooks/usePosCatalogQueries";
-import type { CategoryResponse } from "@/types/api/response";
+import { useQueryParams } from "@/hooks/useQueryParams";
 import { Plus, ShoppingBasket, Store } from "lucide-react";
-import { useState } from "react";
-import { useSearchParams } from "react-router";
+import { useRef, useState } from "react";
+import { useParams } from "react-router";
 
-type CategoryModalStates = {
-  isOpen: boolean;
-  title: string;
-  label: string;
-  placeholder: string;
-  isEditing: boolean;
-  selectedCategoryToEdit: number | null;
-};
-
-type ModalView = "IDLE" | "CATEGORY_FORM" | "PRODUCT_FORM" | "SELECTION_MENU";
+type ModalView =
+  | "IDLE"
+  | "CATEGORY_FORM"
+  | "PRODUCT_CREATE_FORM"
+  | "SELECTION_MENU";
 
 export function ProductSelectionPage() {
+  const { branchId: branchIdParam } = useParams();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { searchParams, getParam, setParams } = useQueryParams();
+  const search = getParam("search") ?? "";
+  const branchId =
+    branchIdParam && !Number.isNaN(Number(branchIdParam))
+      ? Number(branchIdParam)
+      : null;
+  const rawCategoryId = getParam("categoryId");
+  const categoryId =
+    rawCategoryId && !Number.isNaN(Number(rawCategoryId))
+      ? Number(rawCategoryId)
+      : null;
   const { branchList, categoryList, productList, isPending } =
-    usePosCatalogQueries();
-  const [searchParams, setSearchParams] = useSearchParams();
+    usePosCatalogQueries({ branchId, categoryId, search });
   const [activeModal, setActiveModal] = useState<ModalView>("IDLE");
-  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const {
-    create: createCategory,
-    update: updateCategory,
-    remove: removeCategory,
-  } = useCategoryMutation();
+    handleSelectCategory,
+    handleUpdateCategory,
+    handleCategoryDelete,
+    handleCategoryModalClose,
+    handleCategoryModalSubmit,
+    categoryModal,
+  } = useCategoryActions(setActiveModal);
 
-  const [categoryModal, setCategoryModal] = useState<CategoryModalStates>({
-    isOpen: false,
-    title: "New Category",
-    label: "Category",
-    placeholder: "Input category name",
-    isEditing: false,
-    selectedCategoryToEdit: null,
-  });
-
-  const [newItemModal, setNewItemModal] = useState({
-    isOpen: false,
-    title: "New Item",
-    defaultValue: "",
-    items: ["Category", "Product"],
-  });
-
-  const [selectedCategory, setSelectedCategory] = useState<number | string>();
+  function isElementFocused(el: HTMLElement | null): boolean {
+    if (!el) return false;
+    return document.activeElement === el;
+  }
 
   // Search
   const handleSearch = (value: string) => {
-    if (!value) {
-      setSearchParams((prev) => {
-        prev.delete("search");
-        return prev;
-      });
-    } else {
-      setSearchParams((prev) => {
-        prev.set("search", value);
-        return prev;
-      });
+    const nextSearch = value.trim();
+    if (
+      !nextSearch &&
+      isElementFocused(inputRef.current) &&
+      searchParams.has("search")
+    ) {
+      setParams({ search: null });
+      return;
     }
-  };
 
-  // Category Select
-  const handleSelectCategory = (catId: string | number) => {
-    if (catId) {
-      setSelectedCategory(catId);
-      setSearchParams((prev) => {
-        prev.set("category", String(catId));
-        return prev;
-      });
-    } else {
-      setSelectedCategory(catId);
-      setSearchParams((prev) => {
-        prev.delete("category");
-        return prev;
-      });
-    }
-  };
-
-  const handleUpdateCategory = async (category: CategoryResponse) => {
-    setCategoryModal((prev) => ({
-      ...prev,
-      isOpen: true,
-      title: "Update Category",
-      label: "Category",
-      placeholder: "Input category name",
-      isEditing: true,
-      selectedCategoryToEdit: category.id,
-    }));
-  };
-
-  const handleCategoryDelete = (category: CategoryResponse) => {
-    removeCategory.mutate(category.id);
+    setParams({ search: nextSearch || null });
   };
 
   // New Item
   const handleNewItemModalSelect = (value: string) => {
     if (value === "Category") {
-      setCategoryModal((prev) => ({
-        ...prev,
-        isOpen: true,
-        isEditing: false,
-        title: "New Category",
-        label: "Category",
-        placeholder: "Input category name",
-      }));
+      setActiveModal("CATEGORY_FORM");
     } else {
-      setIsProductModalOpen(true);
+      setActiveModal("PRODUCT_CREATE_FORM");
     }
-    setNewItemModal((prev) => ({ ...prev, isOpen: false }));
   };
 
   const handleNewItemModalClose = () => {
-    setNewItemModal((prev) => ({ ...prev, isOpen: false }));
+    setActiveModal("IDLE");
   };
 
-  // Category Modal
-  const handleCategoryModalClose = () => {
-    setCategoryModal((prev) => ({ ...prev, isOpen: false }));
-  };
-
-  const handleCategoryModalSubmit = (value: string) => {
-    if (categoryModal.isEditing) {
-      updateCategory.mutate({
-        id: categoryModal.selectedCategoryToEdit!,
-        newData: { name: value },
-      });
-    } else {
-      createCategory.mutate(value);
-    }
-    setCategoryModal((prev) => ({ ...prev, isOpen: false }));
-  };
+  if (Object.values(isPending).every((val) => val === true)) return <Loader />;
 
   return (
     <div className="relative pb-24 mx-8">
@@ -147,15 +88,18 @@ export function ProductSelectionPage() {
       <div className="flex flex-col sm:flex-row justify-between items-end sm:items-center gap-4 mb-6">
         <div className="flex items-center gap-2 w-full sm:w-auto">
           <div className="flex-1 sm:w-80">
-            <DebouncedSearch onSearch={handleSearch} />
+            <DebouncedSearch
+              delay={1000}
+              onSearch={handleSearch}
+              ref={inputRef}
+              defaultValue={search}
+            />
           </div>
           <Tooltip description="Add new content">
             <Button
               variant="default"
               size="icon"
-              onClick={() =>
-                setNewItemModal((prev) => ({ ...prev, isOpen: true }))
-              }
+              onClick={() => setActiveModal("SELECTION_MENU")}
               className="mt-6"
             >
               <Plus className="h-5 w-5" />
@@ -166,7 +110,7 @@ export function ProductSelectionPage() {
         <ManagedSelect
           label="Category"
           className="w-full sm:max-w-[200px]"
-          value={selectedCategory}
+          value={categoryId ?? undefined}
           options={categoryList}
           placeholder="Select Category"
           onSelect={handleSelectCategory}
@@ -203,7 +147,7 @@ export function ProductSelectionPage() {
         </div>
       </div>
       <InputModal
-        isOpen={categoryModal.isOpen}
+        isOpen={activeModal === "CATEGORY_FORM"}
         title={categoryModal.title}
         label={categoryModal.label}
         placeholder={categoryModal.placeholder}
@@ -212,15 +156,19 @@ export function ProductSelectionPage() {
         onSubmit={handleCategoryModalSubmit}
       />
       <SelectionModal
-        {...newItemModal}
+        title="New Item"
+        items={["Category", "Product"]}
+        isOpen={activeModal === "SELECTION_MENU"}
         onSelect={handleNewItemModalSelect}
         onClose={handleNewItemModalClose}
       />
-      <ProductFormModal
-        setIsOpen={(state) => setIsProductModalOpen(state)}
+      <CreateProductFormModal
+        setIsOpen={(state) =>
+          state ? setActiveModal("PRODUCT_CREATE_FORM") : setActiveModal("IDLE")
+        }
         categoryList={categoryList}
         branchList={branchList}
-        isOpen={isProductModalOpen}
+        isOpen={activeModal === "PRODUCT_CREATE_FORM"}
       />
     </div>
   );

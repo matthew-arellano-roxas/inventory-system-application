@@ -5,17 +5,8 @@ import type {
   UpdateProductPayload,
 } from "@/schemas/ProductSchema";
 import type { Product, ProductSnippet } from "@/types/api/response";
-import type { Unit } from "@/types/api/shared";
 import type { ApiResponse } from "@/types/api/shared/api-response";
-
-type ProductQuery = {
-  page?: number;
-  category?: number;
-  branchId?: number;
-  soldBy?: Unit;
-  details?: boolean;
-  search: string;
-};
+import type { ProductQuery } from "@/types/api/shared/search-params.types";
 
 type UpdateProductArgs = {
   productId: number;
@@ -34,12 +25,15 @@ export const getProducts = async (query?: ProductQuery) => {
 };
 
 export const getProductSnippets = async (query?: ProductQuery) => {
+  const params = cleanQuery({
+    ...query,
+    details: false,
+  });
+
   const response = await api.get<ApiResponse<ProductSnippet[]>>(
     "/api/product",
     {
-      params: {
-        ...query,
-      },
+      params,
     },
   );
   return response.data.data;

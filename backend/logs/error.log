@@ -8827,3 +8827,13 @@ Unique constraint failed on the fields: (`id`)
     at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\branch.service.ts:5:58)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)
 2026-02-22 13:42:25+08:00 [31merror[39m: POST /api/product [404] - 309ms
+2026-02-24 16:17:24+08:00 [31merror[39m: InvalidTokenError: "exp" claim timestamp check failed
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\express-oauth2-jwt-bearer\dist\index.js:278:19
+    at async Object.verify (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\express-oauth2-jwt-bearer\dist\index.js:605:29)
+    at async C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\express-oauth2-jwt-bearer\dist\index.js:812:24
+2026-02-24 16:17:24+08:00 [31merror[39m: GET /api/product?search=saba%20das [500] - 107ms
+2026-02-24 16:17:30+08:00 [31merror[39m: InvalidTokenError: "exp" claim timestamp check failed
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\express-oauth2-jwt-bearer\dist\index.js:278:19
+    at async Object.verify (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\express-oauth2-jwt-bearer\dist\index.js:605:29)
+    at async C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\express-oauth2-jwt-bearer\dist\index.js:812:24
+2026-02-24 16:17:30+08:00 [31merror[39m: GET /api/product?search=saba [500] - 9ms

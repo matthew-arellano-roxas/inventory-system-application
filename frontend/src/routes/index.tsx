@@ -7,7 +7,6 @@ import { PointOfSalePage } from "@/components/pages/PointOfSale/PointOfSalePage"
 import { TransactionsPage } from "@/components/pages/TransactionsPage";
 import { NotFoundPage } from "@/components/pages/NotFoundPage";
 import { ErrorHandler } from "@/components/ErrorHandler";
-import { ProductFormModal } from "@/components/forms/ProductFormModal";
 import { ProductStorePage } from "@/components/pages/PointOfSale/ProductStorePage";
 import { ProductSelectionPage } from "@/components/pages/PointOfSale/ProductSelectionPage";
 
@@ -45,7 +44,7 @@ export const routes = [
             children: [
               {
                 index: true,
-                element: <ProductStorePage />,
+                element: <ProductSelectionPage />,
               },
             ],
           },
@@ -53,7 +52,7 @@ export const routes = [
       },
       {
         path: "/product-selection",
-        element: <ProductSelectionPage />,
+        element: <ProductStorePage />,
       },
     ],
   },

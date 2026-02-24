@@ -1,6 +1,7 @@
 import {
   createProductSchema,
   type CreateProductPayload,
+  type UpdateProductPayload,
 } from "@/schemas/ProductSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
@@ -36,16 +37,16 @@ type ProductFormProps = {
   categoryList: CategoryResponse[];
 };
 
-export function ProductFormModal({
+export function UpdateProductFormModal({
   isOpen,
   setIsOpen,
   categoryList,
   branchList,
 }: ProductFormProps) {
-  const { create } = useProductMutation();
+  const { update } = useProductMutation();
   const { isLoading: isEmailLoading, user } = useAuth0();
 
-  const form = useForm<CreateProductPayload>({
+  const form = useForm<UpdateProductPayload>({
     resolver: zodResolver(createProductSchema),
     mode: "onBlur",
     defaultValues: {
@@ -53,11 +54,8 @@ export function ProductFormModal({
     },
   });
 
-  async function onSubmitFn(data: CreateProductPayload) {
-    await create.mutate({
-      ...data,
-      addedBy: user?.email ?? "",
-    });
+  async function onSubmitFn(data: UpdateProductPayload) {
+    await update.mutate(data);
     setIsOpen(false);
     form.reset();
   }

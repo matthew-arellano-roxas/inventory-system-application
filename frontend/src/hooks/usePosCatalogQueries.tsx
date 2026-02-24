@@ -3,9 +3,12 @@ import { getBranches } from "@/api/branch.api";
 import { getCategories } from "@/api/category.api";
 import { getProductSnippets } from "@/api/product.api";
 import { keys } from "@/api/query-keys";
+import { cleanQuery } from "@/helpers/cleanQuery";
+import type { ProductQuery } from "@/types/api/shared/search-params.types";
 
-export function usePosCatalogQueries() {
+export function usePosCatalogQueries(filters?: ProductQuery) {
   const staleTime = 60 * 1000;
+  const productFilters = cleanQuery(filters ?? {});
 
   const branches = useQuery({
     queryKey: keys.branches.all,
@@ -20,8 +23,8 @@ export function usePosCatalogQueries() {
   });
 
   const products = useQuery({
-    queryKey: keys.products.filters(),
-    queryFn: () => getProductSnippets(),
+    queryKey: [...keys.products.filters(), productFilters],
+    queryFn: () => getProductSnippets(productFilters),
     staleTime,
   });
 
@@ -33,6 +36,11 @@ export function usePosCatalogQueries() {
       branches: branches.isPending,
       categories: categories.isPending,
       products: products.isPending,
+    },
+    refetch: {
+      branches: branches.refetch,
+      categories: categories.refetch,
+      products: products.refetch,
     },
   };
 }
