@@ -27,6 +27,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Label } from "../ui/label";
 
 interface ManagedSelectProps<T extends { id: number | string; name: string }> {
   options: T[];
@@ -37,6 +38,7 @@ interface ManagedSelectProps<T extends { id: number | string; name: string }> {
   onDelete?: (option: T) => void;
   className?: string;
   triggerClassName?: string;
+  label?: string;
 }
 
 export function ManagedSelect<T extends { id: number | string; name: string }>({
@@ -48,12 +50,18 @@ export function ManagedSelect<T extends { id: number | string; name: string }>({
   onDelete,
   className,
   triggerClassName,
+  label,
 }: ManagedSelectProps<T>) {
   const [open, setOpen] = React.useState(false);
   const selectedOption = options.find((opt) => opt.id === value);
 
   return (
     <div className={cn("w-full", className)}>
+      {label && (
+        <Label className="text-xs font-semibold ml-1 uppercase text-muted-foreground mb-2">
+          {label}
+        </Label>
+      )}
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -84,7 +92,9 @@ export function ManagedSelect<T extends { id: number | string; name: string }>({
                     key={option.id}
                     value={option.name}
                     onSelect={() => {
-                      onSelect(option.id);
+                      // If the clicked ID is already the value, send an empty string to unselect
+                      const newValue = value === option.id ? "" : option.id;
+                      onSelect(newValue);
                       setOpen(false);
                     }}
                     className="flex items-center justify-between group px-2 py-1.5"
@@ -112,10 +122,7 @@ export function ManagedSelect<T extends { id: number | string; name: string }>({
                             size="icon"
                             className={cn(
                               "h-8 w-8 transition-opacity",
-                              /* FIXED LOGIC:
-                                 1. Always visible on touch devices (no-hover capability)
-                                 2. Only hidden-until-hover on devices that HAVE a mouse (hover: hover)
-                              */
+                              /* Always visible on touch, hover-only on desktop */
                               "opacity-100 @media(hover:hover){opacity-0 group-hover:opacity-100}",
                             )}
                           >

@@ -30,7 +30,7 @@ export const PointOfSalePage = () => {
       <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-6">
         <div className="space-y-1">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-md shadow-primary/20">
               <Store className="h-5 w-5" />
             </div>
             <h1 className="text-2xl lg:text-3xl font-black tracking-tighter uppercase text-slate-900">

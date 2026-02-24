@@ -1,14 +1,14 @@
 import { RootLayout } from "@/components/layout/RootLayout";
-import { LoginPage } from "@/components/auth/Login";
+import { LoginPage } from "@/components/auth/LoginPage";
 import { AnnouncementPage } from "@/components/pages/AnnouncementPage";
 import { Dashboard } from "@/components/pages/Dashboard";
 import { InventoryPage } from "@/components/pages/InventoryPage";
-import { PointOfSalePage } from "@/components/pages/PointOfSale/PointOfSale";
-import { ProductFormPage } from "@/components/pages/PointOfSale/ProductFormPage";
-import { ProductStorePage } from "@/components/pages/PointOfSale/ProductStorePage";
+import { PointOfSalePage } from "@/components/pages/PointOfSale/PointOfSalePage";
 import { TransactionsPage } from "@/components/pages/TransactionsPage";
 import { NotFoundPage } from "@/components/pages/NotFoundPage";
 import { ErrorHandler } from "@/components/ErrorHandler";
+import { ProductStorePage } from "@/components/pages/PointOfSale/ProductStorePage";
+import { ProductSelectionPage } from "@/components/pages/PointOfSale/ProductSelectionPage";
 
 export const routes = [
   {
@@ -44,18 +44,19 @@ export const routes = [
             children: [
               {
                 index: true,
-                element: <ProductStorePage />,
-              },
-              {
-                path: "product-form", // remove the duplicate :branchId
-                element: <ProductFormPage />,
+                element: <ProductSelectionPage />,
               },
             ],
           },
         ],
       },
+      {
+        path: "/product-selection",
+        element: <ProductStorePage />,
+      },
     ],
   },
+
   {
     path: "*",
     element: <NotFoundPage />,

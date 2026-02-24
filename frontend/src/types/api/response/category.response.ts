@@ -1,5 +1,5 @@
 export type CategoryResponse = {
   id: number;
   name: string;
-  createdAt: string; 
+  createdAt?: string;
 };

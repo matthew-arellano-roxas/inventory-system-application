@@ -1,14 +1,23 @@
-import * as z from "zod";
+import { z } from "zod";
+import { Unit } from "@/types/api/shared";
 
-// Assuming Unit is a string union or enum
-export const CreateProductSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  costPerUnit: z.coerce.number().min(0, "Cost must be 0 or more"),
-  soldBy: z.string().min(1, "Select a unit"),
-  sellingPrice: z.coerce.number().min(0, "Price must be 0 or more"),
-  addedBy: z.string().min(1),
-  categoryId: z.coerce.number().min(1, "Select a category"),
-  branchId: z.coerce.number().min(1, "Select a branch"),
+export const createProductSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  costPerUnit: z
+    .number("Expecting a number")
+    .positive("Cost must be greater than 0"),
+  soldBy: z.nativeEnum(Unit),
+  sellingPrice: z
+    .number("Expecting a number")
+    .positive("Selling price must be greater than 0"),
+  categoryId: z
+    .number("Expecting a number")
+    .int()
+    .positive("Category is required"),
+  branchId: z.number("Expecting number").int().positive("Branch is required"),
 });
 
-export type CreateProductFormValues = z.infer<typeof CreateProductSchema>;
+export type CreateProductPayload = z.infer<typeof createProductSchema>;
+
+export const updateProductSchema = createProductSchema.partial();
+export type UpdateProductPayload = z.infer<typeof updateProductSchema>;

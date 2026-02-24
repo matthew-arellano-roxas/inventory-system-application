@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Plus, ShoppingCart, Store } from "lucide-react";
 
 // Components
-import { ProductActionModal } from "@/components/pos/AddToCartModal";
+import { ProductActionModal } from "@/components/pos/ProductActionModal";
 import { ProductSnippetCard } from "@/components/pos/ProductSnippetCard";
 import { SelectionModal as NewItemModal } from "@/components/pos/SelectionModal";
 import { Tooltip } from "@/components/ToolTip";
