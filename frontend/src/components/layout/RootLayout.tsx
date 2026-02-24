@@ -1,23 +1,107 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Sidebar } from "@/components/layout/Sidebar";
-import { Header } from "@/components/layout/Header";
-import { Outlet } from "react-router";
+import { Outlet, Link, useLocation } from "react-router";
 import { Toaster } from "@/components/ui/sonner";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { AxiosInterceptor } from "../axios/AxiosInterceptor";
+import { usePosCartStore } from "@/stores/usePosCartStore";
+import { useThemeStore } from "@/stores/useThemeStore";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ShoppingBasket, Moon, Sun } from "lucide-react";
+import { formatCurrency } from "@/helpers/formatCurrency";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { useEffect } from "react";
 
 export function RootLayout() {
+  const location = useLocation();
+  const items = usePosCartStore((state) => state.items);
+  const scopedBranchId = usePosCartStore((state) => state.scopedBranchId);
+  const theme = useThemeStore((state) => state.theme);
+  const toggleTheme = useThemeStore((state) => state.toggleTheme);
+
+  const cartItemCount = items.reduce((total, item) => total + item.quantity, 0);
+  const cartSubtotal = items.reduce(
+    (total, item) => total + item.unitPrice * item.quantity,
+    0,
+  );
+
+  const branchMatch = location.pathname.match(/^\/pos\/(\d+)(?:\/|$)/);
+  const routeBranchId = branchMatch ? Number(branchMatch[1]) : null;
+  const checkoutBranchId = routeBranchId ?? scopedBranchId;
+  const checkoutHref =
+    checkoutBranchId !== null ? `/pos/${checkoutBranchId}/checkout` : null;
+  const isPosCheckoutRoute = /^\/pos\/\d+\/checkout$/.test(location.pathname);
+  const shouldShowFloatingCart =
+    !isPosCheckoutRoute && checkoutHref && cartItemCount > 0;
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.toggle("dark", theme === "dark");
+    root.style.colorScheme = theme;
+  }, [theme]);
+
   return (
     <ProtectedRoute>
       <AxiosInterceptor>
         <SidebarProvider>
-          <div className="flex min-h-screen w-full bg-background">
+          <div className="flex min-h-screen w-full overflow-x-hidden bg-background">
             <Toaster position="top-center" />
             <Sidebar />
-            <main className="flex-1 p-6 space-y-6">
-              <Header />
+            <main className="min-w-0 flex-1 overflow-x-hidden p-4 space-y-6">
+              <header className="flex items-center justify-between gap-3 border-b pb-4">
+                <SidebarTrigger />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={toggleTheme}
+                  className="gap-2"
+                >
+                  {theme === "dark" ? (
+                    <>
+                      <Sun className="h-4 w-4" />
+                      <span>Light</span>
+                    </>
+                  ) : (
+                    <>
+                      <Moon className="h-4 w-4" />
+                      <span>Dark</span>
+                    </>
+                  )}
+                </Button>
+              </header>
               <Outlet />
             </main>
+            {shouldShowFloatingCart && (
+              <div className="fixed bottom-4 right-4 z-50 max-w-[calc(100vw-1rem)] sm:bottom-6 sm:right-6 sm:max-w-[calc(100vw-3rem)]">
+                <Button
+                  asChild
+                  className="h-auto min-h-14 max-w-full rounded-2xl px-4 py-3 shadow-xl shadow-primary/20"
+                >
+                  <Link
+                    to={checkoutHref}
+                    className="flex min-w-0 items-center justify-between gap-3 sm:min-w-[220px]"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="relative">
+                        <ShoppingBasket className="h-5 w-5" />
+                        <Badge className="absolute -top-2 -right-2 h-4 min-w-4 px-1 text-[10px] leading-none flex items-center justify-center">
+                          {cartItemCount}
+                        </Badge>
+                      </div>
+                      <div className="flex flex-col items-start leading-tight">
+                        <span className="text-xs opacity-80">Cart</span>
+                        <span className="font-semibold text-sm">
+                          {formatCurrency(cartSubtotal)}
+                        </span>
+                      </div>
+                    </div>
+                    <span className="text-xs opacity-90">Checkout</span>
+                  </Link>
+                </Button>
+              </div>
+            )}
           </div>
         </SidebarProvider>
       </AxiosInterceptor>

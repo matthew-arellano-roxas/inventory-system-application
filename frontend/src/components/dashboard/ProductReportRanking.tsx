@@ -35,7 +35,7 @@ export function ProductReportRanking({
   }, [data]);
 
   return (
-    <Card className="w-full">
+    <Card className="w-full border-border/70 bg-card/70 shadow-sm">
       <CardHeader>
         <CardTitle>Top Products</CardTitle>
         <CardDescription>Ranked by revenue</CardDescription>
@@ -49,15 +49,15 @@ export function ProductReportRanking({
             return (
               <div
                 key={p.id}
-                className="relative flex flex-col gap-3 p-4 rounded-xl border bg-card/50"
+                className="relative flex flex-col gap-3 rounded-xl border border-border/70 bg-background/70 p-4 shadow-sm"
               >
                 {/* Rank Badge */}
-                <div className="absolute top-3 right-3 h-6 w-6 flex items-center justify-center rounded-full bg-muted text-xs font-bold">
+                <div className="absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-full border border-border/70 bg-muted/70 text-xs font-bold">
                   #{index + 1}
                 </div>
 
                 <div className="space-y-1">
-                  <p className="text-sm font-black uppercase text-slate-500">
+                  <p className="text-sm font-black uppercase text-muted-foreground">
                     Product
                   </p>
                   <p className="font-bold text-lg">{p.productName}</p>
@@ -96,7 +96,7 @@ export function ProductReportRanking({
                     <p className="text-[10px] font-bold uppercase text-muted-foreground">
                       Margin
                     </p>
-                    <p className="text-slate-900 font-bold">
+                    <p className="font-bold text-foreground">
                       {margin.toFixed(1)}%
                     </p>
                   </div>
@@ -110,7 +110,7 @@ export function ProductReportRanking({
         <div className="hidden md:block w-full overflow-hidden">
           <table className="w-full text-sm">
             <thead className="text-muted-foreground">
-              <tr className="border-b">
+              <tr className="border-b border-border/70">
                 <th className="text-left py-2">#</th>
                 <th className="text-left py-2">Product</th>
                 <th className="text-right py-2">Revenue</th>
@@ -132,7 +132,7 @@ export function ProductReportRanking({
                 return (
                   <tr
                     key={p.id}
-                    className="border-b last:border-0 hover:bg-muted/40 transition-colors"
+                    className="border-b border-border/60 last:border-0 transition-colors hover:bg-muted/30"
                   >
                     <td className="py-3 font-semibold text-muted-foreground">
                       {index + 1}

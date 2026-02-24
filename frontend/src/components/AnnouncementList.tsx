@@ -51,48 +51,39 @@ export function AnnouncementList({
   }
 
   return (
-    <Card className="min-w-0">
-      <CardHeader>
-        <CardTitle>Announcements</CardTitle>
-        <CardDescription>
-          Latest updates for stock and resources
-        </CardDescription>
-      </CardHeader>
+    <CardContent className="space-y-3 p-0 sm:p-1">
+      {sorted.map((a) => (
+        <div
+          key={a.id}
+          className="rounded-xl border p-3 sm:p-4 hover:bg-muted/30 transition-colors"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <span
+                  className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${typeBadgeClass(
+                    a.type,
+                  )}`}
+                >
+                  {typeLabel(a.type)}
+                </span>
 
-      <CardContent className="space-y-3">
-        {sorted.map((a) => (
-          <div
-            key={a.id}
-            className="rounded-lg border p-4 hover:bg-muted/30 transition-colors"
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <span
-                    className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${typeBadgeClass(
-                      a.type,
-                    )}`}
-                  >
-                    {typeLabel(a.type)}
-                  </span>
-
-                  <span className="text-xs text-muted-foreground">
-                    {formatDateTime(a.createdAt)}
-                  </span>
-                </div>
-
-                <h3 className="mt-2 font-semibold text-foreground leading-tight">
-                  {a.title}
-                </h3>
-
-                <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
-                  {a.message}
-                </p>
+                <span className="text-xs text-muted-foreground break-words">
+                  {formatDateTime(a.createdAt)}
+                </span>
               </div>
+
+              <h3 className="mt-2 font-semibold text-foreground leading-tight break-words">
+                {a.title}
+              </h3>
+
+              <p className="mt-1 text-sm text-muted-foreground leading-relaxed break-words">
+                {a.message}
+              </p>
             </div>
           </div>
-        ))}
-      </CardContent>
-    </Card>
+        </div>
+      ))}
+    </CardContent>
   );
 }

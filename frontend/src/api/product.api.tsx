@@ -39,6 +39,32 @@ export const getProductSnippets = async (query?: ProductQuery) => {
   return response.data.data;
 };
 
+export type ProductSnippetPageResult = {
+  items: ProductSnippet[];
+  meta?: Record<string, unknown>;
+};
+
+export const getProductSnippetsPage = async (
+  query?: ProductQuery,
+): Promise<ProductSnippetPageResult> => {
+  const params = cleanQuery({
+    ...query,
+    details: false,
+  });
+
+  const response = await api.get<ApiResponse<ProductSnippet[]>>("/api/product", {
+    params,
+  });
+
+  return {
+    items: response.data.data ?? [],
+    meta:
+      response.data.meta && typeof response.data.meta === "object"
+        ? (response.data.meta as Record<string, unknown>)
+        : undefined,
+  };
+};
+
 export const updateProduct = async (args: UpdateProductArgs) => {
   const response = await api.put<ApiResponse<UpdateProductPayload>>(
     `/api/product/${args.productId}`,

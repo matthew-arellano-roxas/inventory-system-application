@@ -10,6 +10,7 @@ import {
   Trophy,
 } from "lucide-react";
 import { Badge } from "../ui/badge";
+import { Card } from "../ui/card";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -54,27 +55,45 @@ export function Dashboard() {
   return (
     <div className="container mx-auto p-4 lg:p-8 space-y-12">
       {/* 1. HEADER */}
-      <section className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b pb-6">
-        <div className="flex items-center gap-4">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-md shadow-primary/20">
-            <Calendar className="h-5 w-5" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-black tracking-tighter uppercase">
-              Dashboard
-            </h1>
-            <p className="text-sm text-muted-foreground font-medium">
-              Updated: {date}
-            </p>
+      <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white shadow-xl">
+        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_#22d3ee,_transparent_40%),radial-gradient(circle_at_bottom_left,_#f59e0b,_transparent_35%)]" />
+        <div className="relative p-4 sm:p-6">
+          <div className="flex min-w-0 flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="min-w-0">
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/15 backdrop-blur">
+                  <Calendar className="h-5 w-5" />
+                </div>
+                <div className="min-w-0">
+                  <h1 className="text-2xl font-black tracking-tight uppercase break-words">
+                    Dashboard
+                  </h1>
+                  <p className="text-sm text-white/70 break-words">
+                    Business metrics, revenue trends, and top product performance.
+                  </p>
+                </div>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Badge className="rounded-full border-white/15 bg-white/10 px-3 py-1 text-white hover:bg-white/10">
+                  {productData.length} Ranked Products
+                </Badge>
+                <Badge className="rounded-full border-white/15 bg-white/10 px-3 py-1 text-white hover:bg-white/10">
+                  Updated {date}
+                </Badge>
+              </div>
+            </div>
+            <div className="w-full rounded-xl bg-white/10 p-3 ring-1 ring-white/10 md:w-auto md:min-w-[170px]">
+              <p className="text-[10px] uppercase tracking-widest text-white/60">
+                System Status
+              </p>
+              <p className="mt-1 flex items-center text-sm font-semibold">
+                <Activity className="mr-2 h-3.5 w-3.5 text-emerald-300" />
+                Live System
+              </p>
+            </div>
           </div>
         </div>
-        <Badge
-          variant="secondary"
-          className="bg-emerald-50 text-emerald-700 border-emerald-200"
-        >
-          <Activity className="h-3 w-3 mr-2" /> Live System
-        </Badge>
-      </section>
+      </Card>
 
       {/* 2. STATS */}
       <section className="block w-full">

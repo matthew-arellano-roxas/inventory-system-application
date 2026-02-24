@@ -1,10 +1,10 @@
 import {
-  createProductSchema,
-  type CreateProductPayload,
+  updateProductSchema,
   type UpdateProductPayload,
 } from "@/schemas/ProductSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { useEffect } from "react";
 import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import {
@@ -17,10 +17,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "../ui/button";
-import { Loader } from "../Loader";
 import { Unit } from "@/types/api/shared";
 import { useProductMutation } from "@/hooks/useProductMutation";
-import { useAuth0 } from "@auth0/auth0-react";
 import {
   Dialog,
   DialogClose,
@@ -28,13 +26,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import type { BranchResponse, CategoryResponse } from "@/types/api/response";
+import type { BranchResponse, CategoryResponse, Product } from "@/types/api/response";
 
-type ProductFormProps = {
+type UpdateProductFormModalProps = {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   branchList: BranchResponse[];
   categoryList: CategoryResponse[];
+  product: Product | null;
 };
 
 export function UpdateProductFormModal({
@@ -42,38 +41,53 @@ export function UpdateProductFormModal({
   setIsOpen,
   categoryList,
   branchList,
-}: ProductFormProps) {
+  product,
+}: UpdateProductFormModalProps) {
   const { update } = useProductMutation();
-  const { isLoading: isEmailLoading, user } = useAuth0();
 
   const form = useForm<UpdateProductPayload>({
-    resolver: zodResolver(createProductSchema),
+    resolver: zodResolver(updateProductSchema),
     mode: "onBlur",
     defaultValues: {
-      soldBy: Unit.PC, // keeps select controlled and valid
+      soldBy: Unit.PC,
     },
   });
 
+  useEffect(() => {
+    if (!isOpen || !product) return;
+
+    form.reset({
+      name: product.name,
+      costPerUnit: product.costPerUnit,
+      soldBy: product.soldBy,
+      sellingPrice: product.sellingPrice,
+      categoryId: product.categoryId,
+      branchId: product.branchId,
+    });
+  }, [form, isOpen, product]);
+
   async function onSubmitFn(data: UpdateProductPayload) {
-    await update.mutate(data);
+    if (!product?.id) return;
+
+    await update.mutateAsync({
+      productId: product.id,
+      data,
+    });
+
     setIsOpen(false);
     form.reset();
   }
 
   const { errors } = form.formState;
 
-  if (isEmailLoading) {
-    return <Loader />;
-  }
-
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent aria-describedby={undefined}>
         <DialogHeader>
-          <DialogTitle>Create Product</DialogTitle>
+          <DialogTitle>Update Product</DialogTitle>
         </DialogHeader>
         <div className="no-scrollbar -mx-4 max-h-[50vh] overflow-y-auto px-4">
-          <form id="product-form" onSubmit={form.handleSubmit(onSubmitFn)}>
+          <form id="update-product-form" onSubmit={form.handleSubmit(onSubmitFn)}>
             <FieldGroup>
               <Field data-invalid={!!errors.name}>
                 <FieldLabel htmlFor="name">Product Name</FieldLabel>
@@ -121,7 +135,6 @@ export function UpdateProductFormModal({
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel>Sold by</FieldLabel>
-
                     <Select
                       value={field.value ?? ""}
                       onValueChange={field.onChange}
@@ -142,7 +155,6 @@ export function UpdateProductFormModal({
                         </SelectGroup>
                       </SelectContent>
                     </Select>
-
                     {fieldState.invalid && fieldState.error && (
                       <FieldError errors={[fieldState.error]} />
                     )}
@@ -156,7 +168,6 @@ export function UpdateProductFormModal({
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel>Category</FieldLabel>
-
                     <Select
                       value={field.value ? String(field.value) : ""}
                       onValueChange={(v) => field.onChange(Number(v))}
@@ -173,17 +184,13 @@ export function UpdateProductFormModal({
                         <SelectGroup>
                           <SelectLabel>Category</SelectLabel>
                           {categoryList.map((category) => (
-                            <SelectItem
-                              key={category.id}
-                              value={String(category.id)}
-                            >
+                            <SelectItem key={category.id} value={String(category.id)}>
                               {category.name}
                             </SelectItem>
                           ))}
                         </SelectGroup>
                       </SelectContent>
                     </Select>
-
                     {fieldState.invalid && fieldState.error && (
                       <FieldError errors={[fieldState.error]} />
                     )}
@@ -197,10 +204,9 @@ export function UpdateProductFormModal({
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel>Branch</FieldLabel>
-
                     <Select
                       value={field.value ? String(field.value) : ""}
-                      onValueChange={(v) => field.onChange(Number(v))} // ✅ convert to number
+                      onValueChange={(v) => field.onChange(Number(v))}
                       onOpenChange={(open) => {
                         if (!open) field.onBlur();
                       }}
@@ -214,17 +220,13 @@ export function UpdateProductFormModal({
                         <SelectGroup>
                           <SelectLabel>Branch</SelectLabel>
                           {branchList.map((branch) => (
-                            <SelectItem
-                              key={branch.id}
-                              value={String(branch.id)}
-                            >
+                            <SelectItem key={branch.id} value={String(branch.id)}>
                               {branch.name}
                             </SelectItem>
                           ))}
                         </SelectGroup>
                       </SelectContent>
                     </Select>
-
                     {fieldState.invalid && fieldState.error && (
                       <FieldError errors={[fieldState.error]} />
                     )}
@@ -234,17 +236,24 @@ export function UpdateProductFormModal({
             </FieldGroup>
           </form>
         </div>
-        <div className="flex flex-row gap-2 justify-start mt-2">
+
+        <div className="mt-2 flex flex-row justify-start gap-2">
           <DialogClose asChild className="flex-1">
-            <Button type="button" variant="outline" form="product-form">
+            <Button type="button" variant="outline" form="update-product-form">
               Cancel
             </Button>
           </DialogClose>
-          <Button type="submit" className="flex-1" form="product-form">
-            Submit
+          <Button
+            type="submit"
+            className="flex-1"
+            form="update-product-form"
+            disabled={update.isPending || !product}
+          >
+            {update.isPending ? "Saving..." : "Save Changes"}
           </Button>
         </div>
       </DialogContent>
     </Dialog>
   );
 }
+
