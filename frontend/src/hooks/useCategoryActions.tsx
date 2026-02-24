@@ -7,6 +7,7 @@ export type ModalView =
   | "IDLE"
   | "CATEGORY_FORM"
   | "PRODUCT_CREATE_FORM"
+  | "PRODUCT_UPDATE_FORM"
   | "SELECTION_MENU";
 
 type CategoryModalStates = {

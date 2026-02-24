@@ -45,13 +45,25 @@ export function ProductSnippetCard({
               <MoreVertical className="h-4 w-4 text-muted-foreground" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-32">
-            <DropdownMenuItem onClick={() => onUpdate(product)}>
+          <DropdownMenuContent
+            align="end"
+            className="w-32"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.stopPropagation();
+                onUpdate(product);
+              }}
+            >
               <Pencil className="mr-2 h-4 w-4" /> Update
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => onDelete(product)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(product);
+              }}
               className="text-destructive focus:text-destructive"
             >
               <Trash2 className="mr-2 h-4 w-4" /> Delete

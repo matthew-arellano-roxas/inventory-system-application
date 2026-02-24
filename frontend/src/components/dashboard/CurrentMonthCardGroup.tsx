@@ -24,16 +24,20 @@ export function CurrentMonthCardGroup({
       title: "Revenue",
       value: data.revenue,
       icon: PhilippinePeso,
-      iconColor: "text-green-600 dark:text-green-400",
-      bgColor: "bg-green-50 dark:bg-green-950/20",
+      iconColor: "text-emerald-600 dark:text-emerald-300",
+      bgColor: "bg-emerald-500/10 dark:bg-emerald-400/10",
+      cardClassName:
+        "border-emerald-200/70 bg-gradient-to-b from-emerald-50/80 to-background dark:from-emerald-400/8 dark:to-card dark:border-emerald-900/40",
       trend: data.revenue !== null && data.revenue > 0 ? "up" : null,
     },
     {
       title: "Profit",
       value: data.profit,
       icon: TrendingUp,
-      iconColor: "text-blue-600 dark:text-blue-400",
-      bgColor: "bg-blue-50 dark:bg-blue-950/20",
+      iconColor: "text-primary dark:text-primary",
+      bgColor: "bg-primary/10 dark:bg-primary/15",
+      cardClassName:
+        "border-primary/20 bg-gradient-to-b from-primary/5 to-background dark:from-primary/10 dark:to-card dark:border-primary/25",
       trend:
         data.profit !== null && data.profit > 0
           ? "up"
@@ -45,8 +49,10 @@ export function CurrentMonthCardGroup({
       title: "Damage",
       value: data.damage,
       icon: AlertTriangle,
-      iconColor: "text-red-600 dark:text-red-400",
-      bgColor: "bg-red-50 dark:bg-red-950/20",
+      iconColor: "text-rose-600 dark:text-rose-300",
+      bgColor: "bg-rose-500/10 dark:bg-rose-400/10",
+      cardClassName:
+        "border-rose-200/70 bg-gradient-to-b from-rose-50/80 to-background dark:from-rose-400/8 dark:to-card dark:border-rose-900/40",
       trend: null,
     },
   ];
@@ -56,7 +62,10 @@ export function CurrentMonthCardGroup({
       {cards.map((card) => {
         const Icon = card.icon;
         return (
-          <Card key={card.title} className="overflow-hidden">
+          <Card
+            key={card.title}
+            className={`overflow-hidden shadow-sm ${card.cardClassName}`}
+          >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 {card.title}
@@ -70,16 +79,20 @@ export function CurrentMonthCardGroup({
                 {formatCurrency(card.value)}
               </div>
               {card.trend && (
-                <div className="flex items-center text-xs text-muted-foreground mt-1">
+                <div className="mt-1 flex items-center text-xs text-muted-foreground">
                   {card.trend === "up" ? (
                     <>
-                      <TrendingUp className="mr-1 h-3 w-3 text-green-600" />
-                      <span className="text-green-600">Positive</span>
+                      <TrendingUp className="mr-1 h-3 w-3 text-emerald-600 dark:text-emerald-300" />
+                      <span className="text-emerald-600 dark:text-emerald-300">
+                        Positive
+                      </span>
                     </>
                   ) : (
                     <>
-                      <TrendingDown className="mr-1 h-3 w-3 text-red-600" />
-                      <span className="text-red-600">Negative</span>
+                      <TrendingDown className="mr-1 h-3 w-3 text-rose-600 dark:text-rose-300" />
+                      <span className="text-rose-600 dark:text-rose-300">
+                        Negative
+                      </span>
                     </>
                   )}
                 </div>
