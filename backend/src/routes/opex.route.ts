@@ -31,7 +31,7 @@ opexRoute.delete(
   '/:id',
   checkPermissions(['delete:expense']),
   validateParams(DeleteOpexParams),
-  cacheMiddleware(TTL.ONE_MINUTE),
+  invalidateCache(ROUTE.OPEX),
   opexController.deleteOpex,
 );
 

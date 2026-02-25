@@ -12,6 +12,7 @@ export type Product = {
   createdAt?: string;
 };
 
+
 export type ProductSnippet = {
   id: number;
   name: string;

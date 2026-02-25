@@ -2,7 +2,11 @@ import { prisma } from '@root/lib/prisma';
 import createHttpError from 'http-errors';
 import { getTotalDamageAmount } from './transaction';
 import { opexService } from './opex.service';
-import { BranchFinancialReport } from '@/types/report.types';
+import { BranchFinancialReport, ProductReportQuery } from '@/types/report.types';
+import { calculateSkip } from '@/helpers';
+import { Prisma } from '@root/generated/prisma/client';
+
+const ITEM_LIMIT = 30;
 
 // Monthly Reports
 const getMonthlyReports = () => {
@@ -27,20 +31,40 @@ const getCurrentMonthReport = async () => {
 };
 
 // Product Reports
-const getProductReports = async () => {
-  const reports = await prisma.productReport.findMany({
+const getProductReports = (query?: ProductReportQuery) => {
+  const productDetails = query?.product_details;
+  const skip = calculateSkip(query?.page ?? 1, ITEM_LIMIT);
+  const where: Prisma.ProductReportWhereInput = {};
+  const productWhere: Prisma.ProductWhereInput = {};
+
+  if (query?.search) {
+    productWhere.name = {
+      contains: query.search,
+      mode: 'insensitive',
+    };
+  }
+
+  if (query?.productId) {
+    productWhere.id = query.productId;
+  }
+
+  if (query?.branchId) {
+    productWhere.branchId = query.branchId;
+  }
+
+  if (Object.keys(productWhere).length > 0) {
+    where.product = productWhere;
+  }
+
+  return prisma.productReport.findMany({
     orderBy: { productId: 'asc' },
     include: {
-      product: {
-        select: { name: true },
-      },
+      product: productDetails ?? false,
     },
+    take: ITEM_LIMIT,
+    skip,
+    where,
   });
-
-  return reports.map(({ product, ...report }) => ({
-    ...report,
-    productName: product.name,
-  }));
 };
 
 const getProductReportByProductId = async (id: number) => {
