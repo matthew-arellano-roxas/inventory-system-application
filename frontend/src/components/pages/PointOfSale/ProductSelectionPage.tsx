@@ -3,6 +3,10 @@ import { CreateProductFormModal } from "@/components/forms/CreateProductFormModa
 import { UpdateProductFormModal } from "@/components/forms/UpdateProductFormModal";
 import { InputModal } from "@/components/InputModal";
 import { Loader } from "@/components/Loader";
+import { ProductSelectionSubHeader } from "@/components/pages/PointOfSale/components/ProductSelectionSubHeader";
+import { useInfiniteCatalogScroll } from "@/components/pages/PointOfSale/hooks/useInfiniteCatalogScroll";
+import { useProductSelectionFilters } from "@/components/pages/PointOfSale/hooks/useProductSelectionFilters";
+import { useQueuedProductTransactions } from "@/components/pages/PointOfSale/hooks/useQueuedProductTransactions";
 import { ManagedSelect } from "@/components/pos/ManagedSelect";
 import { ProductActionModal } from "@/components/pos/ProductActionModal";
 import { ProductSnippetCard } from "@/components/pos/ProductSnippetCard";
@@ -12,17 +16,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { getProductById } from "@/api/product.api";
-import { formatCurrency } from "@/helpers/formatCurrency";
 import { useCategoryActions } from "@/hooks/useCategoryActions";
 import { usePosCatalogQueries } from "@/hooks/usePosCatalogQueries";
 import { useProductMutation } from "@/hooks/useProductMutation";
-import { useQueryParams } from "@/hooks/useQueryParams";
 import { usePosCartStore } from "@/stores/usePosCartStore";
 import type { Product } from "@/types/api/response";
 import { Plus, Store } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router";
-import { toast } from "sonner";
+import { useEffect, useState } from "react";
 
 type ModalView =
   | "IDLE"
@@ -32,21 +32,8 @@ type ModalView =
   | "SELECTION_MENU";
 
 export function ProductSelectionPage() {
-  const { branchId: branchIdParam } = useParams();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const { searchParams, getParam, setParams } = useQueryParams();
-  const search = getParam("search") ?? "";
-  const branchId =
-    branchIdParam && !Number.isNaN(Number(branchIdParam))
-      ? Number(branchIdParam)
-      : null;
-  const rawCategoryId = getParam("categoryId");
-  const categoryId =
-    rawCategoryId && !Number.isNaN(Number(rawCategoryId))
-      ? Number(rawCategoryId)
-      : null;
-  const loadMoreRef = useRef<HTMLDivElement | null>(null);
-  const hasUserScrolledRef = useRef(false);
+  const { inputRef, search, branchId, categoryId, handleSearch } =
+    useProductSelectionFilters();
   const {
     branchList,
     categoryList,
@@ -55,8 +42,13 @@ export function ProductSelectionPage() {
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
-  } =
-    usePosCatalogQueries({ branchId, categoryId, search });
+  } = usePosCatalogQueries({ branchId, categoryId, search });
+  const { loadMoreRef } = useInfiniteCatalogScroll({
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+    itemCount: productList.length,
+  });
   const ensureBranchScope = usePosCartStore((state) => state.ensureBranchScope);
   const addCartItem = usePosCartStore((state) => state.addItem);
   const { remove: deleteProductMutation } = useProductMutation();
@@ -73,6 +65,10 @@ export function ProductSelectionPage() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isProductActionOpen, setIsProductActionOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const { handleProductActionSubmit } = useQueuedProductTransactions({
+    branchId,
+    addCartItem,
+  });
   const activeBranchName =
     branchId != null
       ? branchList.find((branch) => branch.id === branchId)?.name ?? `Branch #${branchId}`
@@ -93,55 +89,6 @@ export function ProductSelectionPage() {
   useEffect(() => {
     ensureBranchScope(branchId);
   }, [branchId, ensureBranchScope]);
-
-  useEffect(() => {
-    const onScroll = () => {
-      hasUserScrolledRef.current = true;
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    const node = loadMoreRef.current;
-    if (!node || !hasNextPage) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        if (!entry?.isIntersecting || isFetchingNextPage) return;
-        if (!hasUserScrolledRef.current) return;
-        void fetchNextPage();
-      },
-      {
-        rootMargin: "300px 0px",
-      },
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage, productList.length]);
-
-  function isElementFocused(el: HTMLElement | null): boolean {
-    if (!el) return false;
-    return document.activeElement === el;
-  }
-
-  // Search
-  const handleSearch = (value: string) => {
-    const nextSearch = value.trim();
-    if (
-      !nextSearch &&
-      isElementFocused(inputRef.current) &&
-      searchParams.has("search")
-    ) {
-      setParams({ search: null });
-      return;
-    }
-
-    setParams({ search: nextSearch || null });
-  };
 
   // New Item
   const handleNewItemModalSelect = (value: string) => {
@@ -195,42 +142,11 @@ export function ProductSelectionPage() {
     deleteProductMutation.mutate(product.id);
   };
 
-  const handleProductActionSubmit = (
-    product: Product,
-    quantity: number,
-    type: "SALE" | "DAMAGE" | "RETURN",
-  ) => {
-    if (type === "SALE") {
-      if (product.id == null) {
-        console.error("Cannot add product without an id to cart", product);
-        return;
-      }
-
-      addCartItem(
-        {
-          id: product.id,
-          name: product.name,
-          sellingPrice: product.sellingPrice,
-        },
-        branchId,
-        quantity,
-      );
-      toast.success(`Added ${quantity} ${product.name} to cart`);
-      return;
-    }
-
-    console.log(`${type} action not yet wired`, {
-      productId: product.id,
-      quantity,
-      branchId,
-    });
-  };
-
   if (Object.values(isPending).every((val) => val === true)) return <Loader />;
 
   return (
     <div className="relative overflow-x-hidden pb-32 px-4 sm:px-6 lg:px-8">
-      <SubHeader
+      <ProductSelectionSubHeader
         branchName={activeBranchName}
         productCount={productList.length}
         categoryName={activeCategoryName}
@@ -362,7 +278,7 @@ export function ProductSelectionPage() {
           state ? setActiveModal("PRODUCT_CREATE_FORM") : setActiveModal("IDLE")
         }
         categoryList={categoryList}
-        branchList={branchList}
+        branchId={branchId}
         isOpen={activeModal === "PRODUCT_CREATE_FORM"}
       />
       <UpdateProductFormModal
@@ -370,7 +286,7 @@ export function ProductSelectionPage() {
           setActiveModal(state ? "PRODUCT_UPDATE_FORM" : "IDLE")
         }
         categoryList={categoryList}
-        branchList={branchList}
+        branchId={branchId}
         isOpen={activeModal === "PRODUCT_UPDATE_FORM"}
         product={editingProduct}
       />
@@ -381,73 +297,5 @@ export function ProductSelectionPage() {
         onSubmit={handleProductActionSubmit}
       />
     </div>
-  );
-}
-
-type SubHeaderProps = {
-  branchName: string;
-  productCount: number;
-  categoryName: string;
-  cartItemCount: number;
-  cartSubtotal: number;
-};
-
-function SubHeader({
-  branchName,
-  productCount,
-  categoryName,
-  cartItemCount,
-  cartSubtotal,
-}: SubHeaderProps) {
-  return (
-    <Card className="relative mb-6 overflow-hidden border-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white shadow-xl">
-      <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_#22d3ee,_transparent_45%),radial-gradient(circle_at_bottom_left,_#f59e0b,_transparent_35%)]" />
-      <div className="relative p-4 sm:p-6">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="min-w-0">
-            <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/15 backdrop-blur">
-                <Store className="h-5 w-5" />
-              </div>
-              <div className="min-w-0">
-                <h1 className="text-2xl font-black tracking-tighter uppercase text-white sm:text-3xl break-words">
-                  Point of Sale
-                </h1>
-                <p className="text-sm font-medium text-white/70">
-                  {branchName}
-                </p>
-              </div>
-            </div>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <Badge className="rounded-full border-white/15 bg-white/10 px-3 py-1 text-white hover:bg-white/10">
-                {productCount} Products
-              </Badge>
-              <Badge className="rounded-full border-white/15 bg-white/10 px-3 py-1 text-white hover:bg-white/10">
-                {categoryName}
-              </Badge>
-            </div>
-          </div>
-
-          <div className="grid w-full max-w-full grid-cols-2 gap-2 lg:w-auto lg:min-w-[300px]">
-            <div className="rounded-xl bg-white/10 p-3 ring-1 ring-white/10">
-              <p className="text-[10px] uppercase tracking-widest text-white/60">
-                Cart Items
-              </p>
-              <p className="mt-1 text-lg font-bold leading-none">
-                {cartItemCount}
-              </p>
-            </div>
-            <div className="rounded-xl bg-white/10 p-3 ring-1 ring-white/10">
-              <p className="text-[10px] uppercase tracking-widest text-white/60">
-                Cart Total
-              </p>
-              <p className="mt-1 truncate text-lg font-bold leading-none">
-                {formatCurrency(cartSubtotal)}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Card>
   );
 }

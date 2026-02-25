@@ -1,10 +1,10 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { useEffect } from "react";
 import {
   updateProductSchema,
   type UpdateProductPayload,
 } from "@/schemas/ProductSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import { useEffect } from "react";
 import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import {
@@ -26,12 +26,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import type { BranchResponse, CategoryResponse, Product } from "@/types/api/response";
+import type { CategoryResponse, Product } from "@/types/api/response";
 
 type UpdateProductFormModalProps = {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
-  branchList: BranchResponse[];
+  branchId: number | null;
   categoryList: CategoryResponse[];
   product: Product | null;
 };
@@ -40,7 +40,7 @@ export function UpdateProductFormModal({
   isOpen,
   setIsOpen,
   categoryList,
-  branchList,
+  branchId,
   product,
 }: UpdateProductFormModalProps) {
   const { update } = useProductMutation();
@@ -62,26 +62,41 @@ export function UpdateProductFormModal({
       soldBy: product.soldBy,
       sellingPrice: product.sellingPrice,
       categoryId: product.categoryId,
-      branchId: product.branchId,
+      branchId: branchId ?? product.branchId,
     });
-  }, [form, isOpen, product]);
+  }, [branchId, form, isOpen, product]);
+
+  useEffect(() => {
+    if (branchId == null) return;
+    form.setValue("branchId", branchId);
+  }, [branchId, form]);
 
   async function onSubmitFn(data: UpdateProductPayload) {
     if (!product?.id) return;
 
     await update.mutateAsync({
       productId: product.id,
-      data,
+      data: {
+        ...data,
+        ...(branchId != null ? { branchId } : {}),
+      },
     });
 
-    setIsOpen(false);
     form.reset();
+    setIsOpen(false);
   }
+
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      form.reset();
+    }
+    setIsOpen(open);
+  };
 
   const { errors } = form.formState;
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent aria-describedby={undefined}>
         <DialogHeader>
           <DialogTitle>Update Product</DialogTitle>
@@ -201,41 +216,17 @@ export function UpdateProductFormModal({
               <Controller
                 name="branchId"
                 control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel>Branch</FieldLabel>
-                    <Select
-                      value={field.value ? String(field.value) : ""}
-                      onValueChange={(v) => field.onChange(Number(v))}
-                      onOpenChange={(open) => {
-                        if (!open) field.onBlur();
-                      }}
-                    >
-                      <SelectTrigger
-                        aria-invalid={fieldState.invalid ? "true" : "false"}
-                      >
-                        <SelectValue placeholder="Select a Branch" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Branch</SelectLabel>
-                          {branchList.map((branch) => (
-                            <SelectItem key={branch.id} value={String(branch.id)}>
-                              {branch.name}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    {fieldState.invalid && fieldState.error && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
-                )}
+                render={() => null}
               />
             </FieldGroup>
           </form>
         </div>
+
+        {branchId == null && (
+          <p className="mt-2 text-sm text-destructive">
+            Invalid branch route. Open POS with a branch selected.
+          </p>
+        )}
 
         <div className="mt-2 flex flex-row justify-start gap-2">
           <DialogClose asChild className="flex-1">
@@ -247,7 +238,7 @@ export function UpdateProductFormModal({
             type="submit"
             className="flex-1"
             form="update-product-form"
-            disabled={update.isPending || !product}
+            disabled={update.isPending || !product || branchId == null}
           >
             {update.isPending ? "Saving..." : "Save Changes"}
           </Button>
@@ -256,4 +247,3 @@ export function UpdateProductFormModal({
     </Dialog>
   );
 }
-

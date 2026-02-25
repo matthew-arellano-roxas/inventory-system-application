@@ -38,3 +38,11 @@ export const getProductReport = async () => {
   );
   return response.data.data;
 };
+
+export const getProductReportById = async (id: number) => {
+  // We remove the .catch here so the Router can handle the error via errorElement
+  const response = await api.get<ApiResponse<ProductReportResponse>>(
+    `/api/report/product/${id}`,
+  );
+  return response.data.data;
+};

@@ -133,7 +133,7 @@ export function InventoryTable({ infoData, reportData, className }: Props) {
       </div>
 
       <Tabs defaultValue="info" onValueChange={() => setCurrentPage(1)}>
-        <TabsList className="flex w-full justify-start bg-muted p-1 overflow-scroll md:overflow-auto">
+        <TabsList className="flex w-full justify-start bg-muted p-1 overflow-scroll md:overflow-auto border border-border">
           <TabsTrigger value="info">Product Info</TabsTrigger>
           <TabsTrigger value="report">Product Report</TabsTrigger>
           <TabsTrigger value="opex">Operating Expense</TabsTrigger>
@@ -145,7 +145,7 @@ export function InventoryTable({ infoData, reportData, className }: Props) {
             <CardContent className="p-0">
               <div className="overflow-x-auto">
                 <Table className="min-w-[800px]">
-                  <TableHeader className="bg-slate-50">
+                  <TableHeader>
                     <TableRow>
                       <TableHead>ID</TableHead>
                       <TableHead>Name</TableHead>

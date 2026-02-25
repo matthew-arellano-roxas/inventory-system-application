@@ -21,7 +21,7 @@ export function StockMovementFeed({
   );
 
   return (
-    <div className="flex flex-col h-full bg-background border rounded-lg overflow-hidden">
+    <div className="flex flex-col h-full bg-card border rounded-lg overflow-hidden">
       {/* Search Header */}
       <div className="p-4 border-b bg-muted/5">
         <div className="relative">

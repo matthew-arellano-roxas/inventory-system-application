@@ -1,9 +1,10 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, type DefaultValues, useForm } from "react-hook-form";
+import { useEffect } from "react";
 import {
   createProductSchema,
   type CreateProductPayload,
 } from "@/schemas/ProductSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
 import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import {
@@ -27,12 +28,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import type { BranchResponse, CategoryResponse } from "@/types/api/response";
+import type { CategoryResponse } from "@/types/api/response";
 
 type ProductFormProps = {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
-  branchList: BranchResponse[];
+  branchId: number | null;
   categoryList: CategoryResponse[];
 };
 
@@ -40,27 +41,57 @@ export function CreateProductFormModal({
   isOpen,
   setIsOpen,
   categoryList,
-  branchList,
+  branchId,
 }: ProductFormProps) {
   const { create } = useProductMutation();
   const { isLoading: isEmailLoading, user } = useAuth0();
+  const hasCategories = categoryList.length > 0;
+  const getResetValues = (): DefaultValues<CreateProductPayload> =>
+    ({
+      name: "",
+      costPerUnit: undefined,
+      sellingPrice: undefined,
+      categoryId: undefined,
+      soldBy: Unit.PC,
+      branchId: branchId ?? undefined,
+    }) as DefaultValues<CreateProductPayload>;
 
   const form = useForm<CreateProductPayload>({
     resolver: zodResolver(createProductSchema),
     mode: "onBlur",
     defaultValues: {
-      soldBy: Unit.PC, // keeps select controlled and valid
+      ...getResetValues(),
     },
   });
 
+  useEffect(() => {
+    if (branchId == null) return;
+    form.setValue("branchId", branchId, { shouldValidate: true });
+  }, [branchId, form]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    form.reset(getResetValues());
+  }, [form, isOpen, branchId]);
+
   async function onSubmitFn(data: CreateProductPayload) {
-    await create.mutate({
+    if (branchId == null) return;
+
+    await create.mutateAsync({
       ...data,
+      branchId,
       addedBy: user?.email ?? "",
     });
+    form.reset(getResetValues());
     setIsOpen(false);
-    form.reset();
   }
+
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      form.reset(getResetValues());
+    }
+    setIsOpen(open);
+  };
 
   const { errors } = form.formState;
 
@@ -69,7 +100,7 @@ export function CreateProductFormModal({
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent aria-describedby={undefined}>
         <DialogHeader>
           <DialogTitle>Create Product</DialogTitle>
@@ -123,7 +154,6 @@ export function CreateProductFormModal({
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel>Sold by</FieldLabel>
-
                     <Select
                       value={field.value ?? ""}
                       onValueChange={field.onChange}
@@ -144,7 +174,6 @@ export function CreateProductFormModal({
                         </SelectGroup>
                       </SelectContent>
                     </Select>
-
                     {fieldState.invalid && fieldState.error && (
                       <FieldError errors={[fieldState.error]} />
                     )}
@@ -158,10 +187,10 @@ export function CreateProductFormModal({
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel>Category</FieldLabel>
-
                     <Select
                       value={field.value ? String(field.value) : ""}
                       onValueChange={(v) => field.onChange(Number(v))}
+                      disabled={!hasCategories}
                       onOpenChange={(open) => {
                         if (!open) field.onBlur();
                       }}
@@ -169,7 +198,13 @@ export function CreateProductFormModal({
                       <SelectTrigger
                         aria-invalid={fieldState.invalid ? "true" : "false"}
                       >
-                        <SelectValue placeholder="Select a Category" />
+                        <SelectValue
+                          placeholder={
+                            hasCategories
+                              ? "Select a Category"
+                              : "Create a category first"
+                          }
+                        />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
@@ -185,9 +220,13 @@ export function CreateProductFormModal({
                         </SelectGroup>
                       </SelectContent>
                     </Select>
-
                     {fieldState.invalid && fieldState.error && (
                       <FieldError errors={[fieldState.error]} />
+                    )}
+                    {!hasCategories && (
+                      <p className="text-sm text-muted-foreground">
+                        Create a category first before creating a product.
+                      </p>
                     )}
                   </Field>
                 )}
@@ -196,54 +235,31 @@ export function CreateProductFormModal({
               <Controller
                 name="branchId"
                 control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel>Branch</FieldLabel>
-
-                    <Select
-                      value={field.value ? String(field.value) : ""}
-                      onValueChange={(v) => field.onChange(Number(v))} // ✅ convert to number
-                      onOpenChange={(open) => {
-                        if (!open) field.onBlur();
-                      }}
-                    >
-                      <SelectTrigger
-                        aria-invalid={fieldState.invalid ? "true" : "false"}
-                      >
-                        <SelectValue placeholder="Select a Branch" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Branch</SelectLabel>
-                          {branchList.map((branch) => (
-                            <SelectItem
-                              key={branch.id}
-                              value={String(branch.id)}
-                            >
-                              {branch.name}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-
-                    {fieldState.invalid && fieldState.error && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
-                )}
+                render={() => null}
               />
             </FieldGroup>
           </form>
         </div>
-        <div className="flex flex-row gap-2 justify-start mt-2">
+
+        {branchId == null && (
+          <p className="mt-2 text-sm text-destructive">
+            Select a branch from the POS route before creating a product.
+          </p>
+        )}
+
+        <div className="mt-2 flex flex-row justify-start gap-2">
           <DialogClose asChild className="flex-1">
             <Button type="button" variant="outline" form="product-form">
               Cancel
             </Button>
           </DialogClose>
-          <Button type="submit" className="flex-1" form="product-form">
-            Submit
+          <Button
+            type="submit"
+            className="flex-1"
+            form="product-form"
+            disabled={branchId == null || create.isPending || !hasCategories}
+          >
+            {create.isPending ? "Submitting..." : "Submit"}
           </Button>
         </div>
       </DialogContent>

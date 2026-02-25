@@ -48,7 +48,7 @@ export function RootLayout() {
           <div className="flex min-h-screen w-full overflow-x-hidden bg-background">
             <Toaster position="top-center" />
             <Sidebar />
-            <main className="min-w-0 flex-1 overflow-x-hidden p-4 space-y-6">
+            <main className="min-w-0 flex-1 overflow-x-hidden p-2 md:p4 space-y-6 bg-muted">
               <header className="flex items-center justify-between gap-3 border-b pb-4">
                 <SidebarTrigger />
                 <Button

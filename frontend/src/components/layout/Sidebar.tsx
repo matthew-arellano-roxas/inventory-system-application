@@ -41,7 +41,7 @@ export function Sidebar() {
 
   return (
     <ShadcnSidebar className="border-r border-border/50">
-      <SidebarContent className="bg-card flex flex-col h-full relative">
+      <SidebarContent className="bg-card flex flex-col h-full relative ">
         <SidebarHeader className="p-4 pt-6">
           <div className="flex items-center justify-between">
             {/* Logo Area */}

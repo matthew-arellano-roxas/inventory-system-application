@@ -55,7 +55,7 @@ export function AnnouncementList({
       {sorted.map((a) => (
         <div
           key={a.id}
-          className="rounded-xl border p-3 sm:p-4 hover:bg-muted/30 transition-colors"
+          className="rounded-xl border p-3 sm:p-4 hover:bg-muted/30 transition-colors shadow-sm"
         >
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">

@@ -2,33 +2,32 @@ import { useState } from "react";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
-  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"; // Added Tabs
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  ShoppingCart,
-  Plus,
-  Minus,
   AlertTriangle,
+  Minus,
+  PackagePlus,
+  Plus,
   RotateCcw,
+  ShoppingCart,
 } from "lucide-react";
-import { type Product } from "@/types/api/response/product.response";
 import { cn } from "@/lib/utils";
+import { type Product } from "@/types/api/response/product.response";
 
-// Define the types of transactions
-type TransactionType = "SALE" | "DAMAGE" | "RETURN";
+type TransactionType = "SALE" | "PURCHASE" | "DAMAGE" | "RETURN";
 
 interface ProductModalProps {
   product: Product | null;
   isOpen: boolean;
   onClose: () => void;
-  // Updated handler to include the type
   onSubmit: (product: Product, quantity: number, type: TransactionType) => void;
 }
 
@@ -44,41 +43,43 @@ export function ProductActionModal({
   if (!product) return null;
 
   const numericQuantity = parseFloat(quantity) || 0;
-  const totalPrice = product.sellingPrice * numericQuantity;
+  const totalSalePrice = product.sellingPrice * numericQuantity;
+  const totalPurchaseCost = product.costPerUnit * numericQuantity;
 
   const handleConfirm = () => {
     if (numericQuantity <= 0) return;
     onSubmit(product, numericQuantity, type);
     setQuantity("1");
-    setType("SALE"); // Reset to default
+    setType("SALE");
     onClose();
   };
 
   const adjustQuantity = (amount: number) => {
     setQuantity((prev) => {
-      const val = (parseFloat(prev) || 0) + amount;
-      return val > 0 ? val.toString() : "0";
+      const nextValue = (parseFloat(prev) || 0) + amount;
+      return nextValue > 0 ? nextValue.toString() : "0";
     });
   };
 
-  // Helper to determine button colors/icons based on type
   const getTheme = () => {
     switch (type) {
       case "DAMAGE":
         return {
-          color: "destructive",
           icon: <AlertTriangle className="h-4 w-4" />,
           label: "Report Damage",
         };
       case "RETURN":
         return {
-          color: "default",
           icon: <RotateCcw className="h-4 w-4" />,
           label: "Process Return",
         };
+      case "PURCHASE":
+        return {
+          icon: <PackagePlus className="h-4 w-4" />,
+          label: "Add Stock",
+        };
       default:
         return {
-          color: "primary",
           icon: <ShoppingCart className="h-4 w-4" />,
           label: "Add to Cart",
         };
@@ -86,6 +87,8 @@ export function ProductActionModal({
   };
 
   const theme = getTheme();
+  const unitAmount = type === "PURCHASE" ? product.costPerUnit : product.sellingPrice;
+  const totalAmount = type === "PURCHASE" ? totalPurchaseCost : totalSalePrice;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -97,14 +100,14 @@ export function ProductActionModal({
           </DialogDescription>
         </DialogHeader>
 
-        {/* Transaction Type Selector */}
         <Tabs
           value={type}
-          onValueChange={(val) => setType(val as TransactionType)}
+          onValueChange={(value) => setType(value as TransactionType)}
           className="w-full"
         >
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="SALE">Sale</TabsTrigger>
+            <TabsTrigger value="PURCHASE">Purchase</TabsTrigger>
             <TabsTrigger value="RETURN">Return</TabsTrigger>
             <TabsTrigger
               value="DAMAGE"
@@ -116,29 +119,34 @@ export function ProductActionModal({
         </Tabs>
 
         <div className="grid gap-6 py-4">
-          {/* Price Preview - Only show for Sale/Return */}
           {type !== "DAMAGE" && (
-            <div className="flex justify-between items-center bg-secondary/50 p-4 rounded-lg border border-dashed">
+            <div className="flex items-center justify-between rounded-lg border border-dashed bg-secondary/50 p-4">
               <div>
-                <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">
-                  Unit Price
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                  {type === "PURCHASE" ? "Unit Cost" : "Unit Price"}
                 </p>
-                <p className="text-lg font-bold">
-                  ₱{product.sellingPrice.toFixed(2)}
-                </p>
+                <p className="text-lg font-bold">PHP {unitAmount.toFixed(2)}</p>
               </div>
               <div className="text-right">
-                <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">
-                  {type === "RETURN" ? "Refund Amount" : "Total Price"}
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                  {type === "RETURN"
+                    ? "Refund Amount"
+                    : type === "PURCHASE"
+                      ? "Total Cost"
+                      : "Total Price"}
                 </p>
                 <p
                   className={cn(
                     "text-lg font-bold",
-                    type === "RETURN" ? "text-orange-600" : "text-primary",
+                    type === "RETURN"
+                      ? "text-orange-600"
+                      : type === "PURCHASE"
+                        ? "text-emerald-600"
+                        : "text-primary",
                   )}
                 >
-                  ₱
-                  {totalPrice.toLocaleString(undefined, {
+                  PHP{" "}
+                  {totalAmount.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                   })}
                 </p>
@@ -146,13 +154,22 @@ export function ProductActionModal({
             </div>
           )}
 
-          {/* Damage Warning */}
           {type === "DAMAGE" && (
-            <div className="bg-destructive/10 p-4 rounded-lg border border-destructive/20 flex gap-3 items-center">
+            <div className="flex items-center gap-3 rounded-lg border border-destructive/20 bg-destructive/10 p-4">
               <AlertTriangle className="h-5 w-5 text-destructive" />
-              <p className="text-xs text-destructive font-medium">
+              <p className="text-xs font-medium text-destructive">
                 Reporting damage will deduct {numericQuantity} {product.soldBy}
                 (s) from current stock.
+              </p>
+            </div>
+          )}
+
+          {type === "PURCHASE" && (
+            <div className="flex items-center gap-3 rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-4">
+              <PackagePlus className="h-5 w-5 text-emerald-600" />
+              <p className="text-xs font-medium text-emerald-700">
+                Purchasing stock will add {numericQuantity} {product.soldBy}(s) to
+                current inventory.
               </p>
             </div>
           )}
@@ -177,7 +194,7 @@ export function ProductActionModal({
                 step="0.01"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
-                className="text-center font-bold text-lg"
+                className="text-center text-lg font-bold"
               />
 
               <Button

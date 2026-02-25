@@ -86,9 +86,12 @@ export const PointOfSalePage = () => {
             <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               Branch Directory
             </p>
-            <h2 className="text-xl font-black tracking-tight">Choose a Branch</h2>
+            <h2 className="text-xl font-black tracking-tight">
+              Choose a Branch
+            </h2>
             <p className="text-sm text-muted-foreground">
-              Open a branch to start selling, or create a new branch for another location.
+              Open a branch to start selling, or create a new branch for another
+              location.
             </p>
           </div>
 
@@ -102,7 +105,7 @@ export const PointOfSalePage = () => {
         </header>
       </Card>
 
-      <Card className="mt-6 border-border/60 bg-background/80 p-3 shadow-sm sm:p-4">
+      <Card className="mt-6 border-border/60 bg-background/80 p-3 shadow-sm sm:p-4 bg-card">
         <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
