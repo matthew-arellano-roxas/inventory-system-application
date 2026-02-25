@@ -21,8 +21,9 @@ import { usePosCatalogQueries } from "@/hooks/usePosCatalogQueries";
 import { useProductMutation } from "@/hooks/useProductMutation";
 import { usePosCartStore } from "@/stores/usePosCartStore";
 import type { Product } from "@/types/api/response";
-import { Plus, Store } from "lucide-react";
+import { Plus, Receipt, Store } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 
 type ModalView =
   | "IDLE"
@@ -190,6 +191,25 @@ export function ProductSelectionPage() {
             onUpdate={handleUpdateCategory}
             onDelete={handleCategoryDelete}
           />
+        </div>
+      </Card>
+
+      <Card className="mb-6 border-border/60 bg-background/80 p-4 shadow-sm">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              Shortcuts
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Jump to operating expenses to record branch costs.
+            </p>
+          </div>
+          <Button asChild className="gap-2">
+            <Link to="/opex">
+              <Receipt className="h-4 w-4" />
+              Open OPEX Table
+            </Link>
+          </Button>
         </div>
       </Card>
 

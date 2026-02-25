@@ -6,5 +6,5 @@ export enum ROUTE {
   STOCK = '/api/stock',
   REPORT = '/api/report',
   ANNOUNCEMENT = '/api/notification',
-  OPEX = '/api/opex',
+  OPEX = '/api/expenses',
 }

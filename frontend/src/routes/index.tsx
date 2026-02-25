@@ -5,6 +5,7 @@ import { Dashboard } from "@/components/pages/Dashboard";
 import { InventoryPage } from "@/components/pages/InventoryPage";
 import { PointOfSalePage } from "@/components/pages/PointOfSale/PointOfSalePage";
 import { TransactionsPage } from "@/components/pages/TransactionsPage";
+import { OpexPage } from "@/components/pages/OpexPage";
 import { NotFoundPage } from "@/components/pages/NotFoundPage";
 import { ErrorHandler } from "@/components/ErrorHandler";
 import { ProductStorePage } from "@/components/pages/PointOfSale/ProductStorePage";
@@ -32,6 +33,10 @@ export const routes = [
       {
         path: "/transactions",
         element: <TransactionsPage />,
+      },
+      {
+        path: "/opex",
+        element: <OpexPage />,
       },
       {
         path: "/pos",

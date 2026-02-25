@@ -1,10 +1,22 @@
+import type { Product } from "./product.response";
+
+export type ProductReportQuery = {
+  product_details?: boolean;
+  search?: string;
+  page?: number;
+  productId?: number;
+  branchId?: number;
+};
+
 export type ProductReportResponse = {
   id: number;
   productId: number;
   profit: number;
   revenue: number;
   stock: number;
-  productName: string;
+  productName?: string;
+  branchId?: number;
+  product?: Product;
 };
 
 export type BranchReportResponse = {

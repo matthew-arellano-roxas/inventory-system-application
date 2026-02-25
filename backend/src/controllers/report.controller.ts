@@ -3,6 +3,7 @@ import createHttpError from 'http-errors';
 import { ok } from '@/helpers/response';
 import { Controller } from '@/types/controller.type';
 import { reportService } from '@/services';
+import { ProductReportQuery } from '@/types/report.types';
 
 // Get monthly reports
 const getMonthlyReport: Controller = async (req, res, _next) => {
@@ -18,7 +19,42 @@ const getCurrentMonthReport: Controller = async (req, res, _next) => {
 
 // Get product reports
 const getProductReport: Controller = async (req, res, _next) => {
-  const reports = await reportService.getProductReports();
+  const { product_details, search, page, productId, branchId } = req.query;
+  const query: ProductReportQuery = {};
+
+  if (typeof product_details === 'string') {
+    query.product_details = product_details === 'true';
+  }
+
+  if (typeof search === 'string' && search.trim() !== '') {
+    query.search = search.trim();
+  }
+
+  if (typeof page === 'string' && page.trim() !== '') {
+    const parsedPage = Number(page);
+    if (Object.is(parsedPage, NaN) || parsedPage <= 0) {
+      throw new createHttpError.BadRequest('Please provide a valid page query');
+    }
+    query.page = parsedPage;
+  }
+
+  if (typeof productId === 'string' && productId.trim() !== '') {
+    const parsedProductId = Number(productId);
+    if (Object.is(parsedProductId, NaN) || parsedProductId <= 0) {
+      throw new createHttpError.BadRequest('Please provide a valid productId query');
+    }
+    query.productId = parsedProductId;
+  }
+
+  if (typeof branchId === 'string' && branchId.trim() !== '') {
+    const parsedBranchId = Number(branchId);
+    if (Object.is(parsedBranchId, NaN) || parsedBranchId <= 0) {
+      throw new createHttpError.BadRequest('Please provide a valid branchId query');
+    }
+    query.branchId = parsedBranchId;
+  }
+
+  const reports = await reportService.getProductReports(query);
   res.status(StatusCodes.OK).json(ok(reports, 'Product report retrieved'));
 };
 

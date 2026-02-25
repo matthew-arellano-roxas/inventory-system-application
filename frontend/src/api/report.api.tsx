@@ -1,9 +1,11 @@
 // @/api/report.api.ts
 import { api } from "@/config/axios";
+import { cleanQuery } from "@/helpers/cleanQuery";
 import {
   type BranchReportResponse,
   type CurrentMonthReportResponse,
   type MonthlyReportResponse,
+  type ProductReportQuery,
   type ProductReportResponse,
 } from "@/types/api/response";
 import { type ApiResponse } from "@/types/api/shared/api-response";
@@ -31,10 +33,12 @@ export const getBranchReport = async () => {
   return response.data.data;
 };
 
-export const getProductReport = async () => {
-  // We remove the .catch here so the Router can handle the error via errorElement
+export const getProductReport = async (query?: ProductReportQuery) => {
   const response = await api.get<ApiResponse<ProductReportResponse[]>>(
     "/api/report/product",
+    {
+      params: query ? cleanQuery(query) : undefined,
+    },
   );
   return response.data.data;
 };
