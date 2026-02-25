@@ -112,7 +112,7 @@ export function AnnouncementPage() {
         </div>
       </Card>
 
-      <Card className="border-border/60 bg-background/80 p-3 shadow-sm sm:p-4">
+      <Card className="border-border/60 bg-background/80 p-2 shadow-sm md:p-4 bg-card">
         <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { createTransaction } from "@/api/transaction.api";
 import {
   Table,
   TableBody,
@@ -11,9 +12,11 @@ import {
 } from "@/components/ui/table";
 import { formatCurrency } from "@/helpers/formatCurrency";
 import { usePosCartStore } from "@/stores/usePosCartStore";
+import { TransactionType } from "@/types/api/payload";
 import { Minus, Plus, ShoppingBasket, Trash2 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
+import { toast } from "sonner";
 
 export function CheckoutPage() {
   const navigate = useNavigate();
@@ -28,6 +31,7 @@ export function CheckoutPage() {
   const setQty = usePosCartStore((state) => state.setQty);
   const removeItem = usePosCartStore((state) => state.removeItem);
   const clearCart = usePosCartStore((state) => state.clearCart);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     ensureBranchScope(branchId);
@@ -43,6 +47,40 @@ export function CheckoutPage() {
     const parsed = Number(value);
     if (Number.isNaN(parsed)) return;
     setQty(productId, parsed);
+  };
+
+  const handleCheckoutSubmit = async () => {
+    if (branchId == null) {
+      toast.error("Invalid branch.");
+      return;
+    }
+
+    if (items.length === 0) {
+      toast.error("Cart is empty.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await createTransaction({
+        type: TransactionType.SALE,
+        branchId,
+        items: items.map((item) => ({
+          productId: item.productId,
+          productName: item.name,
+          quantity: item.quantity,
+        })),
+      });
+
+      clearCart();
+      toast.success("Checkout completed successfully.");
+      navigate(`/pos/${branchId}`);
+    } catch (error) {
+      console.error("Failed to submit checkout transaction", error);
+      toast.error("Failed to complete checkout.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (branchId === null) {
@@ -103,7 +141,7 @@ export function CheckoutPage() {
             <Button
               variant="ghost"
               onClick={clearCart}
-              disabled={items.length === 0}
+              disabled={items.length === 0 || isSubmitting}
               className="text-white hover:bg-white/10 hover:text-white"
             >
               Clear Cart
@@ -322,9 +360,10 @@ export function CheckoutPage() {
                 </Button>
                 <Button
                   className="h-12 px-6"
-                  onClick={() => navigate(`/pos/${branchId}`)}
+                  onClick={() => void handleCheckoutSubmit()}
+                  disabled={items.length === 0 || isSubmitting}
                 >
-                  Proceed (Placeholder)
+                  {isSubmitting ? "Submitting..." : "Proceed to Checkout"}
                 </Button>
               </div>
             </div>

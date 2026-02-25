@@ -16304,3 +16304,1008 @@ Unique constraint failed on the fields: (`id`)
 2026-02-25 02:18:04+08:00 [32minfo[39m: GET /api/report/monthly [304] - 151ms
 2026-02-25 02:18:04+08:00 [32minfo[39m: GET /api/report/branch [304] - 158ms
 2026-02-25 02:18:04+08:00 [32minfo[39m: GET /api/report/product [304] - 174ms
+2026-02-25 13:49:00+08:00 [31merror[39m: Database connection failed!
+2026-02-25 13:51:01+08:00 [32minfo[39m: Database connected!
+2026-02-25 13:51:01+08:00 [32minfo[39m: Server running at http://localhost:3000
+2026-02-25 14:01:21+08:00 [32minfo[39m: OPTIONS /api/report/current-month [204] - 19ms
+2026-02-25 14:01:21+08:00 [32minfo[39m: OPTIONS /api/report/monthly [204] - 0ms
+2026-02-25 14:01:21+08:00 [32minfo[39m: OPTIONS /api/report/branch [204] - 3ms
+2026-02-25 14:01:21+08:00 [32minfo[39m: OPTIONS /api/report/product [204] - 1ms
+2026-02-25 14:01:26+08:00 [32minfo[39m: GET /api/report/monthly [304] - 4292ms
+2026-02-25 14:01:26+08:00 [32minfo[39m: GET /api/report/branch [304] - 4299ms
+2026-02-25 14:01:26+08:00 [32minfo[39m: GET /api/report/product [304] - 4182ms
+2026-02-25 14:01:26+08:00 [32minfo[39m: GET /api/report/current-month [304] - 4603ms
+2026-02-25 14:03:06+08:00 [32minfo[39m: GET /api/report/monthly [304] - 212ms
+2026-02-25 14:03:06+08:00 [32minfo[39m: GET /api/report/product [304] - 244ms
+2026-02-25 14:03:06+08:00 [32minfo[39m: GET /api/report/branch [304] - 254ms
+2026-02-25 14:03:06+08:00 [32minfo[39m: GET /api/report/current-month [304] - 315ms
+2026-02-25 14:03:09+08:00 [32minfo[39m: OPTIONS /api/announcement [204] - 1ms
+2026-02-25 14:03:09+08:00 [32minfo[39m: GET /api/announcement [304] - 51ms
+2026-02-25 14:03:11+08:00 [32minfo[39m: OPTIONS /api/branch [204] - 2ms
+2026-02-25 14:03:11+08:00 [32minfo[39m: GET /api/branch [304] - 26ms
+2026-02-25 14:04:10+08:00 [32minfo[39m: GET /api/report/monthly [304] - 122ms
+2026-02-25 14:04:10+08:00 [32minfo[39m: GET /api/report/product [304] - 141ms
+2026-02-25 14:04:10+08:00 [32minfo[39m: GET /api/report/current-month [304] - 251ms
+2026-02-25 14:04:10+08:00 [32minfo[39m: GET /api/report/branch [304] - 153ms
+2026-02-25 14:04:23+08:00 [32minfo[39m: GET /api/announcement [304] - 58ms
+2026-02-25 14:04:25+08:00 [32minfo[39m: GET /api/branch [304] - 11ms
+2026-02-25 14:05:30+08:00 [32minfo[39m: GET /api/report/monthly [304] - 298ms
+2026-02-25 14:05:30+08:00 [32minfo[39m: GET /api/report/product [304] - 306ms
+2026-02-25 14:05:30+08:00 [32minfo[39m: GET /api/report/branch [304] - 317ms
+2026-02-25 14:05:30+08:00 [32minfo[39m: GET /api/report/current-month [304] - 434ms
+2026-02-25 14:05:55+08:00 [32minfo[39m: GET /api/announcement [304] - 121ms
+2026-02-25 14:06:00+08:00 [32minfo[39m: GET /api/branch [304] - 41ms
+2026-02-25 14:06:06+08:00 [32minfo[39m: OPTIONS /api/category [204] - 1ms
+2026-02-25 14:06:06+08:00 [32minfo[39m: OPTIONS /api/product?branchId=3&page=1&details=false [204] - 1ms
+2026-02-25 14:06:07+08:00 [32minfo[39m: GET /api/category [304] - 169ms
+2026-02-25 14:06:07+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 221ms
+2026-02-25 14:06:07+08:00 [32minfo[39m: OPTIONS /api/product?branchId=3&page=2&details=false [204] - 3ms
+2026-02-25 14:06:07+08:00 [32minfo[39m: GET /api/product?branchId=3&page=2&details=false [304] - 21ms
+2026-02-25 14:06:47+08:00 [32minfo[39m: GET /api/report/monthly [304] - 203ms
+2026-02-25 14:06:47+08:00 [32minfo[39m: GET /api/report/product [304] - 220ms
+2026-02-25 14:06:47+08:00 [32minfo[39m: GET /api/report/branch [304] - 230ms
+2026-02-25 14:06:47+08:00 [32minfo[39m: GET /api/report/current-month [304] - 241ms
+2026-02-25 14:07:12+08:00 [32minfo[39m: GET /api/announcement [304] - 86ms
+2026-02-25 14:07:20+08:00 [32minfo[39m: GET /api/branch [304] - 19ms
+2026-02-25 14:08:14+08:00 [32minfo[39m: GET /api/announcement [304] - 64ms
+2026-02-25 14:08:28+08:00 [32minfo[39m: GET /api/branch [304] - 136ms
+2026-02-25 14:09:39+08:00 [32minfo[39m: GET /api/announcement [304] - 122ms
+2026-02-25 14:09:39+08:00 [32minfo[39m: GET /api/branch [304] - 35ms
+2026-02-25 14:09:42+08:00 [32minfo[39m: GET /api/category [304] - 27ms
+2026-02-25 14:09:42+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 29ms
+2026-02-25 14:09:42+08:00 [32minfo[39m: GET /api/product?branchId=3&page=2&details=false [304] - 46ms
+2026-02-25 14:09:43+08:00 [32minfo[39m: OPTIONS /api/product/13 [204] - 1ms
+2026-02-25 14:09:43+08:00 [32minfo[39m: GET /api/product/13 [304] - 54ms
+2026-02-25 14:10:10+08:00 [32minfo[39m: GET /api/report/monthly [304] - 165ms
+2026-02-25 14:10:10+08:00 [32minfo[39m: GET /api/report/branch [304] - 175ms
+2026-02-25 14:10:10+08:00 [32minfo[39m: GET /api/report/current-month [304] - 200ms
+2026-02-25 14:10:10+08:00 [32minfo[39m: GET /api/report/product [304] - 201ms
+2026-02-25 14:10:17+08:00 [32minfo[39m: GET /api/branch [304] - 3ms
+2026-02-25 14:10:49+08:00 [32minfo[39m: GET /api/announcement [304] - 58ms
+2026-02-25 14:11:03+08:00 [32minfo[39m: GET /api/report/current-month [304] - 16ms
+2026-02-25 14:11:03+08:00 [32minfo[39m: GET /api/report/monthly [304] - 19ms
+2026-02-25 14:11:03+08:00 [32minfo[39m: GET /api/report/branch [304] - 21ms
+2026-02-25 14:11:03+08:00 [32minfo[39m: GET /api/report/product [304] - 30ms
+2026-02-25 14:12:04+08:00 [32minfo[39m: GET /api/announcement [304] - 964ms
+2026-02-25 14:12:05+08:00 [32minfo[39m: GET /api/branch [304] - 25ms
+2026-02-25 14:14:32+08:00 [32minfo[39m: GET /api/report/monthly [304] - 454ms
+2026-02-25 14:14:32+08:00 [32minfo[39m: GET /api/report/product [304] - 414ms
+2026-02-25 14:14:32+08:00 [32minfo[39m: GET /api/report/branch [304] - 426ms
+2026-02-25 14:14:32+08:00 [32minfo[39m: GET /api/report/current-month [304] - 439ms
+2026-02-25 14:14:37+08:00 [32minfo[39m: GET /api/branch [304] - 60ms
+2026-02-25 14:14:41+08:00 [32minfo[39m: GET /api/category [304] - 28ms
+2026-02-25 14:14:41+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 27ms
+2026-02-25 14:14:41+08:00 [32minfo[39m: GET /api/product?branchId=3&page=2&details=false [304] - 18ms
+2026-02-25 14:14:59+08:00 [32minfo[39m: GET /api/announcement [304] - 73ms
+2026-02-25 14:15:10+08:00 [32minfo[39m: GET /api/branch [304] - 3ms
+2026-02-25 14:15:16+08:00 [32minfo[39m: GET /api/report/current-month [304] - 7ms
+2026-02-25 14:15:16+08:00 [32minfo[39m: GET /api/report/monthly [304] - 8ms
+2026-02-25 14:15:16+08:00 [32minfo[39m: GET /api/report/branch [304] - 12ms
+2026-02-25 14:15:16+08:00 [32minfo[39m: GET /api/report/product [304] - 27ms
+2026-02-25 14:15:17+08:00 [32minfo[39m: GET /api/announcement [304] - 3ms
+2026-02-25 14:16:18+08:00 [32minfo[39m: GET /api/report/monthly [304] - 164ms
+2026-02-25 14:16:18+08:00 [32minfo[39m: GET /api/report/product [304] - 164ms
+2026-02-25 14:16:18+08:00 [32minfo[39m: GET /api/report/branch [304] - 170ms
+2026-02-25 14:16:18+08:00 [32minfo[39m: GET /api/report/current-month [304] - 208ms
+2026-02-25 14:16:22+08:00 [32minfo[39m: GET /api/announcement [304] - 21ms
+2026-02-25 14:16:23+08:00 [32minfo[39m: GET /api/branch [304] - 17ms
+2026-02-25 14:16:25+08:00 [32minfo[39m: GET /api/category [304] - 12ms
+2026-02-25 14:16:25+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 11ms
+2026-02-25 14:16:26+08:00 [32minfo[39m: GET /api/product/13 [304] - 13ms
+2026-02-25 14:16:53+08:00 [32minfo[39m: OPTIONS /api/product?branchId=6&page=1&details=false [204] - 2ms
+2026-02-25 14:16:53+08:00 [32minfo[39m: GET /api/product?branchId=6&page=1&details=false [200] - 114ms
+2026-02-25 14:20:17+08:00 [32minfo[39m: GET /api/branch [304] - 328ms
+2026-02-25 14:20:17+08:00 [32minfo[39m: GET /api/announcement [304] - 37ms
+2026-02-25 14:20:26+08:00 [32minfo[39m: GET /api/report/current-month [304] - 129ms
+2026-02-25 14:20:26+08:00 [32minfo[39m: GET /api/report/monthly [304] - 245ms
+2026-02-25 14:20:26+08:00 [32minfo[39m: GET /api/report/branch [304] - 275ms
+2026-02-25 14:20:26+08:00 [32minfo[39m: GET /api/report/product [304] - 283ms
+2026-02-25 14:21:13+08:00 [32minfo[39m: GET /api/category [304] - 143ms
+2026-02-25 14:21:13+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 170ms
+2026-02-25 14:21:13+08:00 [32minfo[39m: GET /api/product?branchId=3&page=2&details=false [304] - 169ms
+2026-02-25 14:21:14+08:00 [32minfo[39m: GET /api/product/13 [304] - 12ms
+2026-02-25 14:21:23+08:00 [32minfo[39m: GET /api/branch [304] - 16ms
+2026-02-25 14:22:35+08:00 [32minfo[39m: GET /api/report/monthly [304] - 1032ms
+2026-02-25 14:22:35+08:00 [32minfo[39m: GET /api/report/product [304] - 1051ms
+2026-02-25 14:22:35+08:00 [32minfo[39m: GET /api/report/branch [304] - 1058ms
+2026-02-25 14:22:35+08:00 [32minfo[39m: GET /api/report/current-month [304] - 1217ms
+2026-02-25 14:22:35+08:00 [32minfo[39m: GET /api/announcement [304] - 13ms
+2026-02-25 14:22:36+08:00 [32minfo[39m: GET /api/branch [304] - 12ms
+2026-02-25 14:23:45+08:00 [32minfo[39m: GET /api/branch [304] - 291ms
+2026-02-25 14:24:22+08:00 [32minfo[39m: GET /api/announcement [304] - 199ms
+2026-02-25 14:25:29+08:00 [32minfo[39m: GET /api/announcement [304] - 564ms
+2026-02-25 14:25:39+08:00 [32minfo[39m: GET /api/report/current-month [304] - 118ms
+2026-02-25 14:25:39+08:00 [32minfo[39m: GET /api/report/monthly [304] - 183ms
+2026-02-25 14:25:39+08:00 [32minfo[39m: GET /api/report/product [304] - 213ms
+2026-02-25 14:25:39+08:00 [32minfo[39m: GET /api/report/branch [304] - 229ms
+2026-02-25 14:25:44+08:00 [32minfo[39m: GET /api/branch [304] - 15ms
+2026-02-25 14:25:56+08:00 [32minfo[39m: GET /api/category [304] - 93ms
+2026-02-25 14:25:56+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 102ms
+2026-02-25 14:25:56+08:00 [32minfo[39m: GET /api/product?branchId=3&page=2&details=false [304] - 54ms
+2026-02-25 14:26:54+08:00 [32minfo[39m: GET /api/branch [304] - 124ms
+2026-02-25 14:27:13+08:00 [32minfo[39m: GET /api/announcement [304] - 69ms
+2026-02-25 14:28:12+08:00 [32minfo[39m: GET /api/branch [304] - 246ms
+2026-02-25 14:28:17+08:00 [32minfo[39m: GET /api/category [304] - 22ms
+2026-02-25 14:28:18+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 114ms
+2026-02-25 14:28:18+08:00 [32minfo[39m: GET /api/product?branchId=3&page=2&details=false [304] - 23ms
+2026-02-25 14:28:25+08:00 [32minfo[39m: OPTIONS /api/transaction [204] - 1ms
+2026-02-25 14:28:25+08:00 [32minfo[39m: GET /api/transaction [304] - 73ms
+2026-02-25 14:28:27+08:00 [32minfo[39m: GET /api/report/monthly [304] - 42ms
+2026-02-25 14:28:27+08:00 [32minfo[39m: GET /api/report/current-month [304] - 60ms
+2026-02-25 14:28:27+08:00 [32minfo[39m: GET /api/report/branch [304] - 154ms
+2026-02-25 14:28:27+08:00 [32minfo[39m: GET /api/report/product [304] - 161ms
+2026-02-25 14:28:31+08:00 [32minfo[39m: GET /api/announcement [304] - 16ms
+2026-02-25 14:28:33+08:00 [32minfo[39m: OPTIONS /api/product?branchId=9&page=1&details=false [204] - 1ms
+2026-02-25 14:28:33+08:00 [32minfo[39m: GET /api/product?branchId=9&page=1&details=false [200] - 19ms
+2026-02-25 14:28:38+08:00 [32minfo[39m: OPTIONS /api/product/14 [204] - 1ms
+2026-02-25 14:28:38+08:00 [32minfo[39m: GET /api/product/14 [304] - 8ms
+2026-02-25 15:18:04+08:00 [32minfo[39m: GET /api/announcement [304] - 4456ms
+2026-02-25 15:18:04+08:00 [32minfo[39m: GET /api/report/monthly [304] - 4567ms
+2026-02-25 15:18:04+08:00 [32minfo[39m: GET /api/report/branch [304] - 4641ms
+2026-02-25 15:18:04+08:00 [32minfo[39m: GET /api/report/current-month [304] - 5848ms
+2026-02-25 15:18:04+08:00 [32minfo[39m: GET /api/report/product [304] - 4624ms
+2026-02-25 15:18:36+08:00 [32minfo[39m: GET /api/branch [304] - 178ms
+2026-02-25 15:18:49+08:00 [32minfo[39m: GET /api/category [304] - 267ms
+2026-02-25 15:18:49+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 331ms
+2026-02-25 15:18:49+08:00 [32minfo[39m: GET /api/product?branchId=3&page=2&details=false [304] - 56ms
+2026-02-25 15:18:55+08:00 [32minfo[39m: GET /api/product/13 [304] - 66ms
+2026-02-25 15:19:45+08:00 [32minfo[39m: GET /api/branch [304] - 769ms
+2026-02-25 15:20:45+08:00 [32minfo[39m: GET /api/category [304] - 308ms
+2026-02-25 15:20:45+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 242ms
+2026-02-25 15:20:45+08:00 [32minfo[39m: GET /api/product?branchId=3&page=2&details=false [304] - 31ms
+2026-02-25 15:20:47+08:00 [32minfo[39m: GET /api/product/13 [304] - 40ms
+2026-02-25 15:20:53+08:00 [32minfo[39m: GET /api/product/14 [304] - 37ms
+2026-02-25 15:21:01+08:00 [32minfo[39m: OPTIONS /api/product/19 [204] - 7ms
+2026-02-25 15:21:01+08:00 [32minfo[39m: GET /api/product/19 [200] - 84ms
+2026-02-25 15:30:12+08:00 [32minfo[39m: GET /api/branch [304] - 1981ms
+2026-02-25 15:30:13+08:00 [32minfo[39m: GET /api/category [304] - 1659ms
+2026-02-25 15:30:13+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 1702ms
+2026-02-25 15:30:13+08:00 [32minfo[39m: GET /api/product?branchId=3&page=2&details=false [304] - 65ms
+2026-02-25 15:30:17+08:00 [32minfo[39m: OPTIONS /api/product/15 [204] - 6ms
+2026-02-25 15:30:17+08:00 [32minfo[39m: GET /api/product/15 [304] - 72ms
+2026-02-25 15:30:38+08:00 [32minfo[39m: GET /api/announcement [304] - 332ms
+2026-02-25 15:30:41+08:00 [32minfo[39m: GET /api/product/14 [304] - 20ms
+2026-02-25 16:46:17+08:00 [32minfo[39m: OPTIONS /api/branch [204] - 23ms
+2026-02-25 16:46:17+08:00 [32minfo[39m: OPTIONS /api/category [204] - 2ms
+2026-02-25 16:46:17+08:00 [32minfo[39m: OPTIONS /api/product?branchId=3&page=1&details=false [204] - 1ms
+2026-02-25 16:46:19+08:00 [32minfo[39m: GET /api/category [304] - 1775ms
+2026-02-25 16:46:19+08:00 [32minfo[39m: GET /api/branch [304] - 1988ms
+2026-02-25 16:46:19+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 1788ms
+2026-02-25 16:46:19+08:00 [32minfo[39m: OPTIONS /api/report/current-month [204] - 1ms
+2026-02-25 16:46:19+08:00 [32minfo[39m: OPTIONS /api/report/monthly [204] - 2ms
+2026-02-25 16:46:19+08:00 [32minfo[39m: OPTIONS /api/report/branch [204] - 2ms
+2026-02-25 16:46:19+08:00 [32minfo[39m: OPTIONS /api/report/product [204] - 1ms
+2026-02-25 16:46:19+08:00 [32minfo[39m: GET /api/report/monthly [304] - 128ms
+2026-02-25 16:46:19+08:00 [32minfo[39m: GET /api/report/branch [304] - 183ms
+2026-02-25 16:46:19+08:00 [32minfo[39m: GET /api/report/current-month [304] - 200ms
+2026-02-25 16:46:19+08:00 [32minfo[39m: GET /api/report/product [304] - 118ms
+2026-02-25 16:46:20+08:00 [32minfo[39m: OPTIONS /api/announcement [204] - 2ms
+2026-02-25 16:46:20+08:00 [32minfo[39m: GET /api/announcement [304] - 38ms
+2026-02-25 16:46:25+08:00 [32minfo[39m: OPTIONS /api/product?branchId=3&page=2&details=false [204] - 1ms
+2026-02-25 16:46:25+08:00 [32minfo[39m: GET /api/product?branchId=3&page=2&details=false [304] - 15ms
+2026-02-25 16:47:51+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 107ms
+2026-02-25 16:47:51+08:00 [32minfo[39m: GET /api/branch [304] - 132ms
+2026-02-25 16:47:51+08:00 [32minfo[39m: GET /api/category [304] - 122ms
+2026-02-25 16:47:51+08:00 [32minfo[39m: GET /api/product?branchId=3&page=2&details=false [304] - 14ms
+2026-02-25 16:47:53+08:00 [32minfo[39m: GET /api/report/branch [304] - 59ms
+2026-02-25 16:47:53+08:00 [32minfo[39m: GET /api/report/product [304] - 74ms
+2026-02-25 16:47:53+08:00 [32minfo[39m: GET /api/report/current-month [304] - 77ms
+2026-02-25 16:47:54+08:00 [32minfo[39m: GET /api/report/monthly [304] - 129ms
+2026-02-25 16:48:07+08:00 [32minfo[39m: GET /api/announcement [304] - 69ms
+2026-02-25 16:48:52+08:00 [32minfo[39m: GET /api/branch [304] - 235ms
+2026-02-25 16:49:44+08:00 [32minfo[39m: GET /api/announcement [304] - 268ms
+2026-02-25 16:50:59+08:00 [32minfo[39m: GET /api/announcement [304] - 193ms
+2026-02-25 16:52:02+08:00 [32minfo[39m: GET /api/announcement [304] - 354ms
+2026-02-25 16:52:49+08:00 [32minfo[39m: OPTIONS /api/transaction [204] - 5ms
+2026-02-25 16:52:49+08:00 [32minfo[39m: GET /api/transaction [304] - 234ms
+2026-02-25 16:52:51+08:00 [32minfo[39m: GET /api/report/monthly [304] - 56ms
+2026-02-25 16:52:51+08:00 [32minfo[39m: GET /api/report/branch [304] - 192ms
+2026-02-25 16:52:51+08:00 [32minfo[39m: GET /api/report/current-month [304] - 204ms
+2026-02-25 16:52:51+08:00 [32minfo[39m: GET /api/report/product [304] - 217ms
+2026-02-25 17:08:56+08:00 [32minfo[39m: GET /api/report/monthly [304] - 1295ms
+2026-02-25 17:08:56+08:00 [32minfo[39m: GET /api/report/branch [304] - 1375ms
+2026-02-25 17:08:56+08:00 [32minfo[39m: GET /api/report/product [304] - 1379ms
+2026-02-25 17:08:56+08:00 [32minfo[39m: GET /api/report/current-month [304] - 1511ms
+2026-02-25 17:17:10+08:00 [32minfo[39m: GET /api/report/monthly [304] - 454ms
+2026-02-25 17:17:10+08:00 [32minfo[39m: GET /api/report/branch [304] - 477ms
+2026-02-25 17:17:10+08:00 [32minfo[39m: GET /api/report/product [304] - 479ms
+2026-02-25 17:17:10+08:00 [32minfo[39m: GET /api/report/current-month [304] - 603ms
+2026-02-25 17:17:11+08:00 [32minfo[39m: GET /api/branch [304] - 54ms
+2026-02-25 17:17:12+08:00 [32minfo[39m: GET /api/category [304] - 71ms
+2026-02-25 17:17:12+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 73ms
+2026-02-25 17:17:13+08:00 [32minfo[39m: OPTIONS /api/product/13 [204] - 3ms
+2026-02-25 17:17:13+08:00 [32minfo[39m: GET /api/product/13 [304] - 28ms
+2026-02-25 17:17:27+08:00 [32minfo[39m: GET /api/product/13 [304] - 6ms
+2026-02-25 17:18:15+08:00 [32minfo[39m: GET /api/product/13 [304] - 179ms
+2026-02-25 17:18:26+08:00 [32minfo[39m: GET /api/branch [304] - 208ms
+2026-02-25 17:18:26+08:00 [32minfo[39m: GET /api/category [304] - 208ms
+2026-02-25 17:18:26+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 232ms
+2026-02-25 17:18:28+08:00 [32minfo[39m: OPTIONS /api/product/14 [204] - 2ms
+2026-02-25 17:18:28+08:00 [32minfo[39m: GET /api/product/14 [304] - 55ms
+2026-02-25 17:20:09+08:00 [32minfo[39m: GET /api/branch [304] - 1207ms
+2026-02-25 17:20:09+08:00 [32minfo[39m: GET /api/category [304] - 1129ms
+2026-02-25 17:20:09+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 1133ms
+2026-02-25 17:20:47+08:00 [32minfo[39m: GET /api/product/13 [304] - 64ms
+2026-02-25 17:20:56+08:00 [32minfo[39m: Create purchase transaction
+2026-02-25 17:20:56+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:20:56+08:00 [32minfo[39m: POST /api/transaction [200] - 498ms
+2026-02-25 17:20:57+08:00 [32minfo[39m: GET /api/transaction [200] - 52ms
+2026-02-25 17:21:09+08:00 [32minfo[39m: GET /api/product/13 [304] - 4ms
+2026-02-25 17:21:22+08:00 [32minfo[39m: Create sale transaction
+2026-02-25 17:21:22+08:00 [31merror[39m: BadRequestError: The requested quantity of Mansanas is greater than the available stock.
+    at isThereEnoughStock (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\transaction-validation.ts:21:11)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:49:25
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-02-25 17:21:22+08:00 [32minfo[39m: [Cache NOT INVALIDATED]
+2026-02-25 17:21:22+08:00 [31merror[39m: POST /api/transaction [400] - 382ms
+2026-02-25 17:21:25+08:00 [32minfo[39m: Create sale transaction
+2026-02-25 17:21:25+08:00 [31merror[39m: BadRequestError: The requested quantity of Mansanas is greater than the available stock.
+    at isThereEnoughStock (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\transaction-validation.ts:21:11)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:49:25
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-02-25 17:21:25+08:00 [32minfo[39m: [Cache NOT INVALIDATED]
+2026-02-25 17:21:25+08:00 [31merror[39m: POST /api/transaction [400] - 110ms
+2026-02-25 17:21:42+08:00 [32minfo[39m: Create sale transaction
+2026-02-25 17:21:42+08:00 [31merror[39m: BadRequestError: The requested quantity of Mansanas is greater than the available stock.
+    at isThereEnoughStock (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\transaction-validation.ts:21:11)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:49:25
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-02-25 17:21:42+08:00 [32minfo[39m: [Cache NOT INVALIDATED]
+2026-02-25 17:21:42+08:00 [31merror[39m: POST /api/transaction [400] - 215ms
+2026-02-25 17:21:46+08:00 [32minfo[39m: Create sale transaction
+2026-02-25 17:21:46+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:21:46+08:00 [32minfo[39m: POST /api/transaction [200] - 149ms
+2026-02-25 17:21:46+08:00 [32minfo[39m: GET /api/branch [304] - 16ms
+2026-02-25 17:21:46+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 35ms
+2026-02-25 17:21:46+08:00 [32minfo[39m: GET /api/category [304] - 99ms
+2026-02-25 17:21:53+08:00 [32minfo[39m: GET /api/transaction [200] - 53ms
+2026-02-25 17:22:26+08:00 [32minfo[39m: GET /api/report/monthly [304] - 170ms
+2026-02-25 17:22:26+08:00 [32minfo[39m: GET /api/report/product [200] - 170ms
+2026-02-25 17:22:26+08:00 [32minfo[39m: GET /api/report/branch [200] - 179ms
+2026-02-25 17:22:26+08:00 [32minfo[39m: GET /api/report/current-month [200] - 223ms
+2026-02-25 17:22:32+08:00 [32minfo[39m: GET /api/announcement [304] - 35ms
+2026-02-25 17:22:36+08:00 [32minfo[39m: GET /api/branch [304] - 6ms
+2026-02-25 17:22:39+08:00 [32minfo[39m: GET /api/category [304] - 14ms
+2026-02-25 17:22:39+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 15ms
+2026-02-25 17:22:41+08:00 [32minfo[39m: GET /api/product/13 [304] - 11ms
+2026-02-25 17:22:51+08:00 [32minfo[39m: Create return transaction
+2026-02-25 17:22:51+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:22:51+08:00 [32minfo[39m: POST /api/transaction [200] - 196ms
+2026-02-25 17:22:53+08:00 [32minfo[39m: GET /api/transaction [200] - 116ms
+2026-02-25 17:23:14+08:00 [32minfo[39m: GET /api/product?branchId=3&page=2&details=false [304] - 95ms
+2026-02-25 17:23:15+08:00 [32minfo[39m: GET /api/product/13 [304] - 4ms
+2026-02-25 17:23:31+08:00 [32minfo[39m: GET /api/transaction [304] - 18ms
+2026-02-25 17:23:34+08:00 [32minfo[39m: GET /api/announcement [304] - 64ms
+2026-02-25 17:23:35+08:00 [32minfo[39m: GET /api/branch [304] - 15ms
+2026-02-25 17:23:36+08:00 [32minfo[39m: GET /api/category [304] - 28ms
+2026-02-25 17:23:36+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 137ms
+2026-02-25 17:23:37+08:00 [32minfo[39m: GET /api/product/13 [304] - 4ms
+2026-02-25 17:23:45+08:00 [32minfo[39m: Create damage transaction
+2026-02-25 17:23:45+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:23:46+08:00 [32minfo[39m: POST /api/transaction [200] - 138ms
+2026-02-25 17:23:46+08:00 [32minfo[39m: GET /api/report/monthly [304] - 35ms
+2026-02-25 17:23:46+08:00 [32minfo[39m: GET /api/report/current-month [200] - 137ms
+2026-02-25 17:23:46+08:00 [32minfo[39m: GET /api/report/branch [200] - 202ms
+2026-02-25 17:23:46+08:00 [32minfo[39m: GET /api/report/product [200] - 204ms
+2026-02-25 17:24:03+08:00 [32minfo[39m: OPTIONS /api/branch/19 [204] - 3ms
+2026-02-25 17:24:03+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:24:03+08:00 [32minfo[39m: DELETE /api/branch/19 [200] - 129ms
+2026-02-25 17:24:03+08:00 [32minfo[39m: GET /api/branch [200] - 29ms
+2026-02-25 17:24:05+08:00 [32minfo[39m: OPTIONS /api/branch/18 [204] - 1ms
+2026-02-25 17:24:05+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:24:05+08:00 [32minfo[39m: DELETE /api/branch/18 [200] - 31ms
+2026-02-25 17:24:05+08:00 [32minfo[39m: GET /api/branch [200] - 11ms
+2026-02-25 17:24:07+08:00 [32minfo[39m: OPTIONS /api/branch/17 [204] - 1ms
+2026-02-25 17:24:07+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:24:07+08:00 [32minfo[39m: DELETE /api/branch/17 [200] - 53ms
+2026-02-25 17:24:07+08:00 [32minfo[39m: GET /api/branch [200] - 40ms
+2026-02-25 17:24:08+08:00 [32minfo[39m: OPTIONS /api/branch/10 [204] - 8ms
+2026-02-25 17:24:08+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:24:08+08:00 [32minfo[39m: DELETE /api/branch/10 [200] - 41ms
+2026-02-25 17:24:09+08:00 [32minfo[39m: GET /api/branch [200] - 10ms
+2026-02-25 17:24:10+08:00 [32minfo[39m: OPTIONS /api/branch/9 [204] - 1ms
+2026-02-25 17:24:10+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:24:10+08:00 [32minfo[39m: DELETE /api/branch/9 [200] - 99ms
+2026-02-25 17:24:10+08:00 [32minfo[39m: GET /api/branch [200] - 33ms
+2026-02-25 17:24:12+08:00 [32minfo[39m: OPTIONS /api/branch/8 [204] - 2ms
+2026-02-25 17:24:12+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:24:12+08:00 [32minfo[39m: DELETE /api/branch/8 [200] - 58ms
+2026-02-25 17:24:12+08:00 [32minfo[39m: GET /api/branch [200] - 18ms
+2026-02-25 17:24:14+08:00 [32minfo[39m: OPTIONS /api/branch/7 [204] - 4ms
+2026-02-25 17:24:14+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:24:14+08:00 [32minfo[39m: DELETE /api/branch/7 [200] - 44ms
+2026-02-25 17:24:14+08:00 [32minfo[39m: GET /api/branch [200] - 33ms
+2026-02-25 17:24:15+08:00 [32minfo[39m: OPTIONS /api/product?branchId=4&page=1&details=false [204] - 1ms
+2026-02-25 17:24:15+08:00 [32minfo[39m: GET /api/product?branchId=4&page=1&details=false [304] - 7ms
+2026-02-25 17:24:16+08:00 [32minfo[39m: OPTIONS /api/product/16 [204] - 3ms
+2026-02-25 17:24:16+08:00 [32minfo[39m: GET /api/product/16 [200] - 25ms
+2026-02-25 17:24:28+08:00 [32minfo[39m: Create purchase transaction
+2026-02-25 17:24:28+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:24:28+08:00 [32minfo[39m: POST /api/transaction [200] - 154ms
+2026-02-25 17:24:32+08:00 [32minfo[39m: GET /api/product/16 [304] - 4ms
+2026-02-25 17:24:39+08:00 [32minfo[39m: Create sale transaction
+2026-02-25 17:24:39+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:24:39+08:00 [32minfo[39m: POST /api/transaction [200] - 204ms
+2026-02-25 17:24:39+08:00 [32minfo[39m: GET /api/category [304] - 11ms
+2026-02-25 17:24:41+08:00 [32minfo[39m: GET /api/product/16 [304] - 2ms
+2026-02-25 17:24:47+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 70ms
+2026-02-25 17:24:48+08:00 [32minfo[39m: GET /api/product/13 [304] - 9ms
+2026-02-25 17:25:02+08:00 [32minfo[39m: GET /api/transaction [200] - 289ms
+2026-02-25 17:25:03+08:00 [32minfo[39m: GET /api/report/monthly [304] - 29ms
+2026-02-25 17:25:03+08:00 [32minfo[39m: GET /api/report/current-month [200] - 43ms
+2026-02-25 17:25:03+08:00 [32minfo[39m: GET /api/report/branch [200] - 49ms
+2026-02-25 17:25:03+08:00 [32minfo[39m: GET /api/report/product [200] - 53ms
+2026-02-25 17:25:29+08:00 [32minfo[39m: GET /api/announcement [304] - 80ms
+2026-02-25 17:25:30+08:00 [32minfo[39m: GET /api/branch [304] - 8ms
+2026-02-25 17:26:31+08:00 [32minfo[39m: GET /api/branch [304] - 126ms
+2026-02-25 17:26:32+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 28ms
+2026-02-25 17:26:32+08:00 [32minfo[39m: GET /api/category [304] - 133ms
+2026-02-25 17:26:33+08:00 [32minfo[39m: GET /api/product/13 [304] - 14ms
+2026-02-25 17:26:36+08:00 [32minfo[39m: GET /api/report/monthly [304] - 76ms
+2026-02-25 17:26:36+08:00 [32minfo[39m: GET /api/report/current-month [304] - 95ms
+2026-02-25 17:26:36+08:00 [32minfo[39m: GET /api/report/product [304] - 234ms
+2026-02-25 17:26:37+08:00 [32minfo[39m: GET /api/report/branch [304] - 250ms
+2026-02-25 17:27:19+08:00 [32minfo[39m: GET /api/announcement [304] - 244ms
+2026-02-25 17:27:32+08:00 [32minfo[39m: GET /api/branch [304] - 121ms
+2026-02-25 17:27:39+08:00 [32minfo[39m: GET /api/report/current-month [304] - 134ms
+2026-02-25 17:27:39+08:00 [32minfo[39m: GET /api/report/monthly [304] - 223ms
+2026-02-25 17:27:39+08:00 [32minfo[39m: GET /api/report/branch [304] - 264ms
+2026-02-25 17:27:39+08:00 [32minfo[39m: GET /api/report/product [304] - 332ms
+2026-02-25 17:28:15+08:00 [32minfo[39m: GET /api/category [304] - 265ms
+2026-02-25 17:28:15+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 184ms
+2026-02-25 17:28:17+08:00 [32minfo[39m: GET /api/transaction [304] - 259ms
+2026-02-25 17:28:22+08:00 [32minfo[39m: GET /api/transaction [304] - 3ms
+2026-02-25 17:29:18+08:00 [32minfo[39m: GET /api/report/monthly [304] - 396ms
+2026-02-25 17:29:18+08:00 [32minfo[39m: GET /api/report/branch [304] - 425ms
+2026-02-25 17:29:18+08:00 [32minfo[39m: GET /api/report/product [304] - 429ms
+2026-02-25 17:29:18+08:00 [32minfo[39m: GET /api/report/current-month [304] - 484ms
+2026-02-25 17:29:19+08:00 [32minfo[39m: GET /api/announcement [304] - 211ms
+2026-02-25 17:29:19+08:00 [32minfo[39m: GET /api/branch [304] - 30ms
+2026-02-25 17:29:20+08:00 [32minfo[39m: GET /api/category [304] - 86ms
+2026-02-25 17:29:21+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 90ms
+2026-02-25 17:29:21+08:00 [32minfo[39m: GET /api/product/13 [304] - 21ms
+2026-02-25 17:29:24+08:00 [32minfo[39m: GET /api/product/14 [304] - 11ms
+2026-02-25 17:29:28+08:00 [32minfo[39m: GET /api/product/14 [304] - 4ms
+2026-02-25 17:29:32+08:00 [32minfo[39m: Create purchase transaction
+2026-02-25 17:29:32+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:29:32+08:00 [32minfo[39m: POST /api/transaction [200] - 146ms
+2026-02-25 17:29:46+08:00 [32minfo[39m: Create sale transaction
+2026-02-25 17:29:47+08:00 [32minfo[39m: [ANNOUNCEMENT] Low Stock: Branch Bulacan has low stock of product Mansanas.
+2026-02-25 17:29:47+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:29:47+08:00 [32minfo[39m: POST /api/transaction [200] - 259ms
+2026-02-25 17:29:53+08:00 [32minfo[39m: GET /api/transaction [200] - 266ms
+2026-02-25 17:30:48+08:00 [32minfo[39m: GET /api/report/monthly [304] - 1318ms
+2026-02-25 17:30:48+08:00 [32minfo[39m: GET /api/report/branch [200] - 1334ms
+2026-02-25 17:30:48+08:00 [32minfo[39m: GET /api/report/product [200] - 1346ms
+2026-02-25 17:30:48+08:00 [32minfo[39m: GET /api/report/current-month [200] - 1513ms
+2026-02-25 17:31:10+08:00 [32minfo[39m: GET /api/announcement [200] - 80ms
+2026-02-25 17:31:10+08:00 [32minfo[39m: GET /api/branch [304] - 13ms
+2026-02-25 17:31:50+08:00 [32minfo[39m: GET /api/report/monthly [304] - 167ms
+2026-02-25 17:31:50+08:00 [32minfo[39m: GET /api/report/current-month [304] - 177ms
+2026-02-25 17:31:51+08:00 [32minfo[39m: GET /api/report/branch [304] - 213ms
+2026-02-25 17:31:51+08:00 [32minfo[39m: GET /api/report/product [304] - 234ms
+2026-02-25 17:35:39+08:00 [32minfo[39m: GET /api/report/monthly [304] - 321ms
+2026-02-25 17:35:39+08:00 [32minfo[39m: GET /api/report/product [304] - 338ms
+2026-02-25 17:35:39+08:00 [32minfo[39m: GET /api/report/branch [304] - 350ms
+2026-02-25 17:35:39+08:00 [32minfo[39m: GET /api/report/current-month [304] - 383ms
+2026-02-25 17:35:42+08:00 [32minfo[39m: GET /api/announcement [304] - 41ms
+2026-02-25 17:35:43+08:00 [32minfo[39m: GET /api/branch [304] - 29ms
+2026-02-25 17:37:54+08:00 [32minfo[39m: GET /api/report/branch [304] - 135ms
+2026-02-25 17:37:54+08:00 [32minfo[39m: GET /api/report/monthly [304] - 134ms
+2026-02-25 17:37:54+08:00 [32minfo[39m: GET /api/report/product [304] - 140ms
+2026-02-25 17:37:54+08:00 [32minfo[39m: GET /api/report/current-month [304] - 160ms
+2026-02-25 17:37:54+08:00 [32minfo[39m: GET /api/announcement [304] - 12ms
+2026-02-25 17:42:13+08:00 [32minfo[39m: GET /api/report/monthly [304] - 1417ms
+2026-02-25 17:42:13+08:00 [32minfo[39m: GET /api/report/product [304] - 1477ms
+2026-02-25 17:42:13+08:00 [32minfo[39m: GET /api/report/branch [304] - 1526ms
+2026-02-25 17:42:13+08:00 [32minfo[39m: GET /api/report/current-month [304] - 1692ms
+2026-02-25 17:42:16+08:00 [32minfo[39m: GET /api/announcement [304] - 107ms
+2026-02-25 17:42:18+08:00 [32minfo[39m: GET /api/branch [304] - 15ms
+2026-02-25 17:42:20+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 31ms
+2026-02-25 17:42:20+08:00 [32minfo[39m: GET /api/category [304] - 34ms
+2026-02-25 17:42:21+08:00 [32minfo[39m: GET /api/product/13 [304] - 28ms
+2026-02-25 17:42:30+08:00 [32minfo[39m: Create purchase transaction
+2026-02-25 17:42:30+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:42:30+08:00 [32minfo[39m: POST /api/transaction [200] - 219ms
+2026-02-25 17:42:31+08:00 [32minfo[39m: GET /api/product/13 [304] - 13ms
+2026-02-25 17:42:48+08:00 [32minfo[39m: GET /api/product/14 [304] - 2427ms
+2026-02-25 17:42:51+08:00 [32minfo[39m: GET /api/product/14 [304] - 1679ms
+2026-02-25 17:42:52+08:00 [32minfo[39m: GET /api/product/14 [304] - 70ms
+2026-02-25 17:42:54+08:00 [32minfo[39m: GET /api/product/14 [304] - 1839ms
+2026-02-25 17:42:55+08:00 [32minfo[39m: GET /api/product/14 [304] - 356ms
+2026-02-25 17:42:59+08:00 [32minfo[39m: Create sale transaction
+2026-02-25 17:43:02+08:00 [31merror[39m: PrismaClientKnownRequestError: Transaction API error: Unable to start a transaction in the given time.
+    at Dt.#transformRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\engines\client\ClientEngine.ts:286:14)
+    at Dt.transaction (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\core\engines\client\ClientEngine.ts:438:18)
+    at async Proxy._transactionWithCallback (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:687:20)
+2026-02-25 17:43:02+08:00 [32minfo[39m: [Cache NOT INVALIDATED]
+2026-02-25 17:43:02+08:00 [31merror[39m: POST /api/transaction [500] - 3156ms
+2026-02-25 17:43:12+08:00 [32minfo[39m: Create sale transaction
+2026-02-25 17:43:13+08:00 [32minfo[39m: [ANNOUNCEMENT] Low Stock: Branch Bulacan has low stock of product Mansanas.
+2026-02-25 17:43:13+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:43:13+08:00 [32minfo[39m: POST /api/transaction [200] - 1004ms
+2026-02-25 17:43:15+08:00 [32minfo[39m: GET /api/transaction [200] - 299ms
+2026-02-25 17:43:18+08:00 [32minfo[39m: GET /api/transaction [304] - 3ms
+2026-02-25 17:43:22+08:00 [32minfo[39m: GET /api/branch [304] - 17ms
+2026-02-25 17:43:25+08:00 [32minfo[39m: GET /api/category [304] - 42ms
+2026-02-25 17:43:25+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 39ms
+2026-02-25 17:43:27+08:00 [32minfo[39m: OPTIONS /api/product?branchId=3&categoryId=3&page=1&details=false [204] - 2ms
+2026-02-25 17:43:27+08:00 [32minfo[39m: GET /api/product?branchId=3&categoryId=3&page=1&details=false [304] - 24ms
+2026-02-25 17:43:31+08:00 [32minfo[39m: OPTIONS /api/product?branchId=3&categoryId=2&page=1&details=false [204] - 1ms
+2026-02-25 17:43:31+08:00 [32minfo[39m: GET /api/product?branchId=3&categoryId=2&page=1&details=false [200] - 12ms
+2026-02-25 17:43:34+08:00 [32minfo[39m: OPTIONS /api/product?branchId=3&categoryId=2&search=saba&page=1&details=false [204] - 4ms
+2026-02-25 17:43:34+08:00 [32minfo[39m: GET /api/product?branchId=3&categoryId=2&search=saba&page=1&details=false [200] - 92ms
+2026-02-25 17:43:38+08:00 [32minfo[39m: GET /api/product?branchId=4&page=1&details=false [304] - 14ms
+2026-02-25 17:43:41+08:00 [32minfo[39m: GET /api/announcement [200] - 14ms
+2026-02-25 17:44:21+08:00 [32minfo[39m: GET /api/report/monthly [304] - 403ms
+2026-02-25 17:44:21+08:00 [32minfo[39m: GET /api/report/branch [200] - 330ms
+2026-02-25 17:44:21+08:00 [32minfo[39m: GET /api/report/product [200] - 324ms
+2026-02-25 17:44:21+08:00 [32minfo[39m: GET /api/report/current-month [200] - 452ms
+2026-02-25 17:44:24+08:00 [32minfo[39m: GET /api/branch [304] - 12ms
+2026-02-25 17:44:27+08:00 [32minfo[39m: GET /api/category [304] - 28ms
+2026-02-25 17:44:27+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 22ms
+2026-02-25 17:44:27+08:00 [32minfo[39m: GET /api/product?branchId=3&page=2&details=false [304] - 33ms
+2026-02-25 17:44:28+08:00 [32minfo[39m: GET /api/product/13 [304] - 12ms
+2026-02-25 17:44:40+08:00 [32minfo[39m: Create purchase transaction
+2026-02-25 17:44:40+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:44:40+08:00 [32minfo[39m: POST /api/transaction [200] - 289ms
+2026-02-25 17:44:42+08:00 [32minfo[39m: GET /api/product/13 [304] - 5ms
+2026-02-25 17:44:45+08:00 [32minfo[39m: GET /api/product/14 [304] - 359ms
+2026-02-25 17:44:53+08:00 [32minfo[39m: Create purchase transaction
+2026-02-25 17:44:53+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:44:53+08:00 [32minfo[39m: POST /api/transaction [200] - 100ms
+2026-02-25 17:44:56+08:00 [32minfo[39m: GET /api/transaction [200] - 1510ms
+2026-02-25 17:44:59+08:00 [32minfo[39m: GET /api/transaction [304] - 3ms
+2026-02-25 17:45:04+08:00 [32minfo[39m: GET /api/product/14 [304] - 5ms
+2026-02-25 17:45:10+08:00 [32minfo[39m: Create sale transaction
+2026-02-25 17:45:11+08:00 [32minfo[39m: [ANNOUNCEMENT] Low Stock: Branch Bulacan has low stock of product Mansanas.
+2026-02-25 17:45:11+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:45:11+08:00 [32minfo[39m: POST /api/transaction [200] - 971ms
+2026-02-25 17:45:18+08:00 [32minfo[39m: GET /api/transaction [200] - 233ms
+2026-02-25 17:45:22+08:00 [32minfo[39m: GET /api/report/monthly [304] - 138ms
+2026-02-25 17:45:22+08:00 [32minfo[39m: GET /api/report/product [200] - 170ms
+2026-02-25 17:45:22+08:00 [32minfo[39m: GET /api/report/branch [200] - 172ms
+2026-02-25 17:45:22+08:00 [32minfo[39m: GET /api/report/current-month [200] - 204ms
+2026-02-25 17:45:24+08:00 [32minfo[39m: GET /api/announcement [200] - 40ms
+2026-02-25 17:46:19+08:00 [32minfo[39m: GET /api/report/current-month [304] - 59ms
+2026-02-25 17:46:19+08:00 [32minfo[39m: GET /api/report/monthly [304] - 22ms
+2026-02-25 17:46:19+08:00 [32minfo[39m: GET /api/report/branch [304] - 30ms
+2026-02-25 17:46:19+08:00 [32minfo[39m: GET /api/report/product [304] - 34ms
+2026-02-25 17:46:23+08:00 [32minfo[39m: GET /api/announcement [304] - 6ms
+2026-02-25 17:46:27+08:00 [32minfo[39m: GET /api/branch [304] - 409ms
+2026-02-25 17:46:28+08:00 [32minfo[39m: GET /api/category [304] - 43ms
+2026-02-25 17:46:28+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 173ms
+2026-02-25 17:46:29+08:00 [32minfo[39m: GET /api/product?branchId=3&page=2&details=false [304] - 19ms
+2026-02-25 17:46:31+08:00 [32minfo[39m: GET /api/product?branchId=4&page=1&details=false [304] - 19ms
+2026-02-25 17:46:31+08:00 [32minfo[39m: OPTIONS /api/product?branchId=4&page=2&details=false [204] - 1ms
+2026-02-25 17:46:31+08:00 [32minfo[39m: GET /api/product?branchId=4&page=2&details=false [304] - 17ms
+2026-02-25 17:46:35+08:00 [32minfo[39m: GET /api/product/13 [304] - 156ms
+2026-02-25 17:46:43+08:00 [32minfo[39m: GET /api/product/14 [304] - 165ms
+2026-02-25 17:46:57+08:00 [32minfo[39m: Create purchase transaction
+2026-02-25 17:46:58+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:46:58+08:00 [32minfo[39m: POST /api/transaction [200] - 388ms
+2026-02-25 17:46:58+08:00 [32minfo[39m: GET /api/product/14 [304] - 14ms
+2026-02-25 17:47:18+08:00 [32minfo[39m: Create sale transaction
+2026-02-25 17:47:19+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:47:19+08:00 [32minfo[39m: POST /api/transaction [200] - 309ms
+2026-02-25 17:47:19+08:00 [32minfo[39m: [ANNOUNCEMENT] Low Stock: Branch Bulacan has low stock of product Mansanas.
+2026-02-25 17:47:21+08:00 [32minfo[39m: GET /api/transaction [200] - 302ms
+2026-02-25 17:47:24+08:00 [32minfo[39m: GET /api/transaction [304] - 4ms
+2026-02-25 17:47:25+08:00 [32minfo[39m: GET /api/transaction [304] - 4ms
+2026-02-25 17:47:27+08:00 [32minfo[39m: GET /api/announcement [200] - 21ms
+2026-02-25 17:47:28+08:00 [32minfo[39m: GET /api/report/product [200] - 116ms
+2026-02-25 17:47:28+08:00 [32minfo[39m: GET /api/report/branch [200] - 131ms
+2026-02-25 17:47:28+08:00 [32minfo[39m: GET /api/report/monthly [304] - 141ms
+2026-02-25 17:47:28+08:00 [32minfo[39m: GET /api/report/current-month [200] - 167ms
+2026-02-25 17:48:57+08:00 [32minfo[39m: GET /api/report/monthly [304] - 320ms
+2026-02-25 17:48:57+08:00 [32minfo[39m: GET /api/report/product [304] - 355ms
+2026-02-25 17:48:57+08:00 [32minfo[39m: GET /api/report/branch [304] - 357ms
+2026-02-25 17:48:57+08:00 [32minfo[39m: GET /api/report/current-month [304] - 374ms
+2026-02-25 17:48:59+08:00 [32minfo[39m: GET /api/branch [304] - 42ms
+2026-02-25 17:49:01+08:00 [32minfo[39m: GET /api/category [304] - 19ms
+2026-02-25 17:49:01+08:00 [32minfo[39m: GET /api/product?branchId=3&page=1&details=false [304] - 20ms
+2026-02-25 17:49:01+08:00 [32minfo[39m: GET /api/product?branchId=3&page=2&details=false [304] - 33ms
+2026-02-25 17:49:03+08:00 [32minfo[39m: GET /api/product?branchId=4&page=1&details=false [304] - 23ms
+2026-02-25 17:49:03+08:00 [32minfo[39m: GET /api/product?branchId=4&page=2&details=false [304] - 17ms
+2026-02-25 17:49:07+08:00 [32minfo[39m: GET /api/product/13 [304] - 50ms
+2026-02-25 17:49:19+08:00 [32minfo[39m: Create purchase transaction
+2026-02-25 17:49:19+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:49:19+08:00 [32minfo[39m: POST /api/transaction [200] - 165ms
+2026-02-25 17:49:20+08:00 [32minfo[39m: GET /api/product/14 [304] - 34ms
+2026-02-25 17:49:26+08:00 [32minfo[39m: GET /api/product/13 [304] - 21ms
+2026-02-25 17:49:38+08:00 [32minfo[39m: Create sale transaction
+2026-02-25 17:49:39+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 17:49:39+08:00 [32minfo[39m: POST /api/transaction [200] - 529ms
+2026-02-25 17:49:39+08:00 [32minfo[39m: [ANNOUNCEMENT] Low Stock: Branch Bulacan has low stock of product Mansanas.
+2026-02-25 17:49:43+08:00 [32minfo[39m: GET /api/transaction [200] - 2188ms
+2026-02-25 17:53:49+08:00 [32minfo[39m: GET /api/announcement [200] - 1314ms
+2026-02-25 17:53:49+08:00 [32minfo[39m: GET /api/report/current-month [200] - 216ms
+2026-02-25 17:53:49+08:00 [32minfo[39m: GET /api/report/monthly [304] - 262ms
+2026-02-25 17:53:50+08:00 [32minfo[39m: GET /api/report/branch [200] - 277ms
+2026-02-25 17:53:50+08:00 [32minfo[39m: GET /api/report/product [200] - 277ms
+2026-02-25 18:31:27+08:00 [32minfo[39m: GET /api/report/monthly [304] - 1475ms
+2026-02-25 18:31:27+08:00 [32minfo[39m: GET /api/report/current-month [304] - 1626ms
+2026-02-25 18:31:27+08:00 [32minfo[39m: GET /api/report/branch [304] - 1523ms
+2026-02-25 18:31:27+08:00 [32minfo[39m: GET /api/report/product [304] - 1523ms
+2026-02-25 18:33:36+08:00 [32minfo[39m: Database connected!
+2026-02-25 18:33:36+08:00 [32minfo[39m: Server running at http://localhost:3000
+2026-02-25 18:33:48+08:00 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `.aggregate()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\report.service.ts:17:6
+
+  14 
+  15 const getCurrentMonthReport = async () => {
+  16   return prisma.branchReport
+→ 17     .aggregate(
+The table `public.BranchReport` does not exist in the current database.
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2026-02-25 18:33:48+08:00 [31merror[39m: GET /api/report/current-month [500] - 1418ms
+2026-02-25 18:33:48+08:00 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.branchReport.findMany()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\report.service.ts:68:45
+
+  65 
+  66 // Branch Reports
+  67 const getBranchReports = async () => {
+→ 68   const reports = await prisma.branchReport.findMany(
+The table `public.BranchReport` does not exist in the current database.
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2026-02-25 18:33:48+08:00 [31merror[39m: GET /api/report/branch [500] - 1292ms
+2026-02-25 18:33:48+08:00 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.monthlyReport.findMany()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\report.service.ts:9:31
+
+  6 
+  7 // Monthly Reports
+  8 const getMonthlyReports = () => {
+→ 9   return prisma.monthlyReport.findMany(
+The table `public.MonthlyReport` does not exist in the current database.
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2026-02-25 18:33:48+08:00 [31merror[39m: GET /api/report/monthly [500] - 1331ms
+2026-02-25 18:33:48+08:00 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.productReport.findMany()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\report.service.ts:31:46
+
+  28 
+  29 // Product Reports
+  30 const getProductReports = async () => {
+→ 31   const reports = await prisma.productReport.findMany(
+The table `public.ProductReport` does not exist in the current database.
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2026-02-25 18:33:48+08:00 [31merror[39m: GET /api/report/product [500] - 1359ms
+2026-02-25 18:33:49+08:00 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `.aggregate()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\report.service.ts:17:6
+
+  14 
+  15 const getCurrentMonthReport = async () => {
+  16   return prisma.branchReport
+→ 17     .aggregate(
+The table `public.BranchReport` does not exist in the current database.
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2026-02-25 18:33:49+08:00 [31merror[39m: GET /api/report/current-month [500] - 120ms
+2026-02-25 18:33:49+08:00 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.branchReport.findMany()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\report.service.ts:68:45
+
+  65 
+  66 // Branch Reports
+  67 const getBranchReports = async () => {
+→ 68   const reports = await prisma.branchReport.findMany(
+The table `public.BranchReport` does not exist in the current database.
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2026-02-25 18:33:49+08:00 [31merror[39m: GET /api/report/branch [500] - 125ms
+2026-02-25 18:33:49+08:00 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.monthlyReport.findMany()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\report.service.ts:9:31
+
+  6 
+  7 // Monthly Reports
+  8 const getMonthlyReports = () => {
+→ 9   return prisma.monthlyReport.findMany(
+The table `public.MonthlyReport` does not exist in the current database.
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2026-02-25 18:33:49+08:00 [31merror[39m: GET /api/report/monthly [500] - 130ms
+2026-02-25 18:33:49+08:00 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.productReport.findMany()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\report.service.ts:31:46
+
+  28 
+  29 // Product Reports
+  30 const getProductReports = async () => {
+→ 31   const reports = await prisma.productReport.findMany(
+The table `public.ProductReport` does not exist in the current database.
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2026-02-25 18:33:49+08:00 [31merror[39m: GET /api/report/product [500] - 121ms
+2026-02-25 18:33:51+08:00 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.branchReport.findMany()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\report.service.ts:68:45
+
+  65 
+  66 // Branch Reports
+  67 const getBranchReports = async () => {
+→ 68   const reports = await prisma.branchReport.findMany(
+The table `public.BranchReport` does not exist in the current database.
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2026-02-25 18:33:51+08:00 [31merror[39m: GET /api/report/branch [500] - 113ms
+2026-02-25 18:33:51+08:00 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `.aggregate()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\report.service.ts:17:6
+
+  14 
+  15 const getCurrentMonthReport = async () => {
+  16   return prisma.branchReport
+→ 17     .aggregate(
+The table `public.BranchReport` does not exist in the current database.
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2026-02-25 18:33:51+08:00 [31merror[39m: GET /api/report/current-month [500] - 230ms
+2026-02-25 18:33:51+08:00 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.monthlyReport.findMany()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\report.service.ts:9:31
+
+  6 
+  7 // Monthly Reports
+  8 const getMonthlyReports = () => {
+→ 9   return prisma.monthlyReport.findMany(
+The table `public.MonthlyReport` does not exist in the current database.
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2026-02-25 18:33:51+08:00 [31merror[39m: GET /api/report/monthly [500] - 224ms
+2026-02-25 18:33:52+08:00 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.productReport.findMany()` invocation in
+C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\report.service.ts:31:46
+
+  28 
+  29 // Product Reports
+  30 const getProductReports = async () => {
+→ 31   const reports = await prisma.productReport.findMany(
+The table `public.ProductReport` does not exist in the current database.
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+2026-02-25 18:33:52+08:00 [31merror[39m: GET /api/report/product [500] - 264ms
+2026-02-25 18:35:04+08:00 [32minfo[39m: Database connected!
+2026-02-25 18:35:04+08:00 [32minfo[39m: Server running at http://localhost:3000
+2026-02-25 18:35:10+08:00 [32minfo[39m: GET /api/report/current-month [200] - 1174ms
+2026-02-25 18:35:10+08:00 [32minfo[39m: GET /api/report/monthly [200] - 1035ms
+2026-02-25 18:35:10+08:00 [32minfo[39m: GET /api/report/branch [200] - 1045ms
+2026-02-25 18:35:10+08:00 [32minfo[39m: GET /api/report/product [200] - 1069ms
+2026-02-25 18:36:46+08:00 [32minfo[39m: GET /api/report/monthly [304] - 414ms
+2026-02-25 18:36:46+08:00 [32minfo[39m: GET /api/report/product [304] - 424ms
+2026-02-25 18:36:46+08:00 [32minfo[39m: GET /api/report/branch [304] - 451ms
+2026-02-25 18:36:46+08:00 [32minfo[39m: GET /api/report/current-month [304] - 522ms
+2026-02-25 18:36:48+08:00 [32minfo[39m: GET /api/announcement [200] - 84ms
+2026-02-25 18:36:48+08:00 [32minfo[39m: GET /api/branch [200] - 25ms
+2026-02-25 18:36:55+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 18:36:55+08:00 [32minfo[39m: POST /api/branch [201] - 164ms
+2026-02-25 18:36:55+08:00 [32minfo[39m: GET /api/branch [200] - 69ms
+2026-02-25 18:36:55+08:00 [32minfo[39m: GET /api/branch [304] - 9ms
+2026-02-25 18:36:59+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 18:36:59+08:00 [32minfo[39m: POST /api/branch [201] - 59ms
+2026-02-25 18:37:00+08:00 [32minfo[39m: GET /api/branch [200] - 51ms
+2026-02-25 18:37:00+08:00 [32minfo[39m: GET /api/branch [304] - 21ms
+2026-02-25 18:37:00+08:00 [32minfo[39m: OPTIONS /api/product?branchId=1&page=1&details=false [204] - 13ms
+2026-02-25 18:37:00+08:00 [32minfo[39m: GET /api/category [200] - 126ms
+2026-02-25 18:37:00+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [200] - 147ms
+2026-02-25 18:37:35+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 18:37:35+08:00 [32minfo[39m: POST /api/category [201] - 79ms
+2026-02-25 18:37:35+08:00 [32minfo[39m: GET /api/category [200] - 11ms
+2026-02-25 18:37:35+08:00 [32minfo[39m: GET /api/category [304] - 10ms
+2026-02-25 18:37:53+08:00 [32minfo[39m: OPTIONS /api/product [204] - 1ms
+2026-02-25 18:37:53+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 18:37:53+08:00 [32minfo[39m: POST /api/product [201] - 204ms
+2026-02-25 18:37:53+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [200] - 7ms
+2026-02-25 18:37:53+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 3ms
+2026-02-25 18:37:53+08:00 [32minfo[39m: OPTIONS /api/product?branchId=1&page=2&details=false [204] - 3ms
+2026-02-25 18:37:53+08:00 [32minfo[39m: GET /api/product?branchId=1&page=2&details=false [200] - 21ms
+2026-02-25 18:37:55+08:00 [32minfo[39m: OPTIONS /api/product/1 [204] - 1ms
+2026-02-25 18:37:55+08:00 [32minfo[39m: GET /api/product/1 [200] - 18ms
+2026-02-25 18:37:58+08:00 [32minfo[39m: GET /api/report/monthly [304] - 86ms
+2026-02-25 18:37:58+08:00 [32minfo[39m: GET /api/report/product [200] - 55ms
+2026-02-25 18:37:58+08:00 [32minfo[39m: GET /api/report/current-month [200] - 164ms
+2026-02-25 18:37:58+08:00 [32minfo[39m: GET /api/report/branch [200] - 182ms
+2026-02-25 18:40:12+08:00 [32minfo[39m: GET /api/announcement [304] - 72ms
+2026-02-25 18:40:13+08:00 [32minfo[39m: GET /api/branch [304] - 13ms
+2026-02-25 18:40:15+08:00 [32minfo[39m: GET /api/category [304] - 25ms
+2026-02-25 18:40:15+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 102ms
+2026-02-25 18:40:15+08:00 [32minfo[39m: GET /api/product?branchId=1&page=2&details=false [304] - 10ms
+2026-02-25 18:42:14+08:00 [32minfo[39m: GET /api/branch [304] - 227ms
+2026-02-25 18:42:14+08:00 [32minfo[39m: GET /api/category [304] - 213ms
+2026-02-25 18:42:14+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 212ms
+2026-02-25 18:42:14+08:00 [32minfo[39m: GET /api/product?branchId=1&page=2&details=false [304] - 23ms
+2026-02-25 18:43:57+08:00 [32minfo[39m: GET /api/branch [304] - 580ms
+2026-02-25 18:43:57+08:00 [32minfo[39m: GET /api/category [304] - 551ms
+2026-02-25 18:43:57+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 575ms
+2026-02-25 18:43:57+08:00 [32minfo[39m: GET /api/product?branchId=1&page=2&details=false [304] - 15ms
+2026-02-25 18:44:13+08:00 [32minfo[39m: GET /api/product/1 [304] - 97ms
+2026-02-25 18:44:59+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 212ms
+2026-02-25 18:44:59+08:00 [32minfo[39m: GET /api/branch [304] - 257ms
+2026-02-25 18:44:59+08:00 [32minfo[39m: GET /api/category [304] - 234ms
+2026-02-25 18:44:59+08:00 [32minfo[39m: GET /api/product?branchId=1&page=2&details=false [304] - 24ms
+2026-02-25 18:45:17+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 18:45:17+08:00 [32minfo[39m: POST /api/product [201] - 1310ms
+2026-02-25 18:45:18+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [200] - 32ms
+2026-02-25 18:45:18+08:00 [32minfo[39m: GET /api/product?branchId=1&page=2&details=false [304] - 82ms
+2026-02-25 18:45:18+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 28ms
+2026-02-25 18:45:18+08:00 [32minfo[39m: GET /api/product?branchId=1&page=2&details=false [304] - 17ms
+2026-02-25 18:45:20+08:00 [32minfo[39m: GET /api/announcement [304] - 18ms
+2026-02-25 18:45:22+08:00 [32minfo[39m: OPTIONS /api/product?branchId=2&page=1&details=false [204] - 3ms
+2026-02-25 18:45:22+08:00 [32minfo[39m: GET /api/product?branchId=2&page=1&details=false [200] - 36ms
+2026-02-25 18:45:49+08:00 [32minfo[39m: OPTIONS /api/product/2 [204] - 3ms
+2026-02-25 18:45:50+08:00 [32minfo[39m: GET /api/product/2 [200] - 161ms
+2026-02-25 18:45:52+08:00 [32minfo[39m: GET /api/product/2 [304] - 2ms
+2026-02-25 18:46:00+08:00 [32minfo[39m: GET /api/branch [304] - 80ms
+2026-02-25 18:46:01+08:00 [32minfo[39m: GET /api/report/current-month [304] - 91ms
+2026-02-25 18:46:01+08:00 [32minfo[39m: GET /api/report/branch [304] - 173ms
+2026-02-25 18:46:01+08:00 [32minfo[39m: GET /api/report/product [200] - 181ms
+2026-02-25 18:46:01+08:00 [32minfo[39m: GET /api/report/monthly [304] - 195ms
+2026-02-25 18:46:12+08:00 [32minfo[39m: GET /api/category [304] - 132ms
+2026-02-25 18:47:34+08:00 [32minfo[39m: OPTIONS /api/category [204] - 5ms
+2026-02-25 18:47:34+08:00 [32minfo[39m: OPTIONS /api/branch [204] - 4ms
+2026-02-25 18:47:35+08:00 [32minfo[39m: GET /api/category [304] - 321ms
+2026-02-25 18:47:35+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 263ms
+2026-02-25 18:47:35+08:00 [32minfo[39m: GET /api/branch [304] - 318ms
+2026-02-25 18:47:35+08:00 [32minfo[39m: GET /api/product?branchId=1&page=2&details=false [304] - 78ms
+2026-02-25 18:48:35+08:00 [32minfo[39m: OPTIONS /api/category/1 [204] - 15ms
+2026-02-25 18:48:36+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 18:48:36+08:00 [32minfo[39m: DELETE /api/category/1 [200] - 460ms
+2026-02-25 18:48:36+08:00 [32minfo[39m: GET /api/category [200] - 22ms
+2026-02-25 18:48:40+08:00 [32minfo[39m: GET /api/category [304] - 16ms
+2026-02-25 18:48:40+08:00 [32minfo[39m: GET /api/branch [304] - 59ms
+2026-02-25 18:48:40+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [200] - 40ms
+2026-02-25 18:52:27+08:00 [32minfo[39m: GET /api/category [304] - 429ms
+2026-02-25 18:52:27+08:00 [32minfo[39m: GET /api/branch [304] - 496ms
+2026-02-25 18:52:27+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 446ms
+2026-02-25 18:53:04+08:00 [32minfo[39m: GET /api/branch [304] - 66ms
+2026-02-25 18:53:04+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 92ms
+2026-02-25 18:53:04+08:00 [32minfo[39m: GET /api/category [304] - 211ms
+2026-02-25 18:55:53+08:00 [32minfo[39m: GET /api/category [304] - 1660ms
+2026-02-25 18:55:53+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 1666ms
+2026-02-25 18:55:53+08:00 [32minfo[39m: GET /api/branch [304] - 1790ms
+2026-02-25 18:55:59+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 18:55:59+08:00 [32minfo[39m: POST /api/category [201] - 70ms
+2026-02-25 18:55:59+08:00 [32minfo[39m: GET /api/category [200] - 19ms
+2026-02-25 18:55:59+08:00 [32minfo[39m: GET /api/category [304] - 17ms
+2026-02-25 18:56:03+08:00 [32minfo[39m: OPTIONS /api/product?branchId=1&categoryId=2&page=1&details=false [204] - 1ms
+2026-02-25 18:56:03+08:00 [32minfo[39m: GET /api/product?branchId=1&categoryId=2&page=1&details=false [200] - 54ms
+2026-02-25 18:56:12+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 18:56:12+08:00 [32minfo[39m: POST /api/product [201] - 219ms
+2026-02-25 18:56:12+08:00 [32minfo[39m: GET /api/product?branchId=1&categoryId=2&page=1&details=false [200] - 13ms
+2026-02-25 18:56:12+08:00 [32minfo[39m: GET /api/product?branchId=1&categoryId=2&page=1&details=false [304] - 13ms
+2026-02-25 18:56:12+08:00 [32minfo[39m: OPTIONS /api/product?branchId=1&categoryId=2&page=2&details=false [204] - 1ms
+2026-02-25 18:56:12+08:00 [32minfo[39m: GET /api/product?branchId=1&categoryId=2&page=2&details=false [200] - 20ms
+2026-02-25 18:56:26+08:00 [32minfo[39m: OPTIONS /api/product/3 [204] - 2ms
+2026-02-25 18:56:27+08:00 [32minfo[39m: GET /api/product/3 [200] - 177ms
+2026-02-25 18:56:36+08:00 [32minfo[39m: OPTIONS /api/transaction [204] - 1ms
+2026-02-25 18:56:36+08:00 [32minfo[39m: Create purchase transaction
+2026-02-25 18:56:37+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 18:56:37+08:00 [32minfo[39m: POST /api/transaction [200] - 211ms
+2026-02-25 18:56:37+08:00 [32minfo[39m: GET /api/transaction [200] - 53ms
+2026-02-25 18:56:42+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [200] - 14ms
+2026-02-25 18:56:42+08:00 [32minfo[39m: GET /api/product/3 [304] - 2ms
+2026-02-25 18:56:51+08:00 [32minfo[39m: Create sale transaction
+2026-02-25 18:56:51+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 18:56:51+08:00 [32minfo[39m: POST /api/transaction [200] - 144ms
+2026-02-25 18:56:51+08:00 [32minfo[39m: [ANNOUNCEMENT] Low Stock: Branch Marilao has low stock of product Saba.
+2026-02-25 18:56:53+08:00 [32minfo[39m: GET /api/product/3 [304] - 4ms
+2026-02-25 18:57:07+08:00 [32minfo[39m: Create return transaction
+2026-02-25 18:57:07+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 18:57:07+08:00 [32minfo[39m: POST /api/transaction [200] - 121ms
+2026-02-25 18:57:10+08:00 [32minfo[39m: GET /api/transaction [200] - 85ms
+2026-02-25 18:57:15+08:00 [32minfo[39m: GET /api/branch [304] - 10ms
+2026-02-25 18:57:31+08:00 [32minfo[39m: OPTIONS /api/announcement [204] - 1ms
+2026-02-25 18:57:31+08:00 [32minfo[39m: GET /api/announcement [200] - 60ms
+2026-02-25 18:57:32+08:00 [32minfo[39m: OPTIONS /api/report/current-month [204] - 2ms
+2026-02-25 18:57:32+08:00 [32minfo[39m: OPTIONS /api/report/monthly [204] - 2ms
+2026-02-25 18:57:32+08:00 [32minfo[39m: OPTIONS /api/report/branch [204] - 2ms
+2026-02-25 18:57:32+08:00 [32minfo[39m: OPTIONS /api/report/product [204] - 1ms
+2026-02-25 18:57:32+08:00 [32minfo[39m: GET /api/report/monthly [304] - 84ms
+2026-02-25 18:57:32+08:00 [32minfo[39m: GET /api/report/product [200] - 57ms
+2026-02-25 18:57:32+08:00 [32minfo[39m: GET /api/report/branch [200] - 142ms
+2026-02-25 18:57:32+08:00 [32minfo[39m: GET /api/report/current-month [200] - 145ms
+2026-02-25 18:57:33+08:00 [32minfo[39m: GET /api/category [304] - 30ms
+2026-02-25 18:57:34+08:00 [32minfo[39m: GET /api/product/3 [304] - 12ms
+2026-02-25 18:58:07+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 18:58:07+08:00 [32minfo[39m: POST /api/product [201] - 209ms
+2026-02-25 18:58:07+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [200] - 45ms
+2026-02-25 18:58:07+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 3ms
+2026-02-25 18:58:14+08:00 [32minfo[39m: OPTIONS /api/product/4 [204] - 1ms
+2026-02-25 18:58:14+08:00 [32minfo[39m: GET /api/product/4 [200] - 11ms
+2026-02-25 18:58:29+08:00 [32minfo[39m: Create purchase transaction
+2026-02-25 18:58:29+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 18:58:29+08:00 [32minfo[39m: POST /api/transaction [200] - 96ms
+2026-02-25 18:58:30+08:00 [32minfo[39m: GET /api/transaction [200] - 149ms
+2026-02-25 18:58:36+08:00 [32minfo[39m: GET /api/branch [304] - 13ms
+2026-02-25 18:58:38+08:00 [32minfo[39m: GET /api/category [304] - 19ms
+2026-02-25 18:58:38+08:00 [32minfo[39m: GET /api/product/4 [304] - 3ms
+2026-02-25 18:58:42+08:00 [32minfo[39m: Create sale transaction
+2026-02-25 18:58:43+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 18:58:43+08:00 [32minfo[39m: POST /api/transaction [200] - 141ms
+2026-02-25 18:58:43+08:00 [32minfo[39m: [ANNOUNCEMENT] Low Stock: Branch Marilao has low stock of product Langka.
+2026-02-25 18:58:46+08:00 [32minfo[39m: GET /api/transaction [200] - 87ms
+2026-02-25 18:58:47+08:00 [32minfo[39m: GET /api/transaction [304] - 6ms
+2026-02-25 18:58:48+08:00 [32minfo[39m: GET /api/transaction [304] - 10ms
+2026-02-25 18:58:51+08:00 [32minfo[39m: GET /api/product/3 [304] - 7ms
+2026-02-25 18:59:07+08:00 [32minfo[39m: GET /api/product/4 [304] - 2ms
+2026-02-25 18:59:21+08:00 [32minfo[39m: GET /api/product/4 [304] - 65ms
+2026-02-25 18:59:25+08:00 [32minfo[39m: Create return transaction
+2026-02-25 18:59:25+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 18:59:25+08:00 [32minfo[39m: POST /api/transaction [200] - 82ms
+2026-02-25 19:01:11+08:00 [32minfo[39m: GET /api/category [304] - 289ms
+2026-02-25 19:01:11+08:00 [32minfo[39m: GET /api/branch [304] - 335ms
+2026-02-25 19:01:11+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 304ms
+2026-02-25 19:01:41+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 19:01:41+08:00 [32minfo[39m: POST /api/product [201] - 104ms
+2026-02-25 19:01:42+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [200] - 8ms
+2026-02-25 19:01:42+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 8ms
+2026-02-25 19:01:43+08:00 [32minfo[39m: OPTIONS /api/product/5 [204] - 1ms
+2026-02-25 19:01:43+08:00 [32minfo[39m: GET /api/product/5 [200] - 8ms
+2026-02-25 19:02:09+08:00 [32minfo[39m: GET /api/product/5 [304] - 4ms
+2026-02-25 19:02:15+08:00 [32minfo[39m: GET /api/branch [304] - 68ms
+2026-02-25 19:02:15+08:00 [32minfo[39m: GET /api/category [304] - 88ms
+2026-02-25 19:02:17+08:00 [32minfo[39m: GET /api/branch [304] - 6ms
+2026-02-25 19:02:17+08:00 [32minfo[39m: GET /api/category [304] - 29ms
+2026-02-25 19:02:17+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 25ms
+2026-02-25 19:02:28+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 19:02:28+08:00 [32minfo[39m: POST /api/product [201] - 127ms
+2026-02-25 19:02:28+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [200] - 12ms
+2026-02-25 19:02:28+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 13ms
+2026-02-25 19:03:37+08:00 [32minfo[39m: GET /api/category [304] - 136ms
+2026-02-25 19:03:37+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 124ms
+2026-02-25 19:03:37+08:00 [32minfo[39m: GET /api/branch [304] - 144ms
+2026-02-25 19:05:01+08:00 [32minfo[39m: GET /api/branch [304] - 646ms
+2026-02-25 19:05:01+08:00 [32minfo[39m: GET /api/category [304] - 665ms
+2026-02-25 19:05:01+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 669ms
+2026-02-25 19:05:22+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 19:05:22+08:00 [32minfo[39m: POST /api/product [201] - 155ms
+2026-02-25 19:05:22+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [200] - 14ms
+2026-02-25 19:05:22+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 4ms
+2026-02-25 19:05:37+08:00 [32minfo[39m: GET /api/report/product [200] - 141ms
+2026-02-25 19:05:37+08:00 [32minfo[39m: GET /api/report/current-month [200] - 154ms
+2026-02-25 19:05:37+08:00 [32minfo[39m: GET /api/report/monthly [304] - 153ms
+2026-02-25 19:05:37+08:00 [32minfo[39m: GET /api/report/branch [200] - 160ms
+2026-02-25 19:05:46+08:00 [32minfo[39m: GET /api/announcement [200] - 37ms
+2026-02-25 19:05:50+08:00 [32minfo[39m: GET /api/product?branchId=2&page=1&details=false [304] - 13ms
+2026-02-25 19:07:54+08:00 [32minfo[39m: GET /api/branch [304] - 1178ms
+2026-02-25 19:07:54+08:00 [32minfo[39m: GET /api/category [304] - 1087ms
+2026-02-25 19:07:54+08:00 [32minfo[39m: GET /api/product?branchId=2&page=1&details=false [304] - 1093ms
+2026-02-25 19:07:55+08:00 [32minfo[39m: GET /api/announcement [304] - 46ms
+2026-02-25 19:18:24+08:00 [32minfo[39m: GET /api/branch [304] - 1581ms
+2026-02-25 19:27:41+08:00 [32minfo[39m: GET /api/branch [304] - 465ms
+2026-02-25 21:38:29+08:00 [32minfo[39m: OPTIONS /api/report/monthly [204] - 60ms
+2026-02-25 21:38:32+08:00 [32minfo[39m: OPTIONS /api/report/current-month [204] - 9ms
+2026-02-25 21:38:32+08:00 [32minfo[39m: OPTIONS /api/report/branch [204] - 32ms
+2026-02-25 21:38:32+08:00 [32minfo[39m: OPTIONS /api/report/product [204] - 2ms
+2026-02-25 21:38:34+08:00 [32minfo[39m: GET /api/report/monthly [304] - 4979ms
+2026-02-25 21:38:34+08:00 [32minfo[39m: GET /api/report/branch [304] - 1819ms
+2026-02-25 21:38:34+08:00 [32minfo[39m: GET /api/report/product [304] - 1867ms
+2026-02-25 21:38:34+08:00 [32minfo[39m: GET /api/report/current-month [304] - 2065ms
+2026-02-25 21:38:54+08:00 [32minfo[39m: OPTIONS /api/announcement [204] - 1ms
+2026-02-25 21:38:55+08:00 [32minfo[39m: GET /api/announcement [304] - 321ms
+2026-02-25 21:40:06+08:00 [32minfo[39m: OPTIONS /api/branch [204] - 2ms
+2026-02-25 21:40:06+08:00 [32minfo[39m: GET /api/branch [304] - 189ms
+2026-02-25 21:40:14+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 21:40:14+08:00 [32minfo[39m: POST /api/branch [201] - 107ms
+2026-02-25 21:40:14+08:00 [32minfo[39m: GET /api/branch [200] - 18ms
+2026-02-25 21:40:14+08:00 [32minfo[39m: GET /api/branch [304] - 5ms
+2026-02-25 21:40:18+08:00 [32minfo[39m: GET /api/branch [304] - 5ms
+2026-02-25 21:40:21+08:00 [32minfo[39m: OPTIONS /api/category [204] - 1ms
+2026-02-25 21:40:21+08:00 [32minfo[39m: OPTIONS /api/product?branchId=1&page=1&details=false [204] - 2ms
+2026-02-25 21:40:22+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 93ms
+2026-02-25 21:40:22+08:00 [32minfo[39m: GET /api/category [304] - 534ms
+2026-02-25 21:40:28+08:00 [32minfo[39m: OPTIONS /api/product/3 [204] - 1ms
+2026-02-25 21:40:28+08:00 [32minfo[39m: GET /api/product/3 [304] - 29ms
+2026-02-25 21:41:15+08:00 [32minfo[39m: GET /api/category [304] - 21ms
+2026-02-25 21:41:15+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 51ms
+2026-02-25 21:41:15+08:00 [32minfo[39m: GET /api/branch [304] - 201ms
+2026-02-25 21:41:17+08:00 [32minfo[39m: GET /api/product/3 [304] - 3ms
+2026-02-25 21:41:32+08:00 [32minfo[39m: OPTIONS /api/transaction [204] - 9ms
+2026-02-25 21:41:32+08:00 [32minfo[39m: Create purchase transaction
+2026-02-25 21:41:32+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 21:41:32+08:00 [32minfo[39m: POST /api/transaction [200] - 283ms
+2026-02-25 21:41:34+08:00 [32minfo[39m: GET /api/transaction [200] - 247ms
+2026-02-25 21:41:36+08:00 [32minfo[39m: GET /api/transaction [304] - 9ms
+2026-02-25 21:41:43+08:00 [32minfo[39m: GET /api/product/3 [304] - 18ms
+2026-02-25 21:41:55+08:00 [32minfo[39m: OPTIONS /api/product/4 [204] - 2ms
+2026-02-25 21:41:55+08:00 [32minfo[39m: GET /api/product/4 [304] - 79ms
+2026-02-25 21:42:04+08:00 [32minfo[39m: GET /api/product/3 [304] - 8ms
+2026-02-25 21:42:11+08:00 [32minfo[39m: GET /api/product/4 [304] - 5ms
+2026-02-25 21:42:12+08:00 [32minfo[39m: GET /api/product/3 [304] - 3ms
+2026-02-25 21:43:00+08:00 [32minfo[39m: GET /api/branch [304] - 589ms
+2026-02-25 21:43:00+08:00 [32minfo[39m: GET /api/category [304] - 578ms
+2026-02-25 21:43:00+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 586ms
+2026-02-25 21:43:32+08:00 [32minfo[39m: GET /api/product/3 [304] - 54ms
+2026-02-25 21:46:05+08:00 [32minfo[39m: GET /api/branch [304] - 265ms
+2026-02-25 21:46:05+08:00 [32minfo[39m: GET /api/category [304] - 285ms
+2026-02-25 21:46:05+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 308ms
+2026-02-25 21:48:39+08:00 [32minfo[39m: OPTIONS /api/product [204] - 3ms
+2026-02-25 21:48:41+08:00 [32minfo[39m: [Cache INVALIDATED]
+2026-02-25 21:48:41+08:00 [32minfo[39m: POST /api/product [201] - 1386ms
+2026-02-25 21:48:41+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [200] - 12ms
+2026-02-25 21:48:41+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 13ms
+2026-02-25 21:48:41+08:00 [32minfo[39m: OPTIONS /api/product?branchId=1&page=2&details=false [204] - 0ms
+2026-02-25 21:48:41+08:00 [32minfo[39m: GET /api/product?branchId=1&page=2&details=false [304] - 13ms
+2026-02-25 21:48:49+08:00 [32minfo[39m: GET /api/transaction [304] - 222ms
+2026-02-25 21:48:52+08:00 [32minfo[39m: GET /api/announcement [304] - 15ms
+2026-02-25 21:50:47+08:00 [32minfo[39m: GET /api/report/monthly [304] - 181ms
+2026-02-25 21:50:47+08:00 [32minfo[39m: GET /api/report/product [200] - 195ms
+2026-02-25 21:50:47+08:00 [32minfo[39m: GET /api/report/current-month [304] - 412ms
+2026-02-25 21:50:47+08:00 [32minfo[39m: GET /api/report/branch [200] - 458ms
+2026-02-25 21:51:11+08:00 [32minfo[39m: GET /api/branch [304] - 77ms
+2026-02-25 21:51:13+08:00 [32minfo[39m: GET /api/transaction [304] - 406ms
+2026-02-25 21:51:15+08:00 [32minfo[39m: GET /api/announcement [304] - 13ms
+2026-02-25 21:52:08+08:00 [32minfo[39m: GET /api/report/current-month [304] - 115ms
+2026-02-25 21:52:08+08:00 [32minfo[39m: GET /api/report/product [304] - 104ms
+2026-02-25 21:52:08+08:00 [32minfo[39m: GET /api/report/monthly [304] - 121ms
+2026-02-25 21:52:08+08:00 [32minfo[39m: GET /api/report/branch [304] - 274ms
+2026-02-25 21:52:14+08:00 [32minfo[39m: GET /api/branch [304] - 6ms
+2026-02-25 21:52:28+08:00 [32minfo[39m: GET /api/category [304] - 227ms
+2026-02-25 21:52:28+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 250ms
+2026-02-25 21:52:28+08:00 [32minfo[39m: GET /api/product?branchId=1&page=2&details=false [304] - 12ms
+2026-02-25 21:52:51+08:00 [32minfo[39m: GET /api/product/3 [304] - 38ms
+2026-02-25 21:53:01+08:00 [32minfo[39m: GET /api/product/3 [304] - 16ms
+2026-02-25 21:53:34+08:00 [32minfo[39m: GET /api/report/monthly [304] - 164ms
+2026-02-25 21:53:34+08:00 [32minfo[39m: GET /api/report/branch [304] - 166ms
+2026-02-25 21:53:34+08:00 [32minfo[39m: GET /api/report/current-month [304] - 208ms
+2026-02-25 21:53:34+08:00 [32minfo[39m: GET /api/report/product [304] - 223ms
+2026-02-25 22:00:37+08:00 [32minfo[39m: GET /api/branch [200] - 131ms
+2026-02-25 22:00:39+08:00 [32minfo[39m: GET /api/announcement [304] - 104ms
+2026-02-25 22:00:41+08:00 [32minfo[39m: GET /api/product?branchId=1&page=1&details=false [304] - 261ms
+2026-02-25 22:00:41+08:00 [32minfo[39m: GET /api/category [304] - 330ms
+2026-02-25 22:00:42+08:00 [32minfo[39m: GET /api/product/3 [304] - 99ms
+2026-02-25 22:04:06+08:00 [32minfo[39m: GET /api/report/monthly [304] - 1364ms
+2026-02-25 22:04:07+08:00 [32minfo[39m: GET /api/report/current-month [304] - 1682ms
+2026-02-25 22:04:07+08:00 [32minfo[39m: GET /api/report/branch [304] - 1742ms
+2026-02-25 22:04:07+08:00 [32minfo[39m: GET /api/report/product [304] - 1745ms
+2026-02-25 22:04:07+08:00 [32minfo[39m: GET /api/branch [304] - 88ms

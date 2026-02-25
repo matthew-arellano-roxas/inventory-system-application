@@ -30,7 +30,7 @@ export function ProductSnippetCard({
   return (
     <Card
       onClick={() => onCardClick(product)}
-      className="group relative flex flex-col items-center justify-center p-4 transition-all cursor-pointer overflow-hidden min-h-[130px] border-muted hover:border-muted-foreground/20 hover:bg-accent/30 bg-background shadow-sm"
+      className="group relative flex flex-col items-center justify-center p-4 transition-all cursor-pointer overflow-hidden min-h-[130px] border-muted hover:border-muted-foreground/20 hover:bg-accent/30 bg-background shadow-md"
     >
       {/* 3-DOT MENU (TOP RIGHT) */}
       <div className="absolute top-1 right-1 z-10">

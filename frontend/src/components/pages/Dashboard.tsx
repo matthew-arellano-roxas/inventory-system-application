@@ -53,7 +53,7 @@ export function Dashboard() {
   });
 
   return (
-    <div className="container mx-auto p-4 lg:p-8 space-y-12">
+    <div className="container mx-auto p-4 lg:p-8 space-y-12 bg-muted">
       {/* 1. HEADER */}
       <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white shadow-xl">
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_#22d3ee,_transparent_40%),radial-gradient(circle_at_bottom_left,_#f59e0b,_transparent_35%)]" />
@@ -69,7 +69,8 @@ export function Dashboard() {
                     Dashboard
                   </h1>
                   <p className="text-sm text-white/70 break-words">
-                    Business metrics, revenue trends, and top product performance.
+                    Business metrics, revenue trends, and top product
+                    performance.
                   </p>
                 </div>
               </div>

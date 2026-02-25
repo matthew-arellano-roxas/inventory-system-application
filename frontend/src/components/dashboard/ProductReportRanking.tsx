@@ -20,6 +20,13 @@ function formatCurrency(n: number) {
   });
 }
 
+function formatStock(n: number) {
+  return n.toLocaleString("en-PH", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
+
 export function ProductReportRanking({
   data,
 }: {
@@ -89,7 +96,7 @@ export function ProductReportRanking({
                         p.stock < 30 ? "text-rose-600 font-bold" : "font-bold"
                       }
                     >
-                      {p.stock}
+                      {formatStock(p.stock)}
                     </p>
                   </div>
                   <div>
@@ -147,7 +154,7 @@ export function ProductReportRanking({
                     <td
                       className={`py-3 text-right font-medium ${p.stock < 30 ? "text-rose-600" : ""}`}
                     >
-                      {p.stock}
+                      {formatStock(p.stock)}
                     </td>
                     <td
                       className={`py-3 text-right font-semibold ${marginColor}`}
