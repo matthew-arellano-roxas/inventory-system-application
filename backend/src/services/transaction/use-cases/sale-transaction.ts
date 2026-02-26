@@ -1,5 +1,4 @@
 import { prisma } from '@prisma';
-import { TransactionPayload } from '@/types';
 import type { Product, Transaction } from '@root/generated/prisma/client';
 import {
   StockMovementReason,
@@ -19,8 +18,9 @@ import {
 } from '@/services/transaction';
 import { getItemTotalCost, getItemTotalPrice, getProfitAmount } from '@/services/transaction';
 import { logger } from '@/config';
+import { TransactionBody } from '@/schemas';
 
-export async function createSaleTransaction(payload: TransactionPayload): Promise<Transaction> {
+export async function createSaleTransaction(payload: TransactionBody): Promise<Transaction> {
   logger.info('Create sale transaction');
   const currentDate = new Date();
   return await prisma.$transaction(async (tx) => {
@@ -60,7 +60,7 @@ export async function createSaleTransaction(payload: TransactionPayload): Promis
       });
 
       // Accumulated value of total amount of all items
-      totalAmount += getItemTotalPrice(product.sellingPrice, item.quantity);
+      totalAmount += getItemTotalPrice(product.sellingPrice, item.quantity) - item.discount;
     }
 
     // Create Transaction
@@ -68,7 +68,7 @@ export async function createSaleTransaction(payload: TransactionPayload): Promis
       data: {
         branchId: payload.branchId,
         type: TransactionType.SALE,
-        totalAmount, // Total Amount from earlier
+        totalAmount: totalAmount, // Total Amount from earlier
         createdAt: currentDate,
       },
     });
@@ -78,13 +78,12 @@ export async function createSaleTransaction(payload: TransactionPayload): Promis
       checkSellingPrice(item.productName, currentItem);
       checkCostPerUnit(item.productName, currentItem);
 
-      const salesAmount = getItemTotalCost(currentItem.sellingPrice, item.quantity);
+      const salesAmount = getItemTotalCost(currentItem.sellingPrice, item.quantity) - item.discount;
 
-      const profitAmount = getProfitAmount(
-        currentItem.costPerUnit,
-        currentItem.sellingPrice,
-        item.quantity,
-      );
+      const profitAmount =
+        getProfitAmount(currentItem.costPerUnit, currentItem.sellingPrice, item.quantity) -
+        item.discount;
+
       // Create Transaction Item
       await createTransactionItem(tx, {
         productId: item.productId,

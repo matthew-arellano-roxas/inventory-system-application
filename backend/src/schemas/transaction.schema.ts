@@ -6,6 +6,7 @@ export const transactionItemSchema = z.object({
   productId: z.number().int().positive(), // must be a positive integer
   productName: z.string().min(1), // non-empty string
   quantity: z.number().positive(), // quantity > 0
+  discount: z.number().min(0).default(0),
 });
 
 // Transaction schema

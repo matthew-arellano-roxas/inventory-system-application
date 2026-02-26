@@ -9116,3 +9116,72 @@ Unknown argument `0`.
     at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\opex.service.ts:5:58)
     at processTicksAndRejections (node:internal/process/task_queues:105:5)
 2026-02-26 01:36:00+08:00 [31merror[39m: POST /api/expenses [409] - 102ms
+2026-02-26 17:48:50+08:00 [31merror[39m: BadRequestError: The requested quantity of Saba is greater than the available stock.
+    at isThereEnoughStock (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\transaction-validation.ts:21:11)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:49:25
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-02-26 17:48:50+08:00 [31merror[39m: POST /api/transaction [400] - 225ms
+2026-02-26 17:51:19+08:00 [31merror[39m: BadRequestError: The requested quantity of Saba is greater than the available stock.
+    at isThereEnoughStock (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\transaction-validation.ts:21:11)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:49:25
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-02-26 17:51:19+08:00 [31merror[39m: POST /api/transaction [400] - 113ms
+2026-02-26 17:53:55+08:00 [31merror[39m: BadRequestError: The requested quantity of Saba is greater than the available stock.
+    at isThereEnoughStock (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\transaction-validation.ts:21:11)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:49:25
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-02-26 17:53:55+08:00 [31merror[39m: POST /api/transaction [400] - 1392ms
+2026-02-26 17:54:01+08:00 [31merror[39m: BadRequestError: The requested quantity of Saba is greater than the available stock.
+    at isThereEnoughStock (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\transaction-validation.ts:21:11)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:49:25
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-02-26 17:54:01+08:00 [31merror[39m: POST /api/transaction [400] - 66ms
+2026-02-26 17:54:08+08:00 [31merror[39m: BadRequestError: The requested quantity of Saba is greater than the available stock.
+    at isThereEnoughStock (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\transaction-validation.ts:21:11)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:49:25
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-02-26 17:54:08+08:00 [31merror[39m: POST /api/transaction [400] - 104ms
+2026-02-26 17:54:17+08:00 [31merror[39m: BadRequestError: The requested quantity of Saba is greater than the available stock.
+    at isThereEnoughStock (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\transaction-validation.ts:21:11)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:49:25
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-02-26 17:54:17+08:00 [31merror[39m: POST /api/transaction [400] - 70ms
+2026-02-26 17:54:30+08:00 [31merror[39m: BadRequestError: The requested quantity of Saba is greater than the available stock.
+    at isThereEnoughStock (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\transaction-validation.ts:21:11)
+    at C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:49:25
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Matthew\Videos\Inventory System Application\backend\src\services\transaction\use-cases\sale-transaction.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-02-26 17:54:30+08:00 [31merror[39m: POST /api/transaction [400] - 125ms
+2026-02-26 23:33:04+08:00 [31merror[39m: POST /api/expenses [403] - 7ms
+2026-02-26 23:33:11+08:00 [31merror[39m: POST /api/expenses [403] - 5ms
+2026-02-26 23:34:39+08:00 [31merror[39m: POST /api/branch [403] - 14ms
+2026-02-27 00:02:40+08:00 [31merror[39m: POST /api/expenses [403] - 4ms
+2026-02-27 00:02:42+08:00 [31merror[39m: POST /api/expenses [403] - 2ms
+2026-02-27 00:03:11+08:00 [31merror[39m: POST /api/category [403] - 6ms
+2026-02-27 00:03:29+08:00 [31merror[39m: POST /api/product [403] - 13ms
+2026-02-27 00:06:06+08:00 [31merror[39m: GET /api/report/current-month [403] - 11ms
+2026-02-27 00:06:06+08:00 [31merror[39m: GET /api/report/monthly [403] - 14ms
+2026-02-27 00:06:06+08:00 [31merror[39m: GET /api/report/branch [403] - 39ms
+2026-02-27 00:06:06+08:00 [31merror[39m: GET /api/report/product?client=%5Bobject+Object%5D&queryKey%5B%5D=reports&queryKey%5B%5D=product&signal=%5Bobject+AbortSignal%5D [403] - 13ms
+2026-02-27 00:06:07+08:00 [31merror[39m: GET /api/report/current-month [403] - 7ms
+2026-02-27 00:06:07+08:00 [31merror[39m: GET /api/report/monthly [403] - 15ms
+2026-02-27 00:06:07+08:00 [31merror[39m: GET /api/report/branch [403] - 4ms
+2026-02-27 00:06:07+08:00 [31merror[39m: GET /api/report/product?client=%5Bobject+Object%5D&queryKey%5B%5D=reports&queryKey%5B%5D=product&signal=%5Bobject+AbortSignal%5D [403] - 5ms
+2026-02-27 00:06:09+08:00 [31merror[39m: GET /api/report/current-month [403] - 9ms
+2026-02-27 00:06:09+08:00 [31merror[39m: GET /api/report/monthly [403] - 14ms
+2026-02-27 00:06:09+08:00 [31merror[39m: GET /api/report/branch [403] - 14ms
+2026-02-27 00:06:09+08:00 [31merror[39m: GET /api/report/product?client=%5Bobject+Object%5D&queryKey%5B%5D=reports&queryKey%5B%5D=product&signal=%5Bobject+AbortSignal%5D [403] - 16ms
+2026-02-27 00:06:11+08:00 [31merror[39m: GET /api/announcement [403] - 3ms

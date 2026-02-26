@@ -5,6 +5,7 @@ type CartProductInput = {
   id: number;
   name: string;
   sellingPrice?: number;
+  discount?: number;
 };
 
 export type PosCartItem = {
@@ -12,6 +13,7 @@ export type PosCartItem = {
   name: string;
   unitPrice: number;
   quantity: number;
+  discount: number;
   branchId: number;
 };
 
@@ -72,6 +74,9 @@ export const usePosCartStore = create<PosCartState>()(
             items[existingIndex] = {
               ...items[existingIndex],
               quantity: items[existingIndex].quantity + quantity,
+              discount:
+                (items[existingIndex].discount ?? 0) +
+                Math.max(product.discount ?? 0, 0),
             };
             return { scopedBranchId: baseState.scopedBranchId, items };
           }
@@ -85,6 +90,7 @@ export const usePosCartStore = create<PosCartState>()(
                 name: product.name,
                 unitPrice: product.sellingPrice ?? 0,
                 quantity,
+                discount: Math.max(product.discount ?? 0, 0),
                 branchId,
               },
             ],

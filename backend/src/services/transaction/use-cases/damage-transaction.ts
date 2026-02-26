@@ -1,4 +1,3 @@
-import { TransactionPayload } from '@/types';
 import { prisma } from '@prisma';
 import {
   StockMovementReason,
@@ -17,8 +16,9 @@ import { ProductPriceInfo } from '@/types';
 import { decreaseProductStock } from '@/services/transaction';
 import { getItemTotalCost } from '@/services/transaction';
 import { logger } from '@/config';
+import { TransactionBody } from '@/schemas';
 
-export async function createDamageTransaction(payload: TransactionPayload) {
+export async function createDamageTransaction(payload: TransactionBody) {
   logger.info('Create damage transaction');
   const currentDate = new Date();
   return await prisma.$transaction(async (tx) => {

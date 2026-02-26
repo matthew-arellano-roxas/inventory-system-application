@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { keys } from "@/api/query-keys";
 import { toastApiError as onError } from "@/api/api-error-handler";
+import { toast } from "sonner";
 import {
   createCategory,
   deleteCategory,
@@ -15,6 +16,7 @@ export function useCategoryMutation() {
     onSuccess: async () => {
       await qc.invalidateQueries({ queryKey: keys.categories.all });
     },
+    onError,
   });
 
   const create = useMutation({
@@ -25,6 +27,7 @@ export function useCategoryMutation() {
         queryKey: keys.categories.all,
         type: "active",
       });
+      toast.success("Category created successfully.");
     },
     onError,
   });

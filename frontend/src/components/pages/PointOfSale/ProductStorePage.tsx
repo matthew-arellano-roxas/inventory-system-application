@@ -127,7 +127,9 @@ export function ProductStorePage({
         product={selectedProduct}
         isOpen={isModelOpen}
         onClose={() => setIsModelOpen(false)}
-        onSubmit={(p, q, type) => console.log(type, p.name, q)}
+        onSubmit={(p, q, type, discount) =>
+          console.log(type, p.name, q, discount)
+        }
       />
       <NewItemModal
         isOpen={isNewItemModalOpen}

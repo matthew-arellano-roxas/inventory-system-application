@@ -1,4 +1,3 @@
-import { TransactionPayload } from '@/types';
 import { prisma } from '@prisma';
 import { Transaction } from '@root/generated/prisma/client';
 import {
@@ -17,8 +16,9 @@ import {
 import { ProductPriceInfo } from '@/types';
 import { getItemTotalCost } from '@/services/transaction';
 import { logger } from '@/config';
+import { TransactionBody } from '@/schemas';
 
-export async function createPurchaseTransaction(payload: TransactionPayload): Promise<Transaction> {
+export async function createPurchaseTransaction(payload: TransactionBody): Promise<Transaction> {
   logger.info('Create purchase transaction');
   const currentDate = new Date();
   return prisma.$transaction(async (tx) => {

@@ -1,5 +1,6 @@
 import { getBranches } from "@/api/branch.api";
 import { createOpex, deleteOpex, getOpexList } from "@/api/opex.api";
+import { parseApiError } from "@/api/api-error-handler";
 import { keys } from "@/api/query-keys";
 import { usePagination } from "@/hooks/usePagination";
 import type { ExpensePayload } from "@/types/api/payload";
@@ -59,7 +60,12 @@ export function useOpexPageState() {
     },
     onError: (error) => {
       console.error("Failed to create expense", error);
-      toast.error("Failed to create expense.");
+      const parsed = parseApiError(error);
+      toast.error(
+        parsed.message && parsed.message !== "Request failed"
+          ? parsed.message
+          : "Failed to create expense.",
+      );
     },
   });
 
@@ -77,7 +83,12 @@ export function useOpexPageState() {
     },
     onError: (error) => {
       console.error("Failed to delete expense", error);
-      toast.error("Failed to delete expense.");
+      const parsed = parseApiError(error);
+      toast.error(
+        parsed.message && parsed.message !== "Request failed"
+          ? parsed.message
+          : "Failed to delete expense.",
+      );
     },
   });
 

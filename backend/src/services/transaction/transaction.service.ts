@@ -1,5 +1,4 @@
 import { PrismaClient, Transaction, TransactionType } from '@models';
-import { TransactionPayload } from '@/types';
 import createHttpError from 'http-errors';
 import {
   createSaleTransaction,
@@ -10,11 +9,12 @@ import {
 import { prisma } from '@root/lib/prisma';
 import { addMonths, startOfMonth } from 'date-fns';
 import { productService } from '@/services';
+import { TransactionBody } from '@/schemas';
 
 const prismaClient: PrismaClient = prisma;
 
 // Create a transaction based on its type
-export const createTransaction = async (payload: TransactionPayload): Promise<Transaction> => {
+export const createTransaction = async (payload: TransactionBody): Promise<Transaction> => {
   switch (payload.type as TransactionType) {
     case TransactionType.SALE:
       return createSaleTransaction(payload);

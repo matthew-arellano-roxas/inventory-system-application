@@ -7,7 +7,7 @@ import { toast } from "sonner";
 export type PosProductActionType = "SALE" | "PURCHASE" | "DAMAGE" | "RETURN";
 
 type AddCartItemFn = (
-  product: { id: number; name: string; sellingPrice?: number },
+  product: { id: number; name: string; sellingPrice?: number; discount?: number },
   branchId: number | null,
   quantity?: number,
 ) => void;
@@ -39,6 +39,7 @@ export function useQueuedProductTransactions({
     product: Product,
     quantity: number,
     type: PosProductActionType,
+    discount = 0,
   ) => {
     if (type === "SALE") {
       if (product.id == null) {
@@ -51,6 +52,7 @@ export function useQueuedProductTransactions({
           id: product.id,
           name: product.name,
           sellingPrice: product.sellingPrice,
+          discount,
         },
         branchId,
         quantity,
@@ -93,6 +95,7 @@ export function useQueuedProductTransactions({
                 productId,
                 productName: product.name,
                 quantity,
+                discount,
               },
             ],
           });
