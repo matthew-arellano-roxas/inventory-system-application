@@ -21,6 +21,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { type Product } from "@/types/api/response/product.response";
+import { useAccessControl } from "@/auth/access-control";
+import { toast } from "sonner";
 
 type TransactionType = "SALE" | "PURCHASE" | "DAMAGE" | "RETURN";
 
@@ -42,27 +44,34 @@ export function ProductActionModal({
   onClose,
   onSubmit,
 }: ProductModalProps) {
+  const { isAdmin, isAccessControlLoading } = useAccessControl();
   const [quantity, setQuantity] = useState<string>("1");
   const [type, setType] = useState<TransactionType>("SALE");
   const [discountInput, setDiscountInput] = useState<string>("0");
-  const [discountMode, setDiscountMode] = useState<"AMOUNT" | "PERCENT">("AMOUNT");
+  const [discountMode, setDiscountMode] = useState<"AMOUNT" | "PERCENT">(
+    "AMOUNT",
+  );
 
   if (!product) return null;
+
+  const effectiveType: TransactionType =
+    !isAccessControlLoading && !isAdmin && type === "PURCHASE" ? "SALE" : type;
 
   const numericQuantity = parseFloat(quantity) || 0;
   const totalSalePrice = product.sellingPrice * numericQuantity;
   const totalPurchaseCost = product.costPerUnit * numericQuantity;
   const discountValue = Math.max(parseFloat(discountInput) || 0, 0);
   const discountBaseAmount = totalSalePrice;
-  const supportsDiscount = type === "SALE" || type === "RETURN";
-  const computedDiscountAmount =
-    supportsDiscount
-      ? discountMode === "PERCENT"
-        ? (discountBaseAmount * discountValue) / 100
-        : discountValue
-      : 0;
+  const supportsDiscount = effectiveType === "SALE" || effectiveType === "RETURN";
+  const computedDiscountAmount = supportsDiscount
+    ? discountMode === "PERCENT"
+      ? (discountBaseAmount * discountValue) / 100
+      : discountValue
+    : 0;
   const normalizedDiscountAmount = Number(
-    Math.max(Math.min(computedDiscountAmount, discountBaseAmount), 0).toFixed(2),
+    Math.max(Math.min(computedDiscountAmount, discountBaseAmount), 0).toFixed(
+      2,
+    ),
   );
   const discountPercent =
     supportsDiscount && discountBaseAmount > 0
@@ -71,7 +80,12 @@ export function ProductActionModal({
 
   const handleConfirm = () => {
     if (numericQuantity <= 0) return;
-    onSubmit(product, numericQuantity, type, normalizedDiscountAmount);
+    if (!isAdmin && effectiveType === "PURCHASE") {
+      toast.error("Only admin can create purchase transactions.");
+      setType("SALE");
+      return;
+    }
+    onSubmit(product, numericQuantity, effectiveType, normalizedDiscountAmount);
     setQuantity("1");
     setType("SALE");
     setDiscountInput("0");
@@ -87,7 +101,7 @@ export function ProductActionModal({
   };
 
   const getTheme = () => {
-    switch (type) {
+    switch (effectiveType) {
       case "DAMAGE":
         return {
           icon: <AlertTriangle className="h-4 w-4" />,
@@ -112,13 +126,18 @@ export function ProductActionModal({
   };
 
   const theme = getTheme();
-  const unitAmount = type === "PURCHASE" ? product.costPerUnit : product.sellingPrice;
-  const totalAmount = type === "PURCHASE" ? totalPurchaseCost : totalSalePrice;
-  const netAmountWithDiscount = Math.max(totalSalePrice - normalizedDiscountAmount, 0);
+  const unitAmount =
+    effectiveType === "PURCHASE" ? product.costPerUnit : product.sellingPrice;
+  const totalAmount =
+    effectiveType === "PURCHASE" ? totalPurchaseCost : totalSalePrice;
+  const netAmountWithDiscount = Math.max(
+    totalSalePrice - normalizedDiscountAmount,
+    0,
+  );
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-xl">{product.name}</DialogTitle>
           <DialogDescription>
@@ -127,13 +146,24 @@ export function ProductActionModal({
         </DialogHeader>
 
         <Tabs
-          value={type}
-          onValueChange={(value) => setType(value as TransactionType)}
+          value={effectiveType}
+          onValueChange={(value) => {
+            if (value === "PURCHASE" && !isAdmin) {
+              toast.error("Only admin can access purchase actions.");
+              return;
+            }
+            setType(value as TransactionType);
+          }}
           className="w-full"
         >
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList
+            className={cn(
+              "grid w-full",
+              isAdmin ? "grid-cols-4" : "grid-cols-3",
+            )}
+          >
             <TabsTrigger value="SALE">Sale</TabsTrigger>
-            <TabsTrigger value="PURCHASE">Purchase</TabsTrigger>
+            {isAdmin && <TabsTrigger value="PURCHASE">Purchase</TabsTrigger>}
             <TabsTrigger value="RETURN">Return</TabsTrigger>
             <TabsTrigger
               value="DAMAGE"
@@ -145,39 +175,39 @@ export function ProductActionModal({
         </Tabs>
 
         <div className="grid gap-6 py-4">
-          {type !== "DAMAGE" && (
+          {effectiveType !== "DAMAGE" && (
             <div className="flex items-center justify-between rounded-lg border border-dashed bg-secondary/50 p-4">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                  {type === "PURCHASE" ? "Unit Cost" : "Unit Price"}
+                  {effectiveType === "PURCHASE" ? "Unit Cost" : "Unit Price"}
                 </p>
                 <p className="text-lg font-bold">PHP {unitAmount.toFixed(2)}</p>
               </div>
               <div className="text-right">
                 <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                  {type === "RETURN"
+                  {effectiveType === "RETURN"
                     ? "Refund Amount"
-                    : type === "PURCHASE"
+                    : effectiveType === "PURCHASE"
                       ? "Total Cost"
                       : "Total Price"}
                 </p>
                 <p
                   className={cn(
                     "text-lg font-bold",
-                    type === "RETURN"
+                    effectiveType === "RETURN"
                       ? "text-orange-600"
-                      : type === "PURCHASE"
+                      : effectiveType === "PURCHASE"
                         ? "text-emerald-600"
                         : "text-primary",
                   )}
                 >
                   PHP{" "}
-                  {(supportsDiscount ? netAmountWithDiscount : totalAmount).toLocaleString(
-                    undefined,
-                    {
-                      minimumFractionDigits: 2,
-                    },
-                  )}
+                  {(supportsDiscount
+                    ? netAmountWithDiscount
+                    : totalAmount
+                  ).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                  })}
                 </p>
                 {supportsDiscount && normalizedDiscountAmount > 0 && (
                   <p className="mt-1 text-xs text-emerald-600">
@@ -192,7 +222,7 @@ export function ProductActionModal({
             </div>
           )}
 
-          {type === "DAMAGE" && (
+          {effectiveType === "DAMAGE" && (
             <div className="flex items-center gap-3 rounded-lg border border-destructive/20 bg-destructive/10 p-4">
               <AlertTriangle className="h-5 w-5 text-destructive" />
               <p className="text-xs font-medium text-destructive">
@@ -202,19 +232,19 @@ export function ProductActionModal({
             </div>
           )}
 
-          {type === "PURCHASE" && (
+          {effectiveType === "PURCHASE" && (
             <div className="flex items-center gap-3 rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-4">
               <PackagePlus className="h-5 w-5 text-emerald-600" />
               <p className="text-xs font-medium text-emerald-700">
-                Purchasing stock will add {numericQuantity} {product.soldBy}(s) to
-                current inventory.
+                Purchasing stock will add {numericQuantity} {product.soldBy}(s)
+                to current inventory.
               </p>
             </div>
           )}
 
           <div className="space-y-3">
             <Label htmlFor="quantity">
-              Quantity to {type.toLowerCase()} ({product.soldBy})
+              Quantity to {effectiveType.toLowerCase()} ({product.soldBy})
             </Label>
             <div className="flex items-center gap-2">
               <Button
@@ -277,7 +307,7 @@ export function ProductActionModal({
               />
               <p className="text-xs text-muted-foreground">
                 {discountMode === "AMOUNT"
-                  ? `Equivalent to ${discountPercent.toFixed(2)}% off the current ${type === "RETURN" ? "refund" : "line"} total.`
+                  ? `Equivalent to ${discountPercent.toFixed(2)}% off the current ${effectiveType === "RETURN" ? "refund" : "line"} total.`
                   : `Equivalent discount amount: PHP ${normalizedDiscountAmount.toFixed(2)}.`}
               </p>
             </div>
@@ -289,7 +319,7 @@ export function ProductActionModal({
             Cancel
           </Button>
           <Button
-            variant={type === "DAMAGE" ? "destructive" : "default"}
+            variant={effectiveType === "DAMAGE" ? "destructive" : "default"}
             onClick={handleConfirm}
             className="flex-[2] gap-2"
             disabled={numericQuantity <= 0}

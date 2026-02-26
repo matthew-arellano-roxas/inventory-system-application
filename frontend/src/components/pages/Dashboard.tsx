@@ -25,6 +25,7 @@ import { toPHString } from "@/helpers/formatToPh";
 
 export function Dashboard() {
   const [date] = useState(() => toPHString(new Date()));
+
   // Fetch Current Month Metrics
   const { data: currentMonthData, isPending: isCurrentMonthPending } = useQuery(
     {
@@ -49,7 +50,7 @@ export function Dashboard() {
   const { data: productData = [], isPending: isProductDataPending } = useQuery({
     queryKey: keys.reports.product(),
     staleTime: 60 * 1000,
-    queryFn: getProductReport,
+    queryFn: () => getProductReport(),
   });
 
   return (

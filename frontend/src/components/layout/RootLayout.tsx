@@ -1,6 +1,6 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Sidebar } from "@/components/layout/Sidebar";
-import { Outlet, Link, useLocation } from "react-router";
+import { Outlet, Link, Navigate, useLocation } from "react-router";
 import { Toaster } from "@/components/ui/sonner";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { AxiosInterceptor } from "../axios/AxiosInterceptor";
@@ -12,8 +12,18 @@ import { ShoppingBasket, Moon, Sun } from "lucide-react";
 import { formatCurrency } from "@/helpers/formatCurrency";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useEffect } from "react";
+import { useAccessControl } from "@/auth/access-control";
 
 export function RootLayout() {
+  const {
+    isAuthenticated,
+    isAccessControlLoading,
+    isAdmin,
+    isUserRole,
+    canAccessPos,
+    canAccessTransactions,
+    claims,
+  } = useAccessControl();
   const location = useLocation();
   const items = usePosCartStore((state) => state.items);
   const scopedBranchId = usePosCartStore((state) => state.scopedBranchId);
@@ -40,6 +50,26 @@ export function RootLayout() {
     root.classList.toggle("dark", theme === "dark");
     root.style.colorScheme = theme;
   }, [theme]);
+
+  const path = location.pathname;
+  const hasAccessSignals = claims.roles.length > 0 || claims.permissions.length > 0;
+  const shouldRestrictUser = hasAccessSignals && !isAdmin && (isUserRole || canAccessPos || canAccessTransactions);
+  const isPosPath = path === "/pos" || path.startsWith("/pos/");
+  const isTransactionsPath = path === "/transactions";
+  const isAllowedRestrictedPath =
+    (isPosPath && canAccessPos) || (isTransactionsPath && canAccessTransactions);
+
+  if (isAuthenticated && !isAccessControlLoading && shouldRestrictUser) {
+    if (path === "/") {
+      if (canAccessPos) return <Navigate to="/pos" replace />;
+      if (canAccessTransactions) return <Navigate to="/transactions" replace />;
+    }
+
+    if (!isAllowedRestrictedPath) {
+      if (canAccessPos) return <Navigate to="/pos" replace />;
+      if (canAccessTransactions) return <Navigate to="/transactions" replace />;
+    }
+  }
 
   return (
     <ProtectedRoute>
