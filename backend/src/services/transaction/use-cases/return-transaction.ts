@@ -1,4 +1,3 @@
-import { TransactionPayload } from '@/types';
 import { prisma } from '@prisma';
 import { Product } from '@root/generated/prisma/client';
 import {
@@ -19,8 +18,9 @@ import {
 } from '../transaction-validation';
 import { logger } from '@/config';
 import { getItemTotalPrice, getProfitAmount } from '@/services/transaction';
+import { TransactionBody } from '@/schemas';
 
-export async function createReturnTransaction(payload: TransactionPayload) {
+export async function createReturnTransaction(payload: TransactionBody) {
   logger.info('Create return transaction');
   const productInfo = new Map<number, Pick<Product, 'sellingPrice' | 'costPerUnit' | 'name'>>();
   let totalAmount: number = 0;
@@ -45,7 +45,7 @@ export async function createReturnTransaction(payload: TransactionPayload) {
         createdAt: currentDate,
       });
 
-      totalAmount = totalAmount + item.quantity * product.sellingPrice;
+      totalAmount += item.quantity * product.sellingPrice - item.discount;
     }
     const transaction = await tx.transaction.create({
       data: {
@@ -61,12 +61,11 @@ export async function createReturnTransaction(payload: TransactionPayload) {
       checkCostPerUnit(item.productName, currentItem);
       checkSellingPrice(item.productName, currentItem);
 
-      const salesAmount = getItemTotalPrice(currentItem.sellingPrice, item.quantity);
-      const profitAmount = getProfitAmount(
-        currentItem.costPerUnit,
-        currentItem.sellingPrice,
-        item.quantity,
-      );
+      const salesAmount =
+        getItemTotalPrice(currentItem.sellingPrice, item.quantity) - item.discount;
+      const profitAmount =
+        getProfitAmount(currentItem.costPerUnit, currentItem.sellingPrice, item.quantity) -
+        item.discount;
 
       await createTransactionItem(tx, {
         productId: item.productId,

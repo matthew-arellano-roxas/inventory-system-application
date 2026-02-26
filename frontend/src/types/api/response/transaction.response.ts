@@ -12,6 +12,7 @@ export type TransactionItemResponse = {
   productId: number;
   quantity: number;
   productName: string;
+  discount: number;
 };
 
 export type TransactionResponse = {

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { toastApiError } from "@/api/api-error-handler";
 import { createTransaction } from "@/api/transaction.api";
 import {
   Table,
@@ -39,7 +40,8 @@ export function CheckoutPage() {
 
   const itemCount = items.reduce((total, item) => total + item.quantity, 0);
   const subtotal = items.reduce(
-    (total, item) => total + item.unitPrice * item.quantity,
+    (total, item) =>
+      total + Math.max(item.unitPrice * item.quantity - (item.discount ?? 0), 0),
     0,
   );
 
@@ -69,6 +71,7 @@ export function CheckoutPage() {
           productId: item.productId,
           productName: item.name,
           quantity: item.quantity,
+          discount: item.discount ?? 0,
         })),
       });
 
@@ -77,7 +80,7 @@ export function CheckoutPage() {
       navigate(`/pos/${branchId}`);
     } catch (error) {
       console.error("Failed to submit checkout transaction", error);
-      toast.error("Failed to complete checkout.");
+      toastApiError(error);
     } finally {
       setIsSubmitting(false);
     }
@@ -196,6 +199,11 @@ export function CheckoutPage() {
                         <p className="mt-1 text-xs text-muted-foreground">
                           Unit Price: {formatCurrency(item.unitPrice)}
                         </p>
+                        {(item.discount ?? 0) > 0 && (
+                          <p className="mt-1 text-xs text-emerald-600">
+                            Discount: {formatCurrency(item.discount ?? 0)}
+                          </p>
+                        )}
                       </div>
                       <Button
                         type="button"
@@ -252,7 +260,12 @@ export function CheckoutPage() {
                     <div className="mt-3 flex items-center justify-between rounded-lg bg-muted/50 px-3 py-2 text-sm">
                       <span className="text-muted-foreground">Line Total</span>
                       <span className="font-semibold">
-                        {formatCurrency(item.unitPrice * item.quantity)}
+                        {formatCurrency(
+                          Math.max(
+                            item.unitPrice * item.quantity - (item.discount ?? 0),
+                            0,
+                          ),
+                        )}
                       </span>
                     </div>
                   </div>
@@ -320,7 +333,22 @@ export function CheckoutPage() {
                           </div>
                         </TableCell>
                         <TableCell className="px-3 text-right font-semibold">
-                          {formatCurrency(item.unitPrice * item.quantity)}
+                          <div>
+                            <p>
+                              {formatCurrency(
+                                Math.max(
+                                  item.unitPrice * item.quantity -
+                                    (item.discount ?? 0),
+                                  0,
+                                ),
+                              )}
+                            </p>
+                            {(item.discount ?? 0) > 0 && (
+                              <p className="text-xs font-normal text-emerald-600">
+                                -{formatCurrency(item.discount ?? 0)}
+                              </p>
+                            )}
+                          </div>
                         </TableCell>
                         <TableCell className="px-3 text-right">
                           <Button

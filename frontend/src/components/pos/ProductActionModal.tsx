@@ -28,7 +28,12 @@ interface ProductModalProps {
   product: Product | null;
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (product: Product, quantity: number, type: TransactionType) => void;
+  onSubmit: (
+    product: Product,
+    quantity: number,
+    type: TransactionType,
+    discount: number,
+  ) => void;
 }
 
 export function ProductActionModal({
@@ -39,18 +44,38 @@ export function ProductActionModal({
 }: ProductModalProps) {
   const [quantity, setQuantity] = useState<string>("1");
   const [type, setType] = useState<TransactionType>("SALE");
+  const [discountInput, setDiscountInput] = useState<string>("0");
+  const [discountMode, setDiscountMode] = useState<"AMOUNT" | "PERCENT">("AMOUNT");
 
   if (!product) return null;
 
   const numericQuantity = parseFloat(quantity) || 0;
   const totalSalePrice = product.sellingPrice * numericQuantity;
   const totalPurchaseCost = product.costPerUnit * numericQuantity;
+  const discountValue = Math.max(parseFloat(discountInput) || 0, 0);
+  const discountBaseAmount = totalSalePrice;
+  const supportsDiscount = type === "SALE" || type === "RETURN";
+  const computedDiscountAmount =
+    supportsDiscount
+      ? discountMode === "PERCENT"
+        ? (discountBaseAmount * discountValue) / 100
+        : discountValue
+      : 0;
+  const normalizedDiscountAmount = Number(
+    Math.max(Math.min(computedDiscountAmount, discountBaseAmount), 0).toFixed(2),
+  );
+  const discountPercent =
+    supportsDiscount && discountBaseAmount > 0
+      ? (normalizedDiscountAmount / discountBaseAmount) * 100
+      : 0;
 
   const handleConfirm = () => {
     if (numericQuantity <= 0) return;
-    onSubmit(product, numericQuantity, type);
+    onSubmit(product, numericQuantity, type, normalizedDiscountAmount);
     setQuantity("1");
     setType("SALE");
+    setDiscountInput("0");
+    setDiscountMode("AMOUNT");
     onClose();
   };
 
@@ -89,6 +114,7 @@ export function ProductActionModal({
   const theme = getTheme();
   const unitAmount = type === "PURCHASE" ? product.costPerUnit : product.sellingPrice;
   const totalAmount = type === "PURCHASE" ? totalPurchaseCost : totalSalePrice;
+  const netAmountWithDiscount = Math.max(totalSalePrice - normalizedDiscountAmount, 0);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -146,10 +172,22 @@ export function ProductActionModal({
                   )}
                 >
                   PHP{" "}
-                  {totalAmount.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                  })}
+                  {(supportsDiscount ? netAmountWithDiscount : totalAmount).toLocaleString(
+                    undefined,
+                    {
+                      minimumFractionDigits: 2,
+                    },
+                  )}
                 </p>
+                {supportsDiscount && normalizedDiscountAmount > 0 && (
+                  <p className="mt-1 text-xs text-emerald-600">
+                    Discount: PHP{" "}
+                    {normalizedDiscountAmount.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                    })}{" "}
+                    ({discountPercent.toFixed(2)}%)
+                  </p>
+                )}
               </div>
             </div>
           )}
@@ -206,6 +244,44 @@ export function ProductActionModal({
               </Button>
             </div>
           </div>
+
+          {supportsDiscount && (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="discount">Discount</Label>
+                <Tabs
+                  value={discountMode}
+                  onValueChange={(value) =>
+                    setDiscountMode(value as "AMOUNT" | "PERCENT")
+                  }
+                  className="w-auto"
+                >
+                  <TabsList className="grid h-8 grid-cols-2">
+                    <TabsTrigger value="AMOUNT" className="px-3 text-xs">
+                      Amount
+                    </TabsTrigger>
+                    <TabsTrigger value="PERCENT" className="px-3 text-xs">
+                      %
+                    </TabsTrigger>
+                  </TabsList>
+                </Tabs>
+              </div>
+              <Input
+                id="discount"
+                type="number"
+                min="0"
+                step="0.01"
+                value={discountInput}
+                onChange={(e) => setDiscountInput(e.target.value)}
+                placeholder={discountMode === "AMOUNT" ? "0.00" : "0"}
+              />
+              <p className="text-xs text-muted-foreground">
+                {discountMode === "AMOUNT"
+                  ? `Equivalent to ${discountPercent.toFixed(2)}% off the current ${type === "RETURN" ? "refund" : "line"} total.`
+                  : `Equivalent discount amount: PHP ${normalizedDiscountAmount.toFixed(2)}.`}
+              </p>
+            </div>
+          )}
         </div>
 
         <DialogFooter className="gap-2">

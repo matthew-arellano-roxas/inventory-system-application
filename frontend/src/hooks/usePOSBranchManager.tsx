@@ -30,7 +30,6 @@ export const usePOSBranchManager = () => {
   };
 
   const handleOnModalSubmit = async (name: string) => {
-    console.log(modal.branchId);
     if (modal.editing && modal.branchId) {
       console.log(modal.branchId);
       await update.mutate({ id: modal.branchId, name });

@@ -58,7 +58,8 @@ export function ProductSelectionPage() {
   );
   const cartSubtotal = usePosCartStore((state) =>
     state.items.reduce(
-      (total, item) => total + item.unitPrice * item.quantity,
+      (total, item) =>
+        total + Math.max(item.unitPrice * item.quantity - (item.discount ?? 0), 0),
       0,
     ),
   );
