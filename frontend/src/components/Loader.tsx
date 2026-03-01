@@ -1,5 +1,3 @@
-import React from "react";
-
 export function Loader({ className }: { className?: string }) {
   return (
     <div className={className ?? "flex items-center justify-center h-40"}>

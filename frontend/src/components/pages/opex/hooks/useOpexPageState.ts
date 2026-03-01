@@ -2,6 +2,10 @@ import { getBranches } from "@/api/branch.api";
 import { createOpex, deleteOpex, getOpexList } from "@/api/opex.api";
 import { parseApiError } from "@/api/api-error-handler";
 import { keys } from "@/api/query-keys";
+import {
+  getFinancialReportByBranchId,
+  getFinancialReportList,
+} from "@/api/report.api";
 import { usePagination } from "@/hooks/usePagination";
 import type { ExpensePayload } from "@/types/api/payload";
 import type { ExpenseResponse } from "@/types/api/response/opex.reponse";
@@ -31,6 +35,7 @@ export function useOpexPageState() {
   const [selectedBranchId, setSelectedBranchId] = useState("all");
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [form, setForm] = useState<OpexFormState>(initialOpexFormState);
+  const branchFilter = selectedBranchId === "all" ? null : Number(selectedBranchId);
 
   const branchesQuery = useQuery({
     queryKey: keys.branches.all,
@@ -42,6 +47,19 @@ export function useOpexPageState() {
     queryKey: ["expenses"],
     queryFn: getOpexList,
     staleTime: 30 * 1000,
+  });
+
+  const financialReportListQuery = useQuery({
+    queryKey: keys.reports.branchFinancialList(),
+    queryFn: getFinancialReportList,
+    staleTime: 60 * 1000,
+  });
+
+  const financialReportByBranchQuery = useQuery({
+    queryKey: keys.reports.branchFinancialById(branchFilter ?? 0),
+    queryFn: () => getFinancialReportByBranchId(branchFilter as number),
+    enabled: branchFilter != null,
+    staleTime: 60 * 1000,
   });
 
   const createMutation = useMutation({
@@ -100,8 +118,6 @@ export function useOpexPageState() {
     [branches],
   );
 
-  const branchFilter = selectedBranchId === "all" ? null : Number(selectedBranchId);
-
   const filteredExpenses = useMemo(
     () =>
       expenses.filter((e) => {
@@ -112,18 +128,45 @@ export function useOpexPageState() {
   );
 
   const summary = useMemo(() => {
-    const total = filteredExpenses.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
+    const currentFinancial =
+      branchFilter != null ? financialReportByBranchQuery.data : undefined;
+
+    const totalsFromFinancial = currentFinancial
+      ? {
+          total: Number(currentFinancial.operationExpenses) || 0,
+          grossProfit: Number(currentFinancial.profit) || 0,
+          netProfit: Number(currentFinancial.netProfit) || 0,
+        }
+      : (financialReportListQuery.data ?? []).reduce(
+          (acc, report) => ({
+            total: acc.total + (Number(report.operationExpenses) || 0),
+            grossProfit: acc.grossProfit + (Number(report.profit) || 0),
+            netProfit: acc.netProfit + (Number(report.netProfit) || 0),
+          }),
+          { total: 0, grossProfit: 0, netProfit: 0 },
+        );
+
     const thisMonth = filteredExpenses.filter((e) => {
       const d = new Date(e.createdAt);
       const now = new Date();
       return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
     }).length;
-    return { total, count: filteredExpenses.length, thisMonth };
-  }, [filteredExpenses]);
+    return {
+      total: totalsFromFinancial.total,
+      grossProfit: totalsFromFinancial.grossProfit,
+      netProfit: totalsFromFinancial.netProfit,
+      count: filteredExpenses.length,
+      thisMonth,
+    };
+  }, [branchFilter, filteredExpenses, financialReportByBranchQuery.data, financialReportListQuery.data]);
 
   const pagination = usePagination(filteredExpenses, 12);
 
-  const isRefreshing = branchesQuery.isFetching || opexQuery.isFetching;
+  const isRefreshing =
+    branchesQuery.isFetching ||
+    opexQuery.isFetching ||
+    financialReportListQuery.isFetching ||
+    financialReportByBranchQuery.isFetching;
   const activeBranchName =
     branchFilter == null
       ? "All Branches"
@@ -132,7 +175,12 @@ export function useOpexPageState() {
   const isInitialLoading =
     !branchesQuery.data &&
     !opexQuery.data &&
-    (branchesQuery.isPending || opexQuery.isPending);
+    !financialReportListQuery.data &&
+    (branchFilter == null || !financialReportByBranchQuery.data) &&
+    (branchesQuery.isPending ||
+      opexQuery.isPending ||
+      financialReportListQuery.isPending ||
+      (branchFilter != null && financialReportByBranchQuery.isPending));
 
   const setSearchAndReset = (value: string) => {
     setSearch(value);
@@ -145,7 +193,12 @@ export function useOpexPageState() {
   };
 
   const refreshAll = async () => {
-    await Promise.all([branchesQuery.refetch(), opexQuery.refetch()]);
+    await Promise.all([
+      branchesQuery.refetch(),
+      opexQuery.refetch(),
+      financialReportListQuery.refetch(),
+      ...(branchFilter != null ? [financialReportByBranchQuery.refetch()] : []),
+    ]);
   };
 
   const submitCreate = async () => {

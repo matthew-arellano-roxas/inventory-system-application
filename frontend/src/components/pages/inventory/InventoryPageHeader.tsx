@@ -99,7 +99,7 @@ export function InventoryPageHeader({
           <SummaryPill label="Stock" value={summary.totalStock.toFixed(2)} />
           <SummaryPill label="Low Stock" value={String(summary.lowStockCount)} tone="warn" />
           <SummaryPill label="Revenue" value={formatCurrency(summary.totalRevenue)} tone="good" />
-          <SummaryPill label="Profit" value={formatCurrency(summary.totalProfit)} tone="good" />
+          <SummaryPill label="Gross Profit" value={formatCurrency(summary.totalProfit)} tone="good" />
           <SummaryPill label="OPEX" value={formatCurrency(summary.totalOpex)} tone="bad" />
           <SummaryPill
             label="Net"

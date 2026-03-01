@@ -24,6 +24,8 @@ import type { Product } from "@/types/api/response";
 import { Plus, Receipt, Store } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import { useAccessControl } from "@/auth/access-control";
+import { ROLE_NAMES } from "@/auth/access-policy";
 
 type ModalView =
   | "IDLE"
@@ -33,6 +35,7 @@ type ModalView =
   | "SELECTION_MENU";
 
 export function ProductSelectionPage() {
+  const { hasRole } = useAccessControl();
   const { inputRef, search, branchId, categoryId, handleSearch } =
     useProductSelectionFilters();
   const {
@@ -59,7 +62,8 @@ export function ProductSelectionPage() {
   const cartSubtotal = usePosCartStore((state) =>
     state.items.reduce(
       (total, item) =>
-        total + Math.max(item.unitPrice * item.quantity - (item.discount ?? 0), 0),
+        total +
+        Math.max(item.unitPrice * item.quantity - (item.discount ?? 0), 0),
       0,
     ),
   );
@@ -73,11 +77,13 @@ export function ProductSelectionPage() {
   });
   const activeBranchName =
     branchId != null
-      ? branchList.find((branch) => branch.id === branchId)?.name ?? `Branch #${branchId}`
+      ? (branchList.find((branch) => branch.id === branchId)?.name ??
+        `Branch #${branchId}`)
       : "Select Branch";
   const activeCategoryName =
     categoryId != null
-      ? categoryList.find((category) => category.id === categoryId)?.name ?? "Filtered Category"
+      ? (categoryList.find((category) => category.id === categoryId)?.name ??
+        "Filtered Category")
       : "All Categories";
   const {
     handleSelectCategory,
@@ -195,24 +201,26 @@ export function ProductSelectionPage() {
         </div>
       </Card>
 
-      <Card className="mb-6 border-border/60 bg-background/80 p-4 shadow-sm">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              Shortcuts
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Jump to operating expenses to record branch costs.
-            </p>
+      {hasRole(ROLE_NAMES.ADMIN) && (
+        <Card className="mb-6 border-border/60 bg-background/80 p-4 shadow-sm">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                Shortcuts
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Jump to operating expenses to record branch costs.
+              </p>
+            </div>
+            <Button asChild className="gap-2">
+              <Link to="/opex">
+                <Receipt className="h-4 w-4" />
+                Open OPEX Table
+              </Link>
+            </Button>
           </div>
-          <Button asChild className="gap-2">
-            <Link to="/opex">
-              <Receipt className="h-4 w-4" />
-              Open OPEX Table
-            </Link>
-          </Button>
-        </div>
-      </Card>
+        </Card>
+      )}
 
       <Card className="border-border/60 bg-background/80 p-3 shadow-sm sm:p-4">
         <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">

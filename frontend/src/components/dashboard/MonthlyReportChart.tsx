@@ -24,7 +24,7 @@ import { computeMonthlyTrend } from "@/helpers/dashboard/computeTrend";
 
 const chartConfig: ChartConfig = {
   revenue: { label: "Revenue", color: "var(--chart-1)" }, // soft blue-gray
-  profit: { label: "Profit", color: "var(--chart-2)" }, // muted green
+  profit: { label: "Gross Profit", color: "var(--chart-2)" }, // muted green
 };
 
 export function MonthlyReportChart({
@@ -72,7 +72,7 @@ export function MonthlyReportChart({
   return (
     <Card className={`min-w-0 ${className}`}>
       <CardHeader>
-        <CardTitle>Monthly Revenue & Profit</CardTitle>
+        <CardTitle>Monthly Revenue & Gross Profit</CardTitle>
         <CardDescription>{rangeText}</CardDescription>
       </CardHeader>
 

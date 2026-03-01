@@ -2,6 +2,7 @@
 import { api } from "@/config/axios";
 import { cleanQuery } from "@/helpers/cleanQuery";
 import {
+  type BranchFinancialReportResponse,
   type BranchReportResponse,
   type CurrentMonthReportResponse,
   type MonthlyReportResponse,
@@ -30,6 +31,20 @@ export const getBranchReport = async () => {
   // We remove the .catch here so the Router can handle the error via errorElement
   const response =
     await api.get<ApiResponse<BranchReportResponse[]>>("/api/report/branch");
+  return response.data.data;
+};
+
+export const getFinancialReportList = async () => {
+  const response = await api.get<ApiResponse<BranchFinancialReportResponse[]>>(
+    "/api/report/branch-list",
+  );
+  return response.data.data;
+};
+
+export const getFinancialReportByBranchId = async (branchId: number) => {
+  const response = await api.get<ApiResponse<BranchFinancialReportResponse>>(
+    `/api/report/branch/${branchId}`,
+  );
   return response.data.data;
 };
 

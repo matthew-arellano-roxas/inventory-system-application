@@ -23,6 +23,7 @@ import { Link, useLocation } from "react-router";
 import { Separator } from "../ui/separator";
 import { useAuth0 } from "@auth0/auth0-react";
 import { cn } from "@/lib/utils";
+import { useAccessControl } from "@/auth/access-control";
 
 const items = [
   { title: "Dashboard", url: "/", icon: ChartArea },
@@ -34,7 +35,25 @@ const items = [
 
 export function Sidebar() {
   const { logout, user } = useAuth0();
+  const {
+    isAccessControlLoading,
+    isAdmin,
+    isUserRole,
+    canAccessPos,
+    canAccessTransactions,
+  } = useAccessControl();
   const location = useLocation();
+  const visibleItems = isAccessControlLoading
+    ? items
+    : isAdmin
+      ? items
+      : items.filter((item) => {
+          if (item.url === "/pos") return canAccessPos || isUserRole;
+          if (item.url === "/transactions") {
+            return canAccessTransactions || isUserRole;
+          }
+          return false;
+        });
 
   // Destructure toggleSidebar from the hook
   const { toggleSidebar } = useSidebar();
@@ -72,8 +91,12 @@ export function Sidebar() {
           </p>
           <SidebarGroupContent>
             <SidebarMenu className="gap-1">
-              {items.map((item) => {
-                const isActive = location.pathname === item.url;
+              {visibleItems.map((item) => {
+                const isActive =
+                  item.url === "/pos"
+                    ? location.pathname === "/pos" ||
+                      location.pathname.startsWith("/pos/")
+                    : location.pathname === item.url;
                 return (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton

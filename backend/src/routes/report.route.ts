@@ -9,11 +9,17 @@ const reportRoute: Router = Router();
 reportRoute.use(checkPermissions(['read:report']));
 reportRoute.use(cacheMiddleware(TTL.ONE_MINUTE));
 
+// Monthly
 reportRoute.get('/monthly', reportController.getMonthlyReport);
 reportRoute.get('/current-month', reportController.getCurrentMonthReport);
+
+// Product
 reportRoute.get('/product', reportController.getProductReport);
 reportRoute.get('/product/:productId', reportController.getProductReportByProductId);
+
+// Branch
 reportRoute.get('/branch', reportController.getBranchReport);
-reportRoute.get('/branch/:branchId', reportController.getBranchReportByBranchId);
+reportRoute.get('/branch-list', reportController.getBranchFinancialReportList);
+reportRoute.get('/branch/:branchId', reportController.getFinancialReportByBranchId);
 
 export { reportRoute };

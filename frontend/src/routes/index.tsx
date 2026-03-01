@@ -8,7 +8,6 @@ import { TransactionsPage } from "@/components/pages/TransactionsPage";
 import { OpexPage } from "@/components/pages/OpexPage";
 import { NotFoundPage } from "@/components/pages/NotFoundPage";
 import { ErrorHandler } from "@/components/ErrorHandler";
-import { ProductStorePage } from "@/components/pages/PointOfSale/ProductStorePage";
 import { ProductSelectionPage } from "@/components/pages/PointOfSale/ProductSelectionPage";
 import { CheckoutPage } from "@/components/pages/PointOfSale/CheckoutPage";
 
@@ -59,10 +58,6 @@ export const routes = [
             ],
           },
         ],
-      },
-      {
-        path: "/product-selection",
-        element: <ProductStorePage />,
       },
     ],
   },

@@ -4,6 +4,9 @@ export const keys = {
     currentMonth: () => [...keys.reports.all, "current-month"] as const,
     monthly: () => [...keys.reports.all, "monthly"] as const,
     branch: () => [...keys.reports.all, "branch"] as const,
+    branchFinancialList: () => [...keys.reports.all, "branch-financial-list"] as const,
+    branchFinancialById: (branchId: number) =>
+      [...keys.reports.all, "branch-financial-by-id", branchId] as const,
     product: () => [...keys.reports.all, "product"] as const,
   },
   announcements: {

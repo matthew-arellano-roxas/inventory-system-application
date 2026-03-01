@@ -17,7 +17,13 @@ import { Link } from "react-router";
 
 type OpexPageHeaderProps = {
   activeBranchName: string;
-  summary: { total: number; count: number; thisMonth: number };
+  summary: {
+    total: number;
+    grossProfit: number;
+    netProfit: number;
+    count: number;
+    thisMonth: number;
+  };
   isRefreshing: boolean;
   onRefresh: () => void;
   onOpenCreate: () => void;
@@ -96,8 +102,10 @@ export function OpexPageHeader(props: OpexPageHeaderProps) {
           </div>
         </div>
 
-        <div className="grid gap-2 p-4 sm:grid-cols-3">
+        <div className="grid gap-2 p-4 sm:grid-cols-2 xl:grid-cols-5">
           <HeaderTile label="Total OPEX" value={formatCurrency(summary.total)} />
+          <HeaderTile label="Gross Profit" value={formatCurrency(summary.grossProfit)} />
+          <HeaderTile label="Net Profit" value={formatCurrency(summary.netProfit)} />
           <HeaderTile label="Filtered Rows" value={String(summary.count)} />
           <HeaderTile label="Active Branch" value={activeBranchName} />
         </div>
