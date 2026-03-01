@@ -7,7 +7,7 @@ export const checkDatabaseConnection = async (): Promise<void> => {
     await prisma.$queryRaw`SELECT 1`; // forces a real connection
     logger.info('Database connected!');
   } catch (_error) {
-    logger.error('Database connection failed!');
+    logger.error('Database connection failed!', _error);
     process.exit(1); // exit app if DB is unreachable
   }
 };

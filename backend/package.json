@@ -1,5 +1,5 @@
 {
-  "name": "Inventory System Application - Backend",
+  "name": "Inventory Management System - Backend",
   "version": "1.0.0",
   "description": "",
   "main": "dist/server.js",

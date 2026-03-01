@@ -9197,3 +9197,17 @@ Unknown argument `0`.
 2026-03-01 13:58:02+08:00 [31merror[39m: Database connection failed!
 2026-03-01 13:58:12+08:00 [31merror[39m: Database connection failed!
 2026-03-01 15:12:08+08:00 [31merror[39m: Database connection failed!
+2026-03-01 15:24:14+08:00 [31merror[39m: Database connection failed!
+2026-03-01 20:57:51+08:00 [31merror[39m: Database connection failed!
+2026-03-01 21:00:49+08:00 [31merror[39m: Database connection failed!
+2026-03-01 21:02:38+08:00 [31merror[39m: Database connection failed!
+2026-03-01 21:04:13+08:00 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.$queryRaw()` invocation:
+
+
+Raw query failed. Code: `N/A`. Message: `Error opening a TLS connection: self-signed certificate in certificate chain`
+    at qr.handleRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at qr.handleAndLogRequestError (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at qr.request (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\Matthew\Videos\Inventory System Application\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
