@@ -4,5 +4,5 @@ dist/
 .env.development
 .env.production
 .vscode/
-migrations/
 logs/
+
