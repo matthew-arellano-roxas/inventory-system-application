@@ -79,7 +79,7 @@ export function RootLayout() {
             <Toaster position="top-center" />
             <Sidebar />
             <main className="min-w-0 flex-1 overflow-x-hidden p-2 md:p4 space-y-6 bg-muted">
-              <header className="flex items-center justify-between gap-3 border-b pb-4">
+              <header className="flex min-h-14 items-center justify-between gap-3 border-b py-2 sm:min-h-15 sm:py-3">
                 <SidebarTrigger />
                 <Button
                   type="button"

@@ -12,15 +12,15 @@ export function SidebarTrigger() {
       variant="ghost"
       size="icon"
       onClick={toggleSidebar}
-      className="h-9 w-9"
+      className="h-11 w-11 rounded-xl"
     >
       {/* Changing the icon based on collapse state */}
       {isMobile ? (
-        <Menu className="h-5 w-5" />
+        <Menu className="h-6 w-6" />
       ) : isCollapsed ? (
-        <PanelLeftOpen className="h-5 w-5" />
+        <PanelLeftOpen className="h-6 w-6" />
       ) : (
-        <PanelLeftClose className="h-5 w-5" />
+        <PanelLeftClose className="h-6 w-6" />
       )}
     </Button>
   );
