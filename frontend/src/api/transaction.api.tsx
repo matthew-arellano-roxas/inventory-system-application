@@ -16,4 +16,12 @@ export const createTransaction = async (data: TransactionPayload) => {
     await api.post<ApiResponse<TransactionResponse>>("/api/transaction", data);
   if (!response.data.success) throw new Error(response.data.message);
   return response.data.data;
-}
+};
+
+export const rollbackSaleTransaction = async (transactionId: number) => {
+  const response = await api.post<ApiResponse<TransactionResponse>>(
+    `/api/transaction/${transactionId}/rollback`,
+  );
+  if (!response.data.success) throw new Error(response.data.message);
+  return response.data.data;
+};

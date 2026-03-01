@@ -2,13 +2,16 @@ import { getTransactions } from "@/api/transaction.api";
 import { keys } from "@/api/query-keys";
 import { Loader } from "@/components/Loader";
 import { TransactionCard } from "@/components/transaction/TransactionCard";
+import { useTransactionMutations } from "@/hooks/useTransactionMutation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { RefreshCw, ReceiptText } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export const TransactionsPage = () => {
+  const { rollback } = useTransactionMutations();
   const {
     data = [],
     isPending,
@@ -36,6 +39,30 @@ export const TransactionsPage = () => {
       byType: {} as Record<string, number>,
     },
   );
+
+  const formatQuantity = (value: number) =>
+    Number.isInteger(value)
+      ? value.toLocaleString()
+      : value.toLocaleString(undefined, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        });
+
+  const handleRollback = (transactionId: number, transactionType: string) => {
+    toast.warning(
+      `Void this ${transactionType.toLowerCase()} transaction?`,
+      {
+        description:
+          "This will permanently reverse its effects and remove the record.",
+        action: {
+          label: rollback.isPending ? "Voiding..." : "Confirm",
+          onClick: () => {
+            void rollback.mutateAsync(transactionId);
+          },
+        },
+      },
+    );
+  };
 
   return (
     <div className="space-y-6 p-4">
@@ -91,7 +118,7 @@ export const TransactionsPage = () => {
                     Items Moved
                   </p>
                   <p className="mt-1 text-lg font-bold leading-none">
-                    {totals.items}
+                    {formatQuantity(totals.items)}
                   </p>
                 </div>
               </div>
@@ -134,7 +161,7 @@ export const TransactionsPage = () => {
               key={txn.id}
               transaction={txn}
               onViewReceipt={() => {}}
-              onVoid={() => {}}
+              onVoid={() => void handleRollback(txn.id, txn.type)}
             />
           ))}
         </div>

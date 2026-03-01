@@ -5,6 +5,10 @@ import {
   createPurchaseTransaction,
   createReturnTransaction,
   createDamageTransaction,
+  rollbackDamageTransaction,
+  rollbackPurchaseTransaction,
+  rollbackReturnTransaction,
+  rollbackSaleTransaction,
 } from '@/services/transaction';
 import { prisma } from '@root/lib/prisma';
 import { addMonths, startOfMonth } from 'date-fns';
@@ -88,8 +92,33 @@ export const getTotalDamageAmount = async () => {
   return result._sum.totalAmount ?? 0;
 };
 
+export const rollbackTransaction = async (transactionId: number): Promise<Transaction> => {
+  const transaction = await prismaClient.transaction.findFirst({
+    where: { id: transactionId },
+    select: { type: true },
+  });
+
+  if (!transaction) {
+    throw new createHttpError.NotFound('Transaction not found.');
+  }
+
+  switch (transaction.type as TransactionType) {
+    case TransactionType.SALE:
+      return rollbackSaleTransaction(transactionId);
+    case TransactionType.PURCHASE:
+      return rollbackPurchaseTransaction(transactionId);
+    case TransactionType.RETURN:
+      return rollbackReturnTransaction(transactionId);
+    case TransactionType.DAMAGE:
+      return rollbackDamageTransaction(transactionId);
+    default:
+      throw new createHttpError.BadRequest('Unsupported transaction type.');
+  }
+};
+
 export const transactionService = {
   createTransaction,
   getTransactions,
   getTotalDamageAmount,
+  rollbackTransaction,
 };

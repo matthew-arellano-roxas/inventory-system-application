@@ -22,5 +22,11 @@ transactionRoute.get(
   cacheMiddleware(TTL.ONE_MINUTE),
   transactionController.getTransactions,
 );
+transactionRoute.post(
+  '/:transactionId/rollback',
+  checkPermissions(['create:transaction']),
+  invalidateCache(ROUTE.TRANSACTION),
+  transactionController.rollbackTransaction,
+);
 
 export { transactionRoute };
