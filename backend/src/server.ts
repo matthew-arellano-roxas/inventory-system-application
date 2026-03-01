@@ -1,7 +1,9 @@
 import dotenv from 'dotenv';
 const env = process.env.NODE_ENV || 'development';
-dotenv.config({ path: `.env.${env}` });
-
+dotenv.config({
+  path: `.env.${env}`,
+  override: false, // Docker-provided vars take priority
+});
 import 'express-async-error';
 import express from 'express';
 import http from 'http';

@@ -3,7 +3,11 @@ import { getCategories } from "@/api/category.api";
 import { getOpexList } from "@/api/opex.api";
 import { getProducts } from "@/api/product.api";
 import { keys } from "@/api/query-keys";
-import { getProductReport } from "@/api/report.api";
+import {
+  getFinancialReportByBranchId,
+  getFinancialReportList,
+  getProductReport,
+} from "@/api/report.api";
 import { getStockMovementList } from "@/api/stock.api";
 import {
   type InventoryProduct,
@@ -54,6 +58,19 @@ export function useInventoryPageState() {
       };
       return getProductReport(query);
     },
+    staleTime: 60 * 1000,
+  });
+
+  const financialReportListQuery = useQuery({
+    queryKey: keys.reports.branchFinancialList(),
+    queryFn: getFinancialReportList,
+    staleTime: 60 * 1000,
+  });
+
+  const financialReportByBranchQuery = useQuery({
+    queryKey: keys.reports.branchFinancialById(branchIdFilter ?? 0),
+    queryFn: () => getFinancialReportByBranchId(branchIdFilter as number),
+    enabled: branchIdFilter != null,
     staleTime: 60 * 1000,
   });
 
@@ -152,19 +169,35 @@ export function useInventoryPageState() {
 
   const summary = useMemo(() => {
     const totalStock = filteredReports.reduce((sum, r) => sum + (Number(r.stock) || 0), 0);
-    const totalRevenue = filteredReports.reduce((sum, r) => sum + (Number(r.revenue) || 0), 0);
-    const totalProfit = filteredReports.reduce((sum, r) => sum + (Number(r.profit) || 0), 0);
-    const totalOpex = filteredOpex.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
+    const currentFinancial =
+      branchIdFilter != null ? financialReportByBranchQuery.data : undefined;
+
+    const totalsFromFinancial = currentFinancial
+      ? {
+          totalRevenue: Number(currentFinancial.revenue) || 0,
+          totalProfit: Number(currentFinancial.profit) || 0,
+          totalOpex: Number(currentFinancial.operationExpenses) || 0,
+          net: Number(currentFinancial.netProfit) || 0,
+        }
+      : (financialReportListQuery.data ?? []).reduce(
+          (acc, report) => ({
+            totalRevenue: acc.totalRevenue + (Number(report.revenue) || 0),
+            totalProfit: acc.totalProfit + (Number(report.profit) || 0),
+            totalOpex: acc.totalOpex + (Number(report.operationExpenses) || 0),
+            net: acc.net + (Number(report.netProfit) || 0),
+          }),
+          { totalRevenue: 0, totalProfit: 0, totalOpex: 0, net: 0 },
+        );
 
     return {
       totalStock,
-      totalRevenue,
-      totalProfit,
-      totalOpex,
-      net: totalProfit - totalOpex,
+      totalRevenue: totalsFromFinancial.totalRevenue,
+      totalProfit: totalsFromFinancial.totalProfit,
+      totalOpex: totalsFromFinancial.totalOpex,
+      net: totalsFromFinancial.net,
       lowStockCount: filteredReports.filter((r) => (Number(r.stock) || 0) <= 10).length,
     };
-  }, [filteredOpex, filteredReports]);
+  }, [branchIdFilter, filteredReports, financialReportByBranchQuery.data, financialReportListQuery.data]);
 
   const topRevenueReports = useMemo(
     () =>
@@ -191,6 +224,8 @@ export function useInventoryPageState() {
     categoriesQuery.isFetching ||
     productsQuery.isFetching ||
     productReportsQuery.isFetching ||
+    financialReportListQuery.isFetching ||
+    financialReportByBranchQuery.isFetching ||
     stockMovementsQuery.isFetching ||
     opexQuery.isFetching;
 
@@ -199,12 +234,16 @@ export function useInventoryPageState() {
     !categoriesQuery.data &&
     !productsQuery.data &&
     !productReportsQuery.data &&
+    !financialReportListQuery.data &&
+    (branchIdFilter == null || !financialReportByBranchQuery.data) &&
     !stockMovementsQuery.data &&
     !opexQuery.data &&
     (branchesQuery.isPending ||
       categoriesQuery.isPending ||
       productsQuery.isPending ||
       productReportsQuery.isPending ||
+      financialReportListQuery.isPending ||
+      (branchIdFilter != null && financialReportByBranchQuery.isPending) ||
       stockMovementsQuery.isPending ||
       opexQuery.isPending);
 
@@ -229,6 +268,8 @@ export function useInventoryPageState() {
       categoriesQuery.refetch(),
       productsQuery.refetch(),
       productReportsQuery.refetch(),
+      financialReportListQuery.refetch(),
+      ...(branchIdFilter != null ? [financialReportByBranchQuery.refetch()] : []),
       stockMovementsQuery.refetch(),
       opexQuery.refetch(),
     ]);

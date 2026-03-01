@@ -235,7 +235,9 @@ export function CreateProductFormModal({
               <Controller
                 name="branchId"
                 control={form.control}
-                render={() => null}
+                render={({ field }) => (
+                  <input type="hidden" {...field} value={field.value ?? ""} />
+                )}
               />
             </FieldGroup>
           </form>

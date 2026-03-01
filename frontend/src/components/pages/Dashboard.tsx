@@ -11,18 +11,19 @@ import {
 } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Card } from "../ui/card";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   getBranchReport,
   getCurrentMonthData,
+  getFinancialReportList,
   getMonthlyReport,
   getProductReport,
 } from "@/api/report.api";
 import { keys } from "@/api/query-keys";
 import { Loader } from "../Loader";
 import { toPHString } from "@/helpers/formatToPh";
-
+import { formatCurrency } from "@/helpers/formatCurrency";
 export function Dashboard() {
   const [date] = useState(() => toPHString(new Date()));
 
@@ -50,8 +51,26 @@ export function Dashboard() {
   const { data: productData = [], isPending: isProductDataPending } = useQuery({
     queryKey: keys.reports.product(),
     staleTime: 60 * 1000,
-    queryFn: () => getProductReport(),
+    queryFn: () => getProductReport({ product_details: true }),
   });
+
+  const { data: financialData = [], isPending: isFinancialDataPending } = useQuery({
+    queryKey: keys.reports.branchFinancialList(),
+    staleTime: 60 * 1000,
+    queryFn: getFinancialReportList,
+  });
+
+  const financialSummary = useMemo(
+    () =>
+      financialData.reduce(
+        (acc, item) => ({
+          totalOpex: acc.totalOpex + (Number(item.operationExpenses) || 0),
+          netProfit: acc.netProfit + (Number(item.netProfit) || 0),
+        }),
+        { totalOpex: 0, netProfit: 0 },
+      ),
+    [financialData],
+  );
 
   return (
     <div className="container mx-auto p-4 lg:p-8 space-y-12 bg-muted">
@@ -110,6 +129,39 @@ export function Dashboard() {
         ) : (
           <CurrentMonthCardGroup data={currentMonthData} />
         )}
+        <div className="mt-3 grid grid-cols-2 gap-2 sm:gap-3">
+          <Card className="border-border/70 bg-card shadow-sm">
+            <div className="px-2.5 pt-2.5 pb-2 sm:px-3 sm:pt-3">
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                Total OPEX
+              </p>
+              <p className="mt-1 text-base font-bold leading-tight text-foreground sm:text-xl">
+                {isFinancialDataPending
+                  ? "Loading..."
+                  : formatCurrency(financialSummary.totalOpex)}
+              </p>
+            </div>
+          </Card>
+
+          <Card className="border-border/70 bg-card shadow-sm">
+            <div className="px-2.5 pt-2.5 pb-2 sm:px-3 sm:pt-3">
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                Net Profit
+              </p>
+              <p
+                className={`mt-1 text-base font-bold leading-tight sm:text-xl ${
+                  financialSummary.netProfit < 0
+                    ? "text-destructive"
+                    : "text-foreground"
+                }`}
+              >
+                {isFinancialDataPending
+                  ? "Loading..."
+                  : formatCurrency(financialSummary.netProfit)}
+              </p>
+            </div>
+          </Card>
+        </div>
       </section>
 
       {/* 3. CHARTS SECTION */}

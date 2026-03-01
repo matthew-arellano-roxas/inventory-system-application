@@ -31,7 +31,7 @@ export function CurrentMonthCardGroup({
       trend: data.revenue !== null && data.revenue > 0 ? "up" : null,
     },
     {
-      title: "Profit",
+      title: "Gross Profit",
       value: data.profit,
       icon: TrendingUp,
       iconColor: "text-primary dark:text-primary",

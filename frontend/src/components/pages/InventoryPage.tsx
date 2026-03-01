@@ -333,7 +333,7 @@ export const InventoryPage = () => {
                       value={formatCurrency(Number(r.revenue) || 0)}
                     />
                     <MetricBox
-                      label="Profit"
+                      label="Gross Profit"
                       value={formatCurrency(Number(r.profit) || 0)}
                     />
                   </div>

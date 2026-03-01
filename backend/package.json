@@ -7,11 +7,12 @@
     "diff": "^8.0.3"
   },
   "scripts": {
-    "start": "node dist/server.js",
+    "start": "node dist/src/server.js",
     "build": "tsc && tsc-alias",
     "dev": "nodemon",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
+    "migrate:deploy": "dotenvx run --env-file=.env.development -- prisma migrate deploy",
     "prisma:generate": "dotenvx run --env-file=.env.development -- prisma generate",
     "prisma:migrate": "dotenvx run --env-file=.env.development -- prisma migrate dev",
     "prisma:studio": "dotenvx run --env-file=.env.development -- prisma studio",

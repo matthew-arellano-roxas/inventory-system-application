@@ -125,28 +125,37 @@ const getBranchReportByBranchId = async (id: number) => {
 };
 
 const getNetProfit = (profit: number, totalExpenses: number) => {
-  const netProfit = profit - totalExpenses;
-  return Math.max(0, netProfit); // Compare two numbers and return the largest
+  return profit - totalExpenses;
 };
 
-const getRemainingRequiredProfit = (profit: number, totalExpenses: number) => {
-  const remainingRequiredProfit = totalExpenses - profit;
-  return Math.max(0, remainingRequiredProfit);
-};
-
-export const getFinancialReport = async (branchId: number) => {
+export const getFinancialReportByBranchId = async (branchId: number) => {
   const reports = await reportService.getBranchReportByBranchId(branchId);
   const totalExpenses = await opexService.getTotalOpex(branchId);
   const profit = reports?.profit ?? 0;
   const netProfit = getNetProfit(profit, totalExpenses);
-  const remainingRequiredProfit = getRemainingRequiredProfit(profit, totalExpenses);
   const financialReport: BranchFinancialReport = {
     ...reports,
     netProfit,
-    remainingRequiredProfit,
     operationExpenses: totalExpenses,
   };
   return financialReport;
+};
+
+const getFinancialReportList = async () => {
+  const reports = await reportService.getBranchReports();
+  const financialReportList: BranchFinancialReport[] = [];
+  for (const report of reports) {
+    const totalExpenses = await opexService.getTotalOpex(report.branchId);
+    const profit = report.profit ?? 0;
+    const netProfit = getNetProfit(profit, totalExpenses);
+    const financialReport: BranchFinancialReport = {
+      ...report,
+      netProfit,
+      operationExpenses: totalExpenses,
+    };
+    financialReportList.push(financialReport);
+  }
+  return financialReportList;
 };
 
 export const reportService = {
@@ -156,5 +165,6 @@ export const reportService = {
   getProductReportByProductId,
   getBranchReports,
   getBranchReportByBranchId,
-  getFinancialReport,
+  getFinancialReportByBranchId,
+  getFinancialReportList,
 };

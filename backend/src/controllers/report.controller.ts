@@ -77,13 +77,18 @@ const getBranchReport: Controller = async (req, res, _next) => {
 };
 
 // Get branch report by branch ID
-const getBranchReportByBranchId: Controller = async (req, res, _next) => {
+const getFinancialReportByBranchId: Controller = async (req, res, _next) => {
   const branchId = Number(req.params.branchId);
   if (Object.is(branchId, NaN)) {
     throw new createHttpError.BadRequest('Please provide a valid branch id');
   }
-  const financialReport = await reportService.getFinancialReport(branchId);
+  const financialReport = await reportService.getFinancialReportByBranchId(branchId);
   res.status(StatusCodes.OK).json(ok(financialReport, `Report for branch ${branchId} retrieved`));
+};
+
+const getBranchFinancialReportList: Controller = async (req, res, _next) => {
+  const reports = await reportService.getFinancialReportList();
+  res.status(StatusCodes.OK).json(ok(reports, 'Branch Financial Report List retrieved'));
 };
 
 export const reportController = {
@@ -92,5 +97,6 @@ export const reportController = {
   getProductReport,
   getProductReportByProductId,
   getBranchReport,
-  getBranchReportByBranchId,
+  getFinancialReportByBranchId,
+  getBranchFinancialReportList,
 };

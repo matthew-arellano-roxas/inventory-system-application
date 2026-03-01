@@ -1,9 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  createTransaction,
-  updateTransaction,
-  deleteTransaction,
-} from "@/api/transaction.api";
+import { createTransaction } from "@/api/transaction.api";
 import { keys } from "@/api/query-keys";
 
 export function useTransactionMutations() {
@@ -15,20 +11,5 @@ export function useTransactionMutations() {
       await qc.invalidateQueries({ queryKey: keys.transactions.all });
     },
   });
-
-  const update = useMutation({
-    mutationFn: updateTransaction,
-    onSuccess: async () => {
-      await qc.invalidateQueries({ queryKey: keys.transactions.all });
-    },
-  });
-
-  const remove = useMutation({
-    mutationFn: deleteTransaction,
-    onSuccess: async () => {
-      await qc.invalidateQueries({ queryKey: keys.transactions.all });
-    },
-  });
-
-  return { create, update, remove };
+  return { create };
 }

@@ -36,6 +36,7 @@ export function ProductReportRanking({
     return [...data]
       .map((p) => ({
         ...p,
+        displayName: p.productName?.trim() || p.product?.name?.trim() || `Product #${p.productId}`,
         margin: p.revenue ? (p.profit / p.revenue) * 100 : 0,
       }))
       .sort((a, b) => b.revenue - a.revenue);
@@ -67,7 +68,7 @@ export function ProductReportRanking({
                   <p className="text-sm font-black uppercase text-muted-foreground">
                     Product
                   </p>
-                  <p className="font-bold text-lg">{p.productName}</p>
+                  <p className="font-bold text-lg">{p.displayName}</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 border-t pt-3">
@@ -81,7 +82,7 @@ export function ProductReportRanking({
                   </div>
                   <div>
                     <p className="text-[10px] font-bold uppercase text-muted-foreground">
-                      Profit
+                      Gross Profit
                     </p>
                     <p className="text-indigo-600 font-bold">
                       {formatCurrency(p.profit)}
@@ -121,7 +122,7 @@ export function ProductReportRanking({
                 <th className="text-left py-2">#</th>
                 <th className="text-left py-2">Product</th>
                 <th className="text-right py-2">Revenue</th>
-                <th className="text-right py-2">Profit</th>
+                <th className="text-right py-2">Gross Profit</th>
                 <th className="text-right py-2">Stock</th>
                 <th className="text-right py-2">Margin</th>
               </tr>
@@ -144,7 +145,7 @@ export function ProductReportRanking({
                     <td className="py-3 font-semibold text-muted-foreground">
                       {index + 1}
                     </td>
-                    <td className="py-3 font-medium">{p.productName}</td>
+                    <td className="py-3 font-medium">{p.displayName}</td>
                     <td className="py-3 text-right font-semibold text-emerald-600">
                       {formatCurrency(p.revenue)}
                     </td>

@@ -27,6 +27,11 @@ export type BranchReportResponse = {
   branchName: string;
 };
 
+export type BranchFinancialReportResponse = BranchReportResponse & {
+  netProfit: number;
+  operationExpenses: number;
+};
+
 export type MonthlyReportResponse = {
   id: number;
   date: string;
