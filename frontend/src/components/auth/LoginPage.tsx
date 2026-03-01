@@ -157,7 +157,7 @@ export function LoginPage() {
               </div>
               <div>
                 <CardTitle className="text-2xl font-black tracking-tight text-slate-900">
-                  Inventory System
+                  Inventory Management System
                 </CardTitle>
                 <CardDescription className="mt-1 text-sm text-slate-600">
                   Continue with Google to access your workspace
