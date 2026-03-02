@@ -5,6 +5,8 @@ import { Controller } from '@/types/controller.type';
 import { reportService } from '@/services';
 import { ProductReportQuery } from '@/types/report.types';
 
+const PRODUCT_REPORT_PAGE_SIZE = 30;
+
 // Get monthly reports
 const getMonthlyReport: Controller = async (req, res, _next) => {
   const reports = await reportService.getMonthlyReports();
@@ -18,8 +20,8 @@ const getCurrentMonthReport: Controller = async (req, res, _next) => {
 };
 
 // Get product reports
-const getProductReport: Controller = async (req, res, _next) => {
-  const { product_details, search, page, productId, branchId } = req.query;
+const parseProductReportQuery = (input: Record<string, unknown>) => {
+  const { product_details, search, page, productId, branchId } = input;
   const query: ProductReportQuery = {};
 
   if (typeof product_details === 'string') {
@@ -54,8 +56,37 @@ const getProductReport: Controller = async (req, res, _next) => {
     query.branchId = parsedBranchId;
   }
 
+  return query;
+};
+
+const getProductReport: Controller = async (req, res, _next) => {
+  const query = parseProductReportQuery(req.query);
+
   const reports = await reportService.getProductReports(query);
+
+  if (query.page != null) {
+    const totalItems = await reportService.getProductReportCount(query);
+    res.status(StatusCodes.OK).json(
+      ok(reports, 'Product report retrieved', {
+        page: query.page,
+        pageSize: PRODUCT_REPORT_PAGE_SIZE,
+        totalItems,
+        totalPages: Math.max(1, Math.ceil(totalItems / PRODUCT_REPORT_PAGE_SIZE)),
+      }),
+    );
+    return;
+  }
+
   res.status(StatusCodes.OK).json(ok(reports, 'Product report retrieved'));
+};
+
+const getProductReportSummary: Controller = async (req, res, _next) => {
+  const query = parseProductReportQuery(req.query);
+  delete query.page;
+  delete query.product_details;
+
+  const summary = await reportService.getProductReportSummary(query);
+  res.status(StatusCodes.OK).json(ok(summary, 'Product report summary retrieved'));
 };
 
 // Get product report by product ID
@@ -95,6 +126,7 @@ export const reportController = {
   getMonthlyReport,
   getCurrentMonthReport,
   getProductReport,
+  getProductReportSummary,
   getProductReportByProductId,
   getBranchReport,
   getFinancialReportByBranchId,

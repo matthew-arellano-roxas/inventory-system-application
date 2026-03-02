@@ -47,7 +47,7 @@ export const InventoryPage = () => {
     <div className="space-y-5 overflow-x-hidden px-3 py-4 sm:px-4 lg:px-6">
       <InventoryPageHeader
         activeBranchName={state.activeBranchName}
-        filteredProductsCount={state.filteredProducts.length}
+        filteredProductsCount={state.filteredProductsCount}
         filteredMovementsCount={state.filteredMovements.length}
         filteredOpexCount={state.filteredOpex.length}
         summary={state.summary}
@@ -110,16 +110,16 @@ export const InventoryPage = () => {
                 </div>
                 <Badge variant="secondary" className="w-fit rounded-full px-3 py-1">
                   <PackageSearch className="mr-1 h-3.5 w-3.5" />
-                  {state.filteredProducts.length} rows
+                  {state.filteredProductsCount} rows
                 </Badge>
               </div>
 
-              {state.filteredProducts.length > 0 && (
+              {state.filteredProductsCount > 0 && (
                 <div className="mt-3 flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
                   <p className="text-sm text-muted-foreground">
                     Showing {(state.safePage - 1) * state.pageSize + 1}-
-                    {Math.min(state.safePage * state.pageSize, state.filteredProducts.length)} of{" "}
-                    {state.filteredProducts.length}
+                    {Math.min(state.safePage * state.pageSize, state.filteredProductsCount)} of{" "}
+                    {state.filteredProductsCount}
                   </p>
                   <div className="flex items-center gap-2">
                     <Button
@@ -147,7 +147,7 @@ export const InventoryPage = () => {
               )}
             </div>
 
-            {state.filteredProducts.length === 0 ? (
+            {state.paginatedItems.length === 0 ? (
               <div className="flex min-h-[220px] items-center justify-center p-6 text-center">
                 <div>
                   <p className="font-semibold">No inventory records found</p>

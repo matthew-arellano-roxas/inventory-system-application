@@ -19,6 +19,13 @@ export type ProductReportResponse = {
   product?: Product;
 };
 
+export type ProductReportSummaryResponse = {
+  totalStock: number;
+  lowStockCount: number;
+  topRevenueReports: ProductReportResponse[];
+  lowStockReports: ProductReportResponse[];
+};
+
 export type BranchReportResponse = {
   id: number;
   branchId: number;

@@ -1,21 +1,19 @@
 import { getBranches } from "@/api/branch.api";
 import { getCategories } from "@/api/category.api";
 import { getOpexList } from "@/api/opex.api";
-import { getProducts } from "@/api/product.api";
 import { keys } from "@/api/query-keys";
 import {
   getFinancialReportByBranchId,
   getFinancialReportList,
-  getProductReport,
+  getProductReportPage,
+  getProductReportSummary,
 } from "@/api/report.api";
 import { getStockMovementList } from "@/api/stock.api";
 import {
   type InventoryProduct,
   containsSearch,
-  getReportProductName,
   normalizeProduct,
 } from "@/components/pages/inventory/inventory-page.shared";
-import { usePagination } from "@/hooks/usePagination";
 import type {
   ProductReportQuery,
   ProductReportResponse,
@@ -26,7 +24,14 @@ import { useMemo, useState } from "react";
 export function useInventoryPageState() {
   const [selectedBranchId, setSelectedBranchId] = useState("all");
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
   const branchIdFilter = selectedBranchId === "all" ? null : Number(selectedBranchId);
+  const trimmedSearch = search.trim();
+
+  const reportFilters: ProductReportQuery = {
+    ...(branchIdFilter != null ? { branchId: branchIdFilter } : {}),
+    ...(trimmedSearch ? { search: trimmedSearch } : {}),
+  };
 
   const branchesQuery = useQuery({
     queryKey: keys.branches.all,
@@ -40,24 +45,28 @@ export function useInventoryPageState() {
     staleTime: 60 * 1000,
   });
 
-  const productsQuery = useQuery({
-    queryKey: [...keys.products.all, "inventory-details"],
-    queryFn: () => getProducts({ details: true }),
+  const productSummaryQuery = useQuery({
+    queryKey: [
+      ...keys.reports.product(),
+      "summary",
+      { branchId: branchIdFilter ?? null, search: trimmedSearch || null },
+    ],
+    queryFn: () => getProductReportSummary(reportFilters),
     staleTime: 60 * 1000,
   });
 
-  const productReportsQuery = useQuery({
+  const pagedProductReportsQuery = useQuery({
     queryKey: [
       ...keys.reports.product(),
-      { branchId: branchIdFilter ?? null, search: search.trim() || null },
+      "inventory-page",
+      { page, branchId: branchIdFilter ?? null, search: trimmedSearch || null },
     ],
-    queryFn: () => {
-      const query: ProductReportQuery = {
-        ...(branchIdFilter != null ? { branchId: branchIdFilter } : {}),
-        ...(search.trim() ? { search: search.trim() } : {}),
-      };
-      return getProductReport(query);
-    },
+    queryFn: () =>
+      getProductReportPage({
+        page,
+        product_details: true,
+        ...reportFilters,
+      }),
     staleTime: 60 * 1000,
   });
 
@@ -88,20 +97,23 @@ export function useInventoryPageState() {
 
   const branches = useMemo(() => branchesQuery.data ?? [], [branchesQuery.data]);
   const categories = useMemo(() => categoriesQuery.data ?? [], [categoriesQuery.data]);
-  const rawProducts = useMemo(() => productsQuery.data ?? [], [productsQuery.data]);
-  const productReports = useMemo(
-    () => productReportsQuery.data ?? [],
-    [productReportsQuery.data],
+  const pagedProductReports = useMemo(
+    () => pagedProductReportsQuery.data?.items ?? [],
+    [pagedProductReportsQuery.data],
   );
   const stockMovements = useMemo(
     () => stockMovementsQuery.data ?? [],
     [stockMovementsQuery.data],
   );
   const opexList = useMemo(() => opexQuery.data ?? [], [opexQuery.data]);
+  const productSummary = productSummaryQuery.data;
 
-  const products = useMemo(
-    () => rawProducts.map(normalizeProduct).filter((p): p is InventoryProduct => p != null),
-    [rawProducts],
+  const paginatedItems = useMemo(
+    () =>
+      pagedProductReports
+        .map((report) => normalizeProduct(report.product))
+        .filter((p): p is InventoryProduct => p != null),
+    [pagedProductReports],
   );
 
   const branchNameMap = useMemo(
@@ -114,48 +126,17 @@ export function useInventoryPageState() {
     [categories],
   );
 
-  const productMap = useMemo(
-    () =>
-      new Map<number, InventoryProduct>(
-        products
-          .filter((p) => p.id != null)
-          .map((p) => [p.id as number, p]),
-      ),
-    [products],
-  );
+  const productMap = useMemo(() => new Map<number, InventoryProduct>(), []);
 
   const reportMap = useMemo(
-    () => new Map<number, ProductReportResponse>(productReports.map((r) => [r.productId, r])),
-    [productReports],
-  );
-
-  const filteredProducts = useMemo(
-    () =>
-      products.filter((p) => {
-        if (branchIdFilter != null && p.branchId !== branchIdFilter) return false;
-        return containsSearch(search, p.name, p.id, p.branchId, p.categoryId, p.soldBy);
-      }),
-    [branchIdFilter, products, search],
-  );
-
-  const filteredReports = useMemo(
-    () =>
-      productReports.filter((r) => {
-        const reportBranchId = r.branchId ?? productMap.get(r.productId)?.branchId ?? null;
-        if (branchIdFilter != null && reportBranchId !== branchIdFilter) return false;
-        return containsSearch(search, getReportProductName(r, productMap), r.productId);
-      }),
-    [branchIdFilter, productMap, productReports, search],
+    () => new Map<number, ProductReportResponse>(pagedProductReports.map((r) => [r.productId, r])),
+    [pagedProductReports],
   );
 
   const filteredMovements = useMemo(
     () =>
-      stockMovements.filter((m) => {
-        const product = productMap.get(m.productId);
-        if (branchIdFilter != null && product?.branchId !== branchIdFilter) return false;
-        return containsSearch(search, m.productId, m.movementReason, product?.name);
-      }),
-    [branchIdFilter, productMap, search, stockMovements],
+      stockMovements.filter((m) => containsSearch(search, m.productId, m.movementReason)),
+    [search, stockMovements],
   );
 
   const filteredOpex = useMemo(
@@ -167,63 +148,55 @@ export function useInventoryPageState() {
     [branchIdFilter, opexList, search],
   );
 
-  const summary = useMemo(() => {
-    const totalStock = filteredReports.reduce((sum, r) => sum + (Number(r.stock) || 0), 0);
-    const currentFinancial =
-      branchIdFilter != null ? financialReportByBranchQuery.data : undefined;
+  const currentFinancial =
+    branchIdFilter != null ? financialReportByBranchQuery.data : undefined;
 
-    const totalsFromFinancial = currentFinancial
-      ? {
-          totalRevenue: Number(currentFinancial.revenue) || 0,
-          totalProfit: Number(currentFinancial.profit) || 0,
-          totalOpex: Number(currentFinancial.operationExpenses) || 0,
-          net: Number(currentFinancial.netProfit) || 0,
-        }
-      : (financialReportListQuery.data ?? []).reduce(
-          (acc, report) => ({
-            totalRevenue: acc.totalRevenue + (Number(report.revenue) || 0),
-            totalProfit: acc.totalProfit + (Number(report.profit) || 0),
-            totalOpex: acc.totalOpex + (Number(report.operationExpenses) || 0),
-            net: acc.net + (Number(report.netProfit) || 0),
-          }),
-          { totalRevenue: 0, totalProfit: 0, totalOpex: 0, net: 0 },
-        );
+  const totalsFromFinancial = currentFinancial
+    ? {
+        totalRevenue: Number(currentFinancial.revenue) || 0,
+        totalProfit: Number(currentFinancial.profit) || 0,
+        totalOpex: Number(currentFinancial.operationExpenses) || 0,
+        net: Number(currentFinancial.netProfit) || 0,
+      }
+    : (financialReportListQuery.data ?? []).reduce(
+        (acc, report) => ({
+          totalRevenue: acc.totalRevenue + (Number(report.revenue) || 0),
+          totalProfit: acc.totalProfit + (Number(report.profit) || 0),
+          totalOpex: acc.totalOpex + (Number(report.operationExpenses) || 0),
+          net: acc.net + (Number(report.netProfit) || 0),
+        }),
+        { totalRevenue: 0, totalProfit: 0, totalOpex: 0, net: 0 },
+      );
 
-    return {
-      totalStock,
-      totalRevenue: totalsFromFinancial.totalRevenue,
-      totalProfit: totalsFromFinancial.totalProfit,
-      totalOpex: totalsFromFinancial.totalOpex,
-      net: totalsFromFinancial.net,
-      lowStockCount: filteredReports.filter((r) => (Number(r.stock) || 0) <= 10).length,
-    };
-  }, [branchIdFilter, filteredReports, financialReportByBranchQuery.data, financialReportListQuery.data]);
+  const summary = {
+    totalStock: Number(productSummary?.totalStock) || 0,
+    totalRevenue: totalsFromFinancial.totalRevenue,
+    totalProfit: totalsFromFinancial.totalProfit,
+    totalOpex: totalsFromFinancial.totalOpex,
+    net: totalsFromFinancial.net,
+    lowStockCount: Number(productSummary?.lowStockCount) || 0,
+  };
 
-  const topRevenueReports = useMemo(
-    () =>
-      [...filteredReports]
-        .sort((a, b) => (Number(b.revenue) || 0) - (Number(a.revenue) || 0))
-        .slice(0, 5),
-    [filteredReports],
-  );
+  const topRevenueReports = productSummary?.topRevenueReports ?? [];
+  const lowStockReports = productSummary?.lowStockReports ?? [];
+  const filteredReports = topRevenueReports;
+  const products: InventoryProduct[] = [];
 
-  const lowStockReports = useMemo(
-    () =>
-      [...filteredReports]
-        .filter((r) => (Number(r.stock) || 0) <= 10)
-        .sort((a, b) => (Number(a.stock) || 0) - (Number(b.stock) || 0))
-        .slice(0, 5),
-    [filteredReports],
-  );
+  const pageSize = pagedProductReportsQuery.data?.meta?.pageSize ?? 30;
+  const totalPages = pagedProductReportsQuery.data?.meta?.totalPages ?? 1;
+  const safePage = Math.min(Math.max(1, page), totalPages);
+  const filteredProductsCount = pagedProductReportsQuery.data?.meta?.totalItems ?? 0;
+  const filteredProducts = paginatedItems;
 
-  const pageSize = 10;
-  const pagination = usePagination(filteredProducts, pageSize);
+  const resetPage = () => setPage(1);
+  const prevPage = () => setPage((current) => Math.max(1, current - 1));
+  const nextPage = () => setPage((current) => Math.min(totalPages, current + 1));
 
   const isRefreshing =
     branchesQuery.isFetching ||
     categoriesQuery.isFetching ||
-    productsQuery.isFetching ||
-    productReportsQuery.isFetching ||
+    productSummaryQuery.isFetching ||
+    pagedProductReportsQuery.isFetching ||
     financialReportListQuery.isFetching ||
     financialReportByBranchQuery.isFetching ||
     stockMovementsQuery.isFetching ||
@@ -232,16 +205,16 @@ export function useInventoryPageState() {
   const isInitialLoading =
     !branchesQuery.data &&
     !categoriesQuery.data &&
-    !productsQuery.data &&
-    !productReportsQuery.data &&
+    !productSummaryQuery.data &&
+    !pagedProductReportsQuery.data &&
     !financialReportListQuery.data &&
     (branchIdFilter == null || !financialReportByBranchQuery.data) &&
     !stockMovementsQuery.data &&
     !opexQuery.data &&
     (branchesQuery.isPending ||
       categoriesQuery.isPending ||
-      productsQuery.isPending ||
-      productReportsQuery.isPending ||
+      productSummaryQuery.isPending ||
+      pagedProductReportsQuery.isPending ||
       financialReportListQuery.isPending ||
       (branchIdFilter != null && financialReportByBranchQuery.isPending) ||
       stockMovementsQuery.isPending ||
@@ -254,20 +227,20 @@ export function useInventoryPageState() {
 
   const setSearchAndReset = (value: string) => {
     setSearch(value);
-    pagination.resetPage();
+    resetPage();
   };
 
   const setSelectedBranchAndReset = (value: string) => {
     setSelectedBranchId(value);
-    pagination.resetPage();
+    resetPage();
   };
 
   const refreshAll = async () => {
     await Promise.all([
       branchesQuery.refetch(),
       categoriesQuery.refetch(),
-      productsQuery.refetch(),
-      productReportsQuery.refetch(),
+      productSummaryQuery.refetch(),
+      pagedProductReportsQuery.refetch(),
       financialReportListQuery.refetch(),
       ...(branchIdFilter != null ? [financialReportByBranchQuery.refetch()] : []),
       stockMovementsQuery.refetch(),
@@ -281,7 +254,7 @@ export function useInventoryPageState() {
     branches,
     categories,
     products,
-    productReports,
+    productReports: topRevenueReports,
     stockMovements,
     opexList,
     branchNameMap,
@@ -289,6 +262,7 @@ export function useInventoryPageState() {
     productMap,
     reportMap,
     filteredProducts,
+    filteredProductsCount,
     filteredReports,
     filteredMovements,
     filteredOpex,
@@ -296,7 +270,14 @@ export function useInventoryPageState() {
     topRevenueReports,
     lowStockReports,
     pageSize,
-    ...pagination,
+    page,
+    setPage,
+    safePage,
+    totalPages,
+    paginatedItems,
+    resetPage,
+    prevPage,
+    nextPage,
     isRefreshing,
     isInitialLoading,
     activeBranchName,

@@ -2,11 +2,41 @@ import { prisma } from '@root/lib/prisma';
 import createHttpError from 'http-errors';
 import { getTotalDamageAmount } from './transaction';
 import { opexService } from './opex.service';
-import { BranchFinancialReport, ProductReportQuery } from '@/types/report.types';
+import {
+  BranchFinancialReport,
+  ProductReportQuery,
+  ProductReportSummary,
+} from '@/types/report.types';
 import { calculateSkip } from '@/helpers';
 import { Prisma } from '@root/generated/prisma/client';
 
 const ITEM_LIMIT = 30;
+
+const buildProductReportWhere = (query?: ProductReportQuery): Prisma.ProductReportWhereInput => {
+  const where: Prisma.ProductReportWhereInput = {};
+  const productWhere: Prisma.ProductWhereInput = {};
+
+  if (query?.search) {
+    productWhere.name = {
+      contains: query.search,
+      mode: 'insensitive',
+    };
+  }
+
+  if (query?.productId) {
+    productWhere.id = query.productId;
+  }
+
+  if (query?.branchId) {
+    productWhere.branchId = query.branchId;
+  }
+
+  if (Object.keys(productWhere).length > 0) {
+    where.product = productWhere;
+  }
+
+  return where;
+};
 
 // Monthly Reports
 const getMonthlyReports = () => {
@@ -33,38 +63,72 @@ const getCurrentMonthReport = async () => {
 // Product Reports
 const getProductReports = (query?: ProductReportQuery) => {
   const productDetails = query?.product_details;
-  const skip = calculateSkip(query?.page ?? 1, ITEM_LIMIT);
-  const where: Prisma.ProductReportWhereInput = {};
-  const productWhere: Prisma.ProductWhereInput = {};
-
-  if (query?.search) {
-    productWhere.name = {
-      contains: query.search,
-      mode: 'insensitive',
-    };
-  }
-
-  if (query?.productId) {
-    productWhere.id = query.productId;
-  }
-
-  if (query?.branchId) {
-    productWhere.branchId = query.branchId;
-  }
-
-  if (Object.keys(productWhere).length > 0) {
-    where.product = productWhere;
-  }
+  const where = buildProductReportWhere(query);
 
   return prisma.productReport.findMany({
     orderBy: { productId: 'asc' },
     include: {
       product: productDetails ?? false,
     },
-    take: ITEM_LIMIT,
-    skip,
+    ...(query?.page != null
+      ? {
+          take: ITEM_LIMIT,
+          skip: calculateSkip(query.page, ITEM_LIMIT),
+        }
+      : {}),
     where,
   });
+};
+
+const getProductReportCount = (query?: ProductReportQuery) => {
+  return prisma.productReport.count({
+    where: buildProductReportWhere(query),
+  });
+};
+
+const getSummaryProductReports = (
+  where: Prisma.ProductReportWhereInput,
+  orderBy: Prisma.ProductReportOrderByWithRelationInput[],
+) => {
+  return prisma.productReport.findMany({
+    where,
+    orderBy,
+    take: 5,
+    include: {
+      product: true,
+    },
+  });
+};
+
+const getProductReportSummary = async (
+  query?: ProductReportQuery,
+): Promise<ProductReportSummary> => {
+  const where = buildProductReportWhere(query);
+  const lowStockWhere: Prisma.ProductReportWhereInput = {
+    ...where,
+    stock: { lte: 10 },
+  };
+
+  const [stockAggregate, lowStockCount, topRevenueReports, lowStockReports] = await Promise.all([
+    prisma.productReport.aggregate({
+      where,
+      _sum: {
+        stock: true,
+      },
+    }),
+    prisma.productReport.count({
+      where: lowStockWhere,
+    }),
+    getSummaryProductReports(where, [{ revenue: 'desc' }, { productId: 'asc' }]),
+    getSummaryProductReports(lowStockWhere, [{ stock: 'asc' }, { productId: 'asc' }]),
+  ]);
+
+  return {
+    totalStock: Number(stockAggregate._sum.stock) || 0,
+    lowStockCount,
+    topRevenueReports,
+    lowStockReports,
+  };
 };
 
 const getProductReportByProductId = async (id: number) => {
@@ -162,6 +226,8 @@ export const reportService = {
   getMonthlyReports,
   getCurrentMonthReport,
   getProductReports,
+  getProductReportCount,
+  getProductReportSummary,
   getProductReportByProductId,
   getBranchReports,
   getBranchReportByBranchId,

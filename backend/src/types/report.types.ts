@@ -17,3 +17,10 @@ export type ProductReportQuery = {
   productId?: number;
   branchId?: number;
 };
+
+export type ProductReportSummary = {
+  totalStock: number;
+  lowStockCount: number;
+  topRevenueReports: unknown[];
+  lowStockReports: unknown[];
+};

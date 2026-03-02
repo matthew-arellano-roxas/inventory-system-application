@@ -15,6 +15,7 @@ reportRoute.get('/current-month', reportController.getCurrentMonthReport);
 
 // Product
 reportRoute.get('/product', reportController.getProductReport);
+reportRoute.get('/product-summary', reportController.getProductReportSummary);
 reportRoute.get('/product/:productId', reportController.getProductReportByProductId);
 
 // Branch

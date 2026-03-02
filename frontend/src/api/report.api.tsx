@@ -8,8 +8,12 @@ import {
   type MonthlyReportResponse,
   type ProductReportQuery,
   type ProductReportResponse,
+  type ProductReportSummaryResponse,
 } from "@/types/api/response";
-import { type ApiResponse } from "@/types/api/shared/api-response";
+import {
+  type ApiResponse,
+  type PaginationMeta,
+} from "@/types/api/shared/api-response";
 
 export const getCurrentMonthData = async () => {
   // We remove the .catch here so the Router can handle the error via errorElement
@@ -56,6 +60,34 @@ export const getProductReport = async (query?: ProductReportQuery) => {
     },
   );
   return response.data.data;
+};
+
+export const getProductReportSummary = async (query?: ProductReportQuery) => {
+  const response = await api.get<ApiResponse<ProductReportSummaryResponse>>(
+    "/api/report/product-summary",
+    {
+      params: query ? cleanQuery(query) : undefined,
+    },
+  );
+  return response.data.data;
+};
+
+export type ProductReportPageResult = {
+  items: ProductReportResponse[];
+  meta?: PaginationMeta;
+};
+
+export const getProductReportPage = async (query?: ProductReportQuery) => {
+  const response = await api.get<
+    ApiResponse<ProductReportResponse[], PaginationMeta>
+  >("/api/report/product", {
+    params: query ? cleanQuery(query) : undefined,
+  });
+
+  return {
+    items: response.data.data ?? [],
+    meta: response.data.meta,
+  } satisfies ProductReportPageResult;
 };
 
 export const getProductReportById = async (id: number) => {
