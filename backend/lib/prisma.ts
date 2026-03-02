@@ -8,7 +8,7 @@ const adapter = new PrismaPg({
   connectionString: connectionString,
   connectionTimeoutMillis: 30000,
   ssl: {
-    ca: process.env.AIVEN_CA_PEM,
+    ca: process.env.CA_PEM,
     rejectUnauthorized: true,
   },
 });
