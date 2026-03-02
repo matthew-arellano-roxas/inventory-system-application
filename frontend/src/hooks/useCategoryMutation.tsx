@@ -15,6 +15,7 @@ export function useCategoryMutation() {
     mutationFn: deleteCategory,
     onSuccess: async () => {
       await qc.invalidateQueries({ queryKey: keys.categories.all });
+      toast.success("Category deleted successfully.");
     },
     onError,
   });
