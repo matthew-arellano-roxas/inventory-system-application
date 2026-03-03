@@ -12,6 +12,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export const TransactionsPage = () => {
+  const transactionPageSize = 20;
   const [page, setPage] = useState(1);
   const { rollback } = useTransactionMutations();
   const {
@@ -24,7 +25,7 @@ export const TransactionsPage = () => {
     staleTime: 60 * 1000,
     queryFn: () => getTransactions(page),
   });
-  const hasNextPage = data.length === 50;
+  const hasNextPage = data.length === transactionPageSize;
 
   const totals = data.reduce(
     (acc, txn) => {
