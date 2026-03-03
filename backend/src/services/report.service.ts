@@ -109,7 +109,7 @@ const getProductReportSummary = async (
     stock: { lte: 10 },
   };
 
-  const [stockAggregate, lowStockCount, topRevenueReports, lowStockReports] = await Promise.all([
+  const [stockAggregate, lowStockCount, lowStockReports] = await Promise.all([
     prisma.productReport.aggregate({
       where,
       _sum: {
@@ -119,14 +119,12 @@ const getProductReportSummary = async (
     prisma.productReport.count({
       where: lowStockWhere,
     }),
-    getSummaryProductReports(where, [{ revenue: 'desc' }, { productId: 'asc' }]),
     getSummaryProductReports(lowStockWhere, [{ stock: 'asc' }, { productId: 'asc' }]),
   ]);
 
   return {
     totalStock: Number(stockAggregate._sum.stock) || 0,
     lowStockCount,
-    topRevenueReports,
     lowStockReports,
   };
 };

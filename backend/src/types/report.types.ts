@@ -21,6 +21,5 @@ export type ProductReportQuery = {
 export type ProductReportSummary = {
   totalStock: number;
   lowStockCount: number;
-  topRevenueReports: unknown[];
   lowStockReports: unknown[];
 };
