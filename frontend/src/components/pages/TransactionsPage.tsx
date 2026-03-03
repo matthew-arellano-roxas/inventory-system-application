@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
 
+// Reduce the page size to 20
 export const TransactionsPage = () => {
   const transactionPageSize = 20;
   const [page, setPage] = useState(1);
@@ -53,19 +54,16 @@ export const TransactionsPage = () => {
         });
 
   const handleRollback = (transactionId: number, transactionType: string) => {
-    toast.warning(
-      `Void this ${transactionType.toLowerCase()} transaction?`,
-      {
-        description:
-          "This will permanently reverse its effects and remove the record.",
-        action: {
-          label: rollback.isPending ? "Voiding..." : "Confirm",
-          onClick: () => {
-            void rollback.mutateAsync(transactionId);
-          },
+    toast.warning(`Void this ${transactionType.toLowerCase()} transaction?`, {
+      description:
+        "This will permanently reverse its effects and remove the record.",
+      action: {
+        label: rollback.isPending ? "Voiding..." : "Confirm",
+        onClick: () => {
+          void rollback.mutateAsync(transactionId);
         },
       },
-    );
+    });
   };
 
   return (
