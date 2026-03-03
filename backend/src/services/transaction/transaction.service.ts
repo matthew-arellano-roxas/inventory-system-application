@@ -15,7 +15,7 @@ import { addMonths, startOfMonth } from 'date-fns';
 import { TransactionBody } from '@/schemas';
 
 const prismaClient: PrismaClient = prisma;
-const TRANSACTION_PAGE_SIZE = 50;
+const TRANSACTION_PAGE_SIZE = 20;
 
 // Create a transaction based on its type
 export const createTransaction = async (payload: TransactionBody): Promise<Transaction> => {
