@@ -1,9 +1,20 @@
 import dotenv from 'dotenv';
-const env = process.env.NODE_ENV || 'development';
+import fs from 'fs';
+
 dotenv.config({
-  path: `.env.${env}`,
-  override: false, // Docker-provided vars take priority
+  path: '.env',
+  override: false,
 });
+
+const env = process.env.NODE_ENV || 'development';
+const envFilePath = `.env.${env}`;
+
+if (fs.existsSync(envFilePath)) {
+  dotenv.config({
+    path: envFilePath,
+    override: false, // Docker-provided vars still take priority
+  });
+}
 import 'express-async-error';
 import express from 'express';
 import http from 'http';
@@ -34,7 +45,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
 app.use(cors(corsOptions));
-// Auth0 middleware
 initSocketServer(server);
 
 app.use('/api/product', protectedRoute, productRoute);
