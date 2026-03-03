@@ -1,8 +1,8 @@
 import { prisma } from '@root/lib/prisma';
-import { subYears } from 'date-fns';
+import { subMonths } from 'date-fns';
 
 export async function cleanupOldTransactions() {
-  const cutoffDate = subYears(new Date(), 1);
+  const cutoffDate = subMonths(new Date(), 8);
 
   const oldCount = await prisma.transaction.count({
     where: { createdAt: { lt: cutoffDate } },
