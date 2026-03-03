@@ -16,6 +16,7 @@ export const keys = {
   },
   transactions: {
     all: ["transactions"] as const,
+    page: (page: number) => [...keys.transactions.all, "page", page] as const,
   },
   branches: {
     all: ["branches"] as const,

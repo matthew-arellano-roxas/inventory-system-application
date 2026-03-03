@@ -20,7 +20,13 @@ export const createTransaction: Controller = async (req, res, _next) => {
 
 // Get transactions
 export const getTransactions: Controller = async (req, res, _next) => {
-  const transactions = await transactionService.getTransactions();
+  const page = Number(req.query.page ?? 1);
+
+  if (!Number.isInteger(page) || page < 1) {
+    throw new createHttpError.BadRequest('Invalid page query.');
+  }
+
+  const transactions = await transactionService.getTransactions(page);
   res.status(StatusCodes.OK).json(ok(transactions, 'Transactions retrieved'));
 };
 

@@ -12,10 +12,10 @@ import {
 } from '@/services/transaction';
 import { prisma } from '@root/lib/prisma';
 import { addMonths, startOfMonth } from 'date-fns';
-import { productService } from '@/services';
 import { TransactionBody } from '@/schemas';
 
 const prismaClient: PrismaClient = prisma;
+const TRANSACTION_PAGE_SIZE = 50;
 
 // Create a transaction based on its type
 export const createTransaction = async (payload: TransactionBody): Promise<Transaction> => {
@@ -34,40 +34,35 @@ export const createTransaction = async (payload: TransactionBody): Promise<Trans
 };
 
 // Get recent transactions with product names
-export const getTransactions = async () => {
+export const getTransactions = async (page = 1) => {
+  const safePage = Math.max(1, page);
   const transactions = await prismaClient.transaction.findMany({
     include: {
       transactionItem: {
         select: {
           productId: true,
           quantity: true,
+          price: true,
+          product: {
+            select: {
+              name: true,
+            },
+          },
         },
       },
     },
     orderBy: { createdAt: 'desc' },
-    take: 50,
+    skip: (safePage - 1) * TRANSACTION_PAGE_SIZE,
+    take: TRANSACTION_PAGE_SIZE,
   });
 
-  const transactionsWithProducts = await Promise.all(
-    transactions.map(async (transaction) => {
-      const transactionItems = await Promise.all(
-        transaction.transactionItem.map(async (item) => {
-          const product = await productService.getProductById(item.productId);
-          return {
-            ...item,
-            productName: product.name,
-          };
-        }),
-      );
-
-      return {
-        ...transaction,
-        transactionItem: transactionItems,
-      };
-    }),
-  );
-
-  return transactionsWithProducts;
+  return transactions.map((transaction) => ({
+    ...transaction,
+    transactionItem: transaction.transactionItem.map(({ product, ...item }) => ({
+      ...item,
+      productName: product.name,
+    })),
+  }));
 };
 
 // Get total damage amount for the current month

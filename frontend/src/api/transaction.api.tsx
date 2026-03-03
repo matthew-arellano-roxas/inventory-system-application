@@ -3,9 +3,13 @@ import type { TransactionPayload } from "@/types/api/payload";
 import type { TransactionResponse } from "@/types/api/response";
 import type { ApiResponse } from "@/types/api/shared/api-response";
 
-export const getTransactions = async () => {
-  const response =
-    await api.get<ApiResponse<TransactionResponse[]>>("/api/transaction");
+export const getTransactions = async (page = 1) => {
+  const response = await api.get<ApiResponse<TransactionResponse[]>>(
+    "/api/transaction",
+    {
+      params: { page },
+    },
+  );
   if (!response.data.success) throw new Error(response.data.message);
   return response.data.data;
 };

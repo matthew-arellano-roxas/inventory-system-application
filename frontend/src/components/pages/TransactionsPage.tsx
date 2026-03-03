@@ -8,9 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { RefreshCw, ReceiptText } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export const TransactionsPage = () => {
+  const [page, setPage] = useState(1);
   const { rollback } = useTransactionMutations();
   const {
     data = [],
@@ -18,10 +20,11 @@ export const TransactionsPage = () => {
     isFetching,
     refetch,
   } = useQuery({
-    queryKey: keys.transactions.all,
+    queryKey: keys.transactions.page(page),
     staleTime: 60 * 1000,
-    queryFn: getTransactions,
+    queryFn: () => getTransactions(page),
   });
+  const hasNextPage = data.length === 50;
 
   const totals = data.reduce(
     (acc, txn) => {
@@ -87,6 +90,9 @@ export const TransactionsPage = () => {
 
               <div className="mt-4 flex flex-wrap gap-2">
                 <Badge className="rounded-full border-white/15 bg-white/10 px-3 py-1 text-white hover:bg-white/10">
+                  Page {page}
+                </Badge>
+                <Badge className="rounded-full border-white/15 bg-white/10 px-3 py-1 text-white hover:bg-white/10">
                   {data.length} Records
                 </Badge>
                 {Object.entries(totals.byType).map(([type, count]) => (
@@ -133,6 +139,24 @@ export const TransactionsPage = () => {
                 />
                 {isFetching ? "Refreshing..." : "Refetch Transactions"}
               </Button>
+              <div className="mt-2 grid grid-cols-2 gap-2">
+                <Button
+                  variant="outline"
+                  className="h-10"
+                  onClick={() => setPage((current) => Math.max(1, current - 1))}
+                  disabled={page === 1 || isFetching}
+                >
+                  Previous
+                </Button>
+                <Button
+                  variant="outline"
+                  className="h-10"
+                  onClick={() => setPage((current) => current + 1)}
+                  disabled={!hasNextPage || isFetching}
+                >
+                  Next
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -146,24 +170,53 @@ export const TransactionsPage = () => {
         <Card className="border-border/60 bg-gradient-to-b from-background to-muted/20 p-10 text-center shadow-sm">
           <p className="text-base font-semibold">No transactions found</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Try refetching to load the latest transaction records.
+            {page === 1
+              ? "Try refetching to load the latest transaction records."
+              : "This page has no transaction records."}
           </p>
           <div className="mt-4">
-            <Button onClick={() => void refetch()} disabled={isFetching}>
-              {isFetching ? "Refreshing..." : "Refetch"}
-            </Button>
+            <div className="flex justify-center gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setPage((current) => Math.max(1, current - 1))}
+                disabled={page === 1 || isFetching}
+              >
+                Previous
+              </Button>
+              <Button onClick={() => void refetch()} disabled={isFetching}>
+                {isFetching ? "Refreshing..." : "Refetch"}
+              </Button>
+            </div>
           </div>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          {data.map((txn) => (
-            <TransactionCard
-              key={txn.id}
-              transaction={txn}
-              onViewReceipt={() => {}}
-              onVoid={() => void handleRollback(txn.id, txn.type)}
-            />
-          ))}
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            {data.map((txn) => (
+              <TransactionCard
+                key={txn.id}
+                transaction={txn}
+                onViewReceipt={() => {}}
+                onVoid={() => void handleRollback(txn.id, txn.type)}
+              />
+            ))}
+          </div>
+          <div className="flex justify-end gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setPage((current) => Math.max(1, current - 1))}
+              disabled={page === 1 || isFetching}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => setPage((current) => current + 1)}
+              disabled={!hasNextPage || isFetching}
+            >
+              Next
+            </Button>
+          </div>
         </div>
       )}
     </div>
