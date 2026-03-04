@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -21,10 +21,12 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { type Product } from "@/types/api/response/product.response";
+import { Unit } from "@/types/api/shared";
 import { useAccessControl } from "@/auth/access-control";
 import { toast } from "sonner";
 
 type TransactionType = "SALE" | "PURCHASE" | "DAMAGE" | "RETURN";
+type QuantityInputMode = "AMOUNT" | "QUANTITY";
 
 interface ProductModalProps {
   product: Product | null;
@@ -46,19 +48,38 @@ export function ProductActionModal({
 }: ProductModalProps) {
   const { isAdmin, isAccessControlLoading } = useAccessControl();
   const [quantity, setQuantity] = useState<string>("1");
+  const [amountInput, setAmountInput] = useState<string>("0");
+  const [inputMode, setInputMode] = useState<QuantityInputMode>("AMOUNT");
   const [type, setType] = useState<TransactionType>("SALE");
   const [discountInput, setDiscountInput] = useState<string>("0");
   const [discountMode, setDiscountMode] = useState<"AMOUNT" | "PERCENT">(
     "AMOUNT",
   );
 
-  if (!product) return null;
-
   const effectiveType: TransactionType =
     !isAccessControlLoading && !isAdmin && type === "PURCHASE" ? "SALE" : type;
 
-  const numericQuantity = parseFloat(quantity) || 0;
-  const totalSalePrice = product.sellingPrice * numericQuantity;
+  const canUseAmountMode =
+    product?.soldBy === Unit.KG &&
+    (effectiveType === "SALE" || effectiveType === "RETURN");
+  const usesAmountInput = canUseAmountMode && inputMode === "AMOUNT";
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setInputMode(canUseAmountMode ? "AMOUNT" : "QUANTITY");
+  }, [canUseAmountMode, isOpen]);
+
+  if (!product) return null;
+
+  const numericAmount = Math.max(parseFloat(amountInput) || 0, 0);
+  const numericQuantity = usesAmountInput
+    ? product.sellingPrice > 0
+      ? numericAmount / product.sellingPrice
+      : 0
+    : Math.max(parseFloat(quantity) || 0, 0);
+  const totalSalePrice = usesAmountInput
+    ? numericAmount
+    : product.sellingPrice * numericQuantity;
   const totalPurchaseCost = product.costPerUnit * numericQuantity;
   const discountValue = Math.max(parseFloat(discountInput) || 0, 0);
   const discountBaseAmount = totalSalePrice;
@@ -77,6 +98,10 @@ export function ProductActionModal({
     supportsDiscount && discountBaseAmount > 0
       ? (normalizedDiscountAmount / discountBaseAmount) * 100
       : 0;
+  const formattedQuantity = numericQuantity.toLocaleString(undefined, {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 3,
+  });
 
   const handleConfirm = () => {
     if (numericQuantity <= 0) return;
@@ -87,6 +112,7 @@ export function ProductActionModal({
     }
     onSubmit(product, numericQuantity, effectiveType, normalizedDiscountAmount);
     setQuantity("1");
+    setAmountInput("0");
     setType("SALE");
     setDiscountInput("0");
     setDiscountMode("AMOUNT");
@@ -98,6 +124,18 @@ export function ProductActionModal({
       const nextValue = (parseFloat(prev) || 0) + amount;
       return nextValue > 0 ? nextValue.toString() : "0";
     });
+  };
+
+  const switchInputMode = (mode: QuantityInputMode) => {
+    if (!canUseAmountMode || mode === inputMode) return;
+
+    if (mode === "AMOUNT") {
+      setAmountInput((numericQuantity * product.sellingPrice).toFixed(2));
+    } else {
+      setQuantity(numericQuantity.toFixed(3));
+    }
+
+    setInputMode(mode);
   };
 
   const getTheme = () => {
@@ -140,9 +178,7 @@ export function ProductActionModal({
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-xl">{product.name}</DialogTitle>
-          <DialogDescription>
-            Select transaction type and quantity
-          </DialogDescription>
+          <DialogDescription>Select transaction details</DialogDescription>
         </DialogHeader>
 
         <Tabs
@@ -226,7 +262,7 @@ export function ProductActionModal({
             <div className="flex items-center gap-3 rounded-lg border border-destructive/20 bg-destructive/10 p-4">
               <AlertTriangle className="h-5 w-5 text-destructive" />
               <p className="text-xs font-medium text-destructive">
-                Reporting damage will deduct {numericQuantity} {product.soldBy}
+                Reporting damage will deduct {formattedQuantity} {product.soldBy}
                 (s) from current stock.
               </p>
             </div>
@@ -236,43 +272,82 @@ export function ProductActionModal({
             <div className="flex items-center gap-3 rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-4">
               <PackagePlus className="h-5 w-5 text-emerald-600" />
               <p className="text-xs font-medium text-emerald-700">
-                Purchasing stock will add {numericQuantity} {product.soldBy}(s)
+                Purchasing stock will add {formattedQuantity} {product.soldBy}(s)
                 to current inventory.
               </p>
             </div>
           )}
 
           <div className="space-y-3">
-            <Label htmlFor="quantity">
-              Quantity to {effectiveType.toLowerCase()} ({product.soldBy})
-            </Label>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => adjustQuantity(-1)}
-                disabled={numericQuantity <= 0}
-              >
-                <Minus className="h-4 w-4" />
-              </Button>
-
-              <Input
-                id="quantity"
-                type="number"
-                step="0.01"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                className="text-center text-lg font-bold"
-              />
-
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => adjustQuantity(1)}
-              >
-                <Plus className="h-4 w-4" />
-              </Button>
+            <div className="flex items-center justify-between gap-3">
+              <Label htmlFor={usesAmountInput ? "amount" : "quantity"}>
+                {usesAmountInput
+                  ? `Amount to ${effectiveType.toLowerCase()} (PHP)`
+                  : `Quantity to ${effectiveType.toLowerCase()} (${product.soldBy})`}
+              </Label>
+              {canUseAmountMode && (
+                <Tabs
+                  value={inputMode}
+                  onValueChange={(value) =>
+                    switchInputMode(value as QuantityInputMode)
+                  }
+                  className="w-auto"
+                >
+                  <TabsList className="grid h-8 grid-cols-2">
+                    <TabsTrigger value="AMOUNT" className="px-3 text-xs">
+                      Amount
+                    </TabsTrigger>
+                    <TabsTrigger value="QUANTITY" className="px-3 text-xs">
+                      Qty
+                    </TabsTrigger>
+                  </TabsList>
+                </Tabs>
+              )}
             </div>
+            {usesAmountInput ? (
+              <div className="space-y-2">
+                <Input
+                  id="amount"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={amountInput}
+                  onChange={(e) => setAmountInput(e.target.value)}
+                  className="text-center text-lg font-bold"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Equivalent quantity: {formattedQuantity} {product.soldBy}
+                </p>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => adjustQuantity(-1)}
+                  disabled={numericQuantity <= 0}
+                >
+                  <Minus className="h-4 w-4" />
+                </Button>
+
+                <Input
+                  id="quantity"
+                  type="number"
+                  step="0.01"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                  className="text-center text-lg font-bold"
+                />
+
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => adjustQuantity(1)}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
           </div>
 
           {supportsDiscount && (
