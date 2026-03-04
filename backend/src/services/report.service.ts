@@ -13,6 +13,7 @@ import {
 import { getFinancialReportByBranchId, getFinancialReportList } from './report-financial.service';
 import { getInventoryExportFile } from './report-export.service';
 
+// Centralized report service
 export const reportService = {
   getMonthlyReports,
   getDailyReports,
