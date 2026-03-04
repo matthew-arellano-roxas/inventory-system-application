@@ -24,7 +24,7 @@ transactionRoute.get(
 );
 transactionRoute.post(
   '/:transactionId/rollback',
-  checkPermissions(['create:transaction']),
+  checkPermissions(['delete:transaction']),
   invalidateCache(ROUTE.TRANSACTION),
   transactionController.rollbackTransaction,
 );
