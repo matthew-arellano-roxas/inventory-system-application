@@ -4,6 +4,7 @@ import { ok } from '@/helpers/response';
 import { Controller } from '@/types/controller.type';
 import { reportService } from '@/services';
 import { DailyReportQuery, ProductReportQuery } from '@/types/report.types';
+import { InventoryExportFormat } from '@/services/inventory-export';
 
 const PRODUCT_REPORT_PAGE_SIZE = 30;
 
@@ -159,6 +160,33 @@ const getBranchFinancialReportList: Controller = async (req, res, _next) => {
   res.status(StatusCodes.OK).json(ok(reports, 'Branch Financial Report List retrieved'));
 };
 
+const exportInventoryWorkbook: Controller = async (req, res, _next) => {
+  const query = parseProductReportQuery(req.query);
+  const requestedFormat =
+    req.query.format === 'pdf' || req.query.format === 'excel'
+      ? (req.query.format as InventoryExportFormat)
+      : 'excel';
+  const requestedTimezone =
+    typeof req.query.timezone === 'string' && req.query.timezone.trim() !== ''
+      ? req.query.timezone.trim()
+      : undefined;
+  delete query.page;
+  delete query.limit;
+  delete query.productId;
+  delete query.product_details;
+
+  const file = await reportService.getInventoryExportFile(
+    query,
+    requestedFormat,
+    requestedTimezone,
+  );
+
+  res.setHeader('Content-Type', file.contentType);
+  res.setHeader('Content-Disposition', `attachment; filename="${file.fileName}"`);
+  res.setHeader('Cache-Control', 'no-store');
+  res.status(StatusCodes.OK).send(file.content);
+};
+
 export const reportController = {
   getMonthlyReport,
   getDailyReport,
@@ -170,4 +198,5 @@ export const reportController = {
   getBranchReport,
   getFinancialReportByBranchId,
   getBranchFinancialReportList,
+  exportInventoryWorkbook,
 };

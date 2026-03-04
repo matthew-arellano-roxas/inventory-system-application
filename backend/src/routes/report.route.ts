@@ -7,6 +7,7 @@ import { checkPermissions } from '@/middlewares';
 const reportRoute: Router = Router();
 
 reportRoute.use(checkPermissions(['read:report']));
+reportRoute.get('/inventory-export', reportController.exportInventoryWorkbook);
 reportRoute.use(cacheMiddleware(TTL.ONE_MINUTE));
 
 // Monthly
