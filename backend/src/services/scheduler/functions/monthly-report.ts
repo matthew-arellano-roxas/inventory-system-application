@@ -27,14 +27,16 @@ function getManilaMonthWindow(referenceDate: Date) {
 
 export async function createMonthlyReport() {
   const currentDate = new Date();
-  const { monthStart, nextMonthStart } = getManilaMonthWindow(currentDate);
+  const { monthStart: currentMonthStart } = getManilaMonthWindow(currentDate);
+  const reportMonthStart = addMonths(currentMonthStart, -1);
+  const nextReportMonthStart = addMonths(reportMonthStart, 1);
 
   return await prisma.$transaction(async (tx) => {
     const existingMonthlyReport = await tx.monthlyReport.findFirst({
       where: {
         date: {
-          gte: monthStart,
-          lt: nextMonthStart,
+          gte: reportMonthStart,
+          lt: nextReportMonthStart,
         },
       },
       orderBy: { date: 'desc' },
@@ -42,7 +44,7 @@ export async function createMonthlyReport() {
 
     if (existingMonthlyReport) {
       logger.warn(
-        `[Scheduler] Monthly report for ${monthStart.toISOString()} already exists (id=${existingMonthlyReport.id}). Skipping duplicate create/reset.`,
+        `[Scheduler] Monthly report for period ${reportMonthStart.toISOString()} already exists (id=${existingMonthlyReport.id}). Skipping duplicate create/reset.`,
       );
       return existingMonthlyReport;
     }
@@ -63,7 +65,7 @@ export async function createMonthlyReport() {
 
     await tx.monthlyReport.create({
       data: {
-        date: currentDate,
+        date: reportMonthStart,
         revenue: branchReport.sales,
         profit: branchReport.profit,
       },

@@ -1,11 +1,38 @@
 import { prisma } from '@root/lib/prisma';
 import { TransactionType } from '@root/generated/prisma/enums';
-import { addDays, startOfDay, subDays } from 'date-fns';
+import { addDays } from 'date-fns';
+
+const REPORT_TIMEZONE = 'Asia/Manila';
+
+function getManilaDayStart(referenceDate: Date) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: REPORT_TIMEZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(referenceDate);
+
+  const year = parts.find((part) => part.type === 'year')?.value;
+  const month = parts.find((part) => part.type === 'month')?.value;
+  const day = parts.find((part) => part.type === 'day')?.value;
+
+  if (!year || !month || !day) {
+    throw new Error('Unable to resolve Manila day window.');
+  }
+
+  return new Date(`${year}-${month}-${day}T00:00:00+08:00`);
+}
 
 const getDailyWindow = (reportDate?: Date) => {
-  const targetDate = reportDate ?? subDays(new Date(), 1);
-  const dayStart = startOfDay(targetDate);
-  const nextDayStart = addDays(dayStart, 1);
+  if (reportDate) {
+    const dayStart = getManilaDayStart(reportDate);
+    const nextDayStart = addDays(dayStart, 1);
+    return { dayStart, nextDayStart };
+  }
+
+  const manilaTodayStart = getManilaDayStart(new Date());
+  const dayStart = addDays(manilaTodayStart, -1);
+  const nextDayStart = manilaTodayStart;
 
   return {
     dayStart,
