@@ -14,6 +14,11 @@ const QUEUE_NAME = 'system-jobs';
 const TIMEZONE = 'Asia/Manila';
 
 type SchedulerJobName = 'daily-cleanup' | 'daily-report-and-stock-check' | 'monthly-report';
+const EXPECTED_JOB_NAMES: SchedulerJobName[] = [
+  'daily-cleanup',
+  'daily-report-and-stock-check',
+  'monthly-report',
+];
 
 let schedulerQueue: Queue | null = null;
 let schedulerWorker: Worker | null = null;
@@ -141,6 +146,24 @@ async function registerRecurringJobs(queue: Queue) {
   );
 }
 
+async function syncRecurringJobs(queue: Queue) {
+  const schedulers = await queue.getJobSchedulers();
+
+  if (schedulers.length > 0) {
+    const schedulerIds = schedulers
+      .map((scheduler) => scheduler.id)
+      .filter((id): id is string => typeof id === 'string' && id.length > 0);
+
+    await Promise.all(schedulerIds.map((id) => queue.removeJobScheduler(id)));
+    logger.warn(
+      `[BULL MQ Scheduler] Removed ${schedulerIds.length} stale job scheduler(s) before re-registering scheduler jobs.`,
+    );
+  }
+
+  await registerRecurringJobs(queue);
+  logger.info(`[BULL MQ Scheduler] Registered recurring jobs: ${EXPECTED_JOB_NAMES.join(', ')}.`);
+}
+
 export async function startBackgroundJobs() {
   if (schedulerStarted) return;
 
@@ -156,7 +179,7 @@ export async function startBackgroundJobs() {
     logger.error(`[BULL MQ Scheduler] Job failed: ${job?.name ?? 'unknown'} - ${error.message}`);
   });
 
-  await registerRecurringJobs(schedulerQueue);
+  await syncRecurringJobs(schedulerQueue);
   schedulerStarted = true;
   logger.info('[BULL MQ Scheduler] BullMQ background jobs started.');
 }

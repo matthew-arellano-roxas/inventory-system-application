@@ -1,10 +1,52 @@
 import { prisma } from '@root/lib/prisma';
+import { addMonths } from 'date-fns';
+import { logger } from '@/config';
 import { resetReports } from './report-resetter';
+
+const REPORT_TIMEZONE = 'Asia/Manila';
+
+function getManilaMonthWindow(referenceDate: Date) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: REPORT_TIMEZONE,
+    year: 'numeric',
+    month: '2-digit',
+  }).formatToParts(referenceDate);
+
+  const year = parts.find((part) => part.type === 'year')?.value;
+  const month = parts.find((part) => part.type === 'month')?.value;
+
+  if (!year || !month) {
+    throw new Error('Unable to resolve Manila month window.');
+  }
+
+  const monthStart = new Date(`${year}-${month}-01T00:00:00+08:00`);
+  const nextMonthStart = addMonths(monthStart, 1);
+
+  return { monthStart, nextMonthStart };
+}
 
 export async function createMonthlyReport() {
   const currentDate = new Date();
+  const { monthStart, nextMonthStart } = getManilaMonthWindow(currentDate);
 
   return await prisma.$transaction(async (tx) => {
+    const existingMonthlyReport = await tx.monthlyReport.findFirst({
+      where: {
+        date: {
+          gte: monthStart,
+          lt: nextMonthStart,
+        },
+      },
+      orderBy: { date: 'desc' },
+    });
+
+    if (existingMonthlyReport) {
+      logger.warn(
+        `[Scheduler] Monthly report for ${monthStart.toISOString()} already exists (id=${existingMonthlyReport.id}). Skipping duplicate create/reset.`,
+      );
+      return existingMonthlyReport;
+    }
+
     const branchReport = await tx.branchReport
       .aggregate({
         _sum: {
