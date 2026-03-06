@@ -1,5 +1,4 @@
 import { prisma } from '@root/lib/prisma';
-import { addMonths } from 'date-fns';
 import { logger } from '@/config';
 import { resetReports } from './report-resetter';
 
@@ -12,24 +11,30 @@ function getManilaMonthWindow(referenceDate: Date) {
     month: '2-digit',
   }).formatToParts(referenceDate);
 
-  const year = parts.find((part) => part.type === 'year')?.value;
-  const month = parts.find((part) => part.type === 'month')?.value;
+  const year = Number(parts.find((part) => part.type === 'year')?.value);
+  const month = Number(parts.find((part) => part.type === 'month')?.value);
 
-  if (!year || !month) {
+  if (!Number.isFinite(year) || !Number.isFinite(month)) {
     throw new Error('Unable to resolve Manila month window.');
   }
 
-  const monthStart = new Date(`${year}-${month}-01T00:00:00+08:00`);
-  const nextMonthStart = addMonths(monthStart, 1);
+  const previousMonthYear = month === 1 ? year - 1 : year;
+  const previousMonth = month === 1 ? 12 : month - 1;
 
-  return { monthStart, nextMonthStart };
+  const currentMonthStart = new Date(
+    `${String(year)}-${String(month).padStart(2, '0')}-01T00:00:00+08:00`,
+  );
+  const reportMonthStart = new Date(
+    `${String(previousMonthYear)}-${String(previousMonth).padStart(2, '0')}-01T00:00:00+08:00`,
+  );
+
+  return { currentMonthStart, reportMonthStart };
 }
 
 export async function createMonthlyReport() {
   const currentDate = new Date();
-  const { monthStart: currentMonthStart } = getManilaMonthWindow(currentDate);
-  const reportMonthStart = addMonths(currentMonthStart, -1);
-  const nextReportMonthStart = addMonths(reportMonthStart, 1);
+  const { currentMonthStart, reportMonthStart } = getManilaMonthWindow(currentDate);
+  const nextReportMonthStart = currentMonthStart;
 
   return await prisma.$transaction(async (tx) => {
     const existingMonthlyReport = await tx.monthlyReport.findFirst({

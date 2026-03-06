@@ -82,6 +82,21 @@ async function runDailyReportAndStockCheck() {
 }
 
 async function runMonthlyReport() {
+  const now = new Date();
+  const dayInManila = Number(
+    new Intl.DateTimeFormat('en-US', {
+      timeZone: TIMEZONE,
+      day: '2-digit',
+    }).format(now),
+  );
+
+  if (dayInManila !== 1) {
+    logger.warn(
+      `[Scheduler] Skipping monthly report because Manila date day is ${dayInManila} at ${now.toISOString()}. Monthly report only runs on day 1.`,
+    );
+    return;
+  }
+
   await createMonthlyReport();
   logger.info('[Scheduler] Monthly report created and reports reset.');
 }
