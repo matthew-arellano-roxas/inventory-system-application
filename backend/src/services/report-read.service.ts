@@ -4,8 +4,8 @@ import { calculateSkip } from '@/helpers';
 import { Prisma } from '@root/generated/prisma/client';
 import { TransactionType } from '@root/generated/prisma/enums';
 import { addDays, startOfDay } from 'date-fns';
-import { getTotalDamageAmount } from './transaction';
 import { DailyReportQuery, ProductReportQuery, ProductReportSummary } from '@/types/report.types';
+import { getManilaMonthStart, getMonthTotals } from './report-period.service';
 
 const ITEM_LIMIT = 30;
 
@@ -62,18 +62,16 @@ export const getDailyReports = async (query?: DailyReportQuery) => {
   }));
 };
 
-export const getCurrentMonthReport = async () =>
-  prisma.branchReport
-    .aggregate({
-      _sum: {
-        revenue: true,
-        profit: true,
-      },
-    })
-    .then(async (report) => {
-      const damage = await getTotalDamageAmount();
-      return { ...report._sum, damage };
-    });
+export const getCurrentMonthReport = async () => {
+  const currentMonthStart = getManilaMonthStart(new Date());
+  const totals = await getMonthTotals(prisma, currentMonthStart);
+
+  return {
+    revenue: totals.revenue,
+    profit: totals.profit,
+    damage: totals.damage,
+  };
+};
 
 export const getCurrentDayReport = async (query?: DailyReportQuery) => {
   const dayStart = startOfDay(new Date());

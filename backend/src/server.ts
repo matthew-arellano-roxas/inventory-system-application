@@ -36,7 +36,8 @@ import {
 import { startBackgroundJobs } from '@/services';
 import { requestLogger, protectedRoute, errorHandler } from '@/middlewares';
 import cors from 'cors';
-import { initSocketServer } from '@/socket';
+import { initSocketServer } from '@/config/socket';
+import { ensureMonthlyReportsAreCurrent, rebuildCurrentMonthReports } from '@/services/report-period.service';
 const app = express();
 const server = http.createServer(app);
 
@@ -62,6 +63,12 @@ app.use(errorHandler);
 // Start server
 (async () => {
   await checkDatabaseConnection(); // wait for DB connection
+  const monthlyCatchup = await ensureMonthlyReportsAreCurrent();
+  await rebuildCurrentMonthReports();
+  if (monthlyCatchup.created > 0) {
+    logger.info(`[Reports] Backfilled ${monthlyCatchup.created} missing monthly report(s) on startup.`);
+  }
+  logger.info('[Reports] Rebuilt current month product and branch report totals on startup.');
   await startBackgroundJobs();
   server.listen(serverConfig.port, () => {
     logger.info(`Server running at http://localhost:${serverConfig.port}`);
