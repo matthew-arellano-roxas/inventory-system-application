@@ -58,34 +58,35 @@ export function InventoryPageHeader({
 }: InventoryPageHeaderProps) {
   return (
     <>
-      <Card className="overflow-hidden border-border/70 bg-gradient-to-br from-amber-50 via-background to-sky-50 shadow-sm">
-        <div className="border-b border-border/60 bg-[linear-gradient(110deg,rgba(251,191,36,.12),rgba(14,165,233,.10))] p-4 sm:p-5">
+      <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white shadow-xl">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#22d3ee,_transparent_45%),radial-gradient(circle_at_bottom_left,_#f59e0b,_transparent_35%)] opacity-20" />
+        <div className="relative p-4 sm:p-5">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="min-w-0">
               <div className="flex items-start gap-3">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-sm">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/15 backdrop-blur">
                   <Warehouse className="h-5 w-5" />
                 </div>
                 <div className="min-w-0">
-                  <h1 className="break-words text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">
+                  <h1 className="break-words text-2xl font-black tracking-tight text-white sm:text-3xl">
                     Inventory Control Center
                   </h1>
-                  <p className="text-sm text-slate-600">
+                  <p className="text-sm text-white/70">
                     Cleaner browsing, safer values, and faster branch filtering.
                   </p>
                 </div>
               </div>
               <div className="mt-3 flex flex-wrap gap-2">
-                <Badge variant="secondary" className="rounded-full px-3 py-1">
+                <Badge className="rounded-full border-white/15 bg-white/10 px-3 py-1 text-white hover:bg-white/10">
                   {activeBranchName}
                 </Badge>
-                <Badge variant="outline" className="rounded-full px-3 py-1">
+                <Badge className="rounded-full border-white/15 bg-white/10 px-3 py-1 text-white hover:bg-white/10">
                   {filteredProductsCount} products
                 </Badge>
-                <Badge variant="outline" className="rounded-full px-3 py-1">
+                <Badge className="rounded-full border-white/15 bg-white/10 px-3 py-1 text-white hover:bg-white/10">
                   {filteredMovementsCount} movements
                 </Badge>
-                <Badge variant="outline" className="rounded-full px-3 py-1">
+                <Badge className="rounded-full border-white/15 bg-white/10 px-3 py-1 text-white hover:bg-white/10">
                   {filteredOpexCount} expenses
                 </Badge>
               </div>
@@ -94,7 +95,7 @@ export function InventoryPageHeader({
             <div className="flex w-full flex-col gap-2 lg:w-auto lg:flex-row">
               <Button
                 variant="default"
-                className="w-full gap-2 lg:w-auto"
+                className="w-full gap-2 bg-white text-slate-900 hover:bg-white/90 lg:w-auto"
                 onClick={onRefresh}
                 disabled={isRefreshing}
               >
@@ -103,7 +104,7 @@ export function InventoryPageHeader({
               </Button>
               <Button
                 variant="outline"
-                className="w-full gap-2 lg:w-auto"
+                className="w-full gap-2 border-white/20 bg-white/10 text-white hover:bg-white/15 hover:text-white lg:w-auto"
                 onClick={onExportExcel}
                 disabled={isExporting}
               >
@@ -112,7 +113,7 @@ export function InventoryPageHeader({
               </Button>
               <Button
                 variant="outline"
-                className="w-full gap-2 lg:w-auto"
+                className="w-full gap-2 border-white/20 bg-white/10 text-white hover:bg-white/15 hover:text-white lg:w-auto"
                 onClick={onExportPdf}
                 disabled={isExporting}
               >
