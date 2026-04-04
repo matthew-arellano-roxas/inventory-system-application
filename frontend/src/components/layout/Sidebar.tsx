@@ -2,6 +2,7 @@ import {
   ChartArea,
   ShoppingBasket,
   Database,
+  Store,
   ClipboardClock,
   LogOut,
   Megaphone,
@@ -65,11 +66,11 @@ export function Sidebar() {
           <div className="flex items-center justify-between">
             {/* Logo Area */}
             <div className="flex items-center gap-2 px-2">
-              <div className="bg-primary h-8 w-8 rounded-lg flex items-center justify-center shadow-md shadow-primary/20">
-                <Database className="text-primary-foreground w-5 h-5" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-2xl border border-border/70 bg-gradient-to-br from-background via-muted/30 to-muted/60 shadow-sm backdrop-blur">
+                <Store className="h-5 w-5 text-primary" />
               </div>
               <span className="font-bold text-lg tracking-tight whitespace-nowrap">
-                StockFlow
+                Stock Flow
               </span>
             </div>
 
